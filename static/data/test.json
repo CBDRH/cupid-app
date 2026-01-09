@@ -1,0 +1,6 @@
+[
+  { "name": "Alice", "drug": "alcohol" },
+  { "name": "Bob", "drug": "nicotene" },
+  { "name": "Charlie", "drug": "cannabis" },
+  { "name": "Dana", "drug": "other drugs" }
+]

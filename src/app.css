@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "flowbite";
+@custom-variant dark (&:where(.dark, .dark *));
+/* ... */
+@source "../node_modules/flowbite-svelte/dist";
+@source "../node_modules/flowbite-svelte-icons/dist";
+
+@layer base {
+  h1 {
+    @apply text-3xl font-bold mb-4 text-gray-800;
+  }
+
+  h2 {
+    @apply font-semibold mb-1 text-gray-700;
+  }
+}
