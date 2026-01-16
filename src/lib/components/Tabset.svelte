@@ -2,6 +2,7 @@
   import SummaryStudies from '$lib/components/SummaryStudies.svelte';
   import ManuscriptsTable from './ManuscriptsTable.svelte';
   import Bibliography from './Bibliography.svelte';
+  import SummaryDrugs from './SummaryDrugs.svelte';
 
   let activeTab = 0;
   const tabs = ["Evidence Summary", "Manuscripts", "Bibliography"];
@@ -22,7 +23,8 @@
 
   <div class="mt-4 p-4 border border-gray-300">
     {#if activeTab === 0}
-      <SummaryStudies/>
+      <SummaryStudies />
+      <SummaryDrugs />
     {:else if activeTab === 1}
       <ManuscriptsTable />
     {:else}

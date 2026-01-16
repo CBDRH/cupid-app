@@ -9,7 +9,8 @@
   } from "flowbite-svelte";
 
   import { dataStore } from "$lib/stores/dataStore";
-  import { ArrowTopRightOnSquareIcon } from "heroicons-svelte/24/solid";
+  import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
+  import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 
   let items = $state<{ reference: string; study_url: string }[]>([]);
@@ -31,31 +32,34 @@
     Details of the {total} studies included in the CUPID study
 </div>
 
-<Table hoverable class="table-fixed w-full text-xs">
-  <TableHead>
-    <TableHeadCell>Reference</TableHeadCell>
-    <TableHeadCell>Study URL</TableHeadCell>
-  </TableHead>
+<div class="max-h-screen overflow-y-auto">
+  <Table hoverable class="table-fixed w-full text-xs">
+    <TableHead>
+      <TableHeadCell>Reference</TableHeadCell>
+      <TableHeadCell>Study URL</TableHeadCell>
+    </TableHead>
 
-  <TableBody>
-    {#each items as row}
-      <TableBodyRow>
-        <TableBodyCell class="whitespace-normal break-words max-w-md">
-          {row.reference}
-        </TableBodyCell>
+    <TableBody>
+      {#each items as row}
+        <TableBodyRow>
 
-        <TableBodyCell class="whitespace-normal break-all max-w-sm">
-          <a
-            href={row.study_url}
-            class="inline-flex gap-1 underline hover:text-blue-50"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {row.study_url}
-            <ArrowTopRightOnSquareIcon class="w-4 h-4 opacity-70" />
-          </a>
-        </TableBodyCell>
-      </TableBodyRow>
-    {/each}
-  </TableBody>
-</Table>
+          <TableBodyCell class="whitespace-normal break-words max-w-md">
+            {row.reference}
+          </TableBodyCell>
+
+          <TableBodyCell class="whitespace-normal break-all max-w-sm">
+            <a
+              href={row.study_url}
+              class="inline-flex gap-1 underline hover:text-blue-50"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {row.study_url}
+              <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+            </a>
+          </TableBodyCell>
+        </TableBodyRow>
+      {/each}
+    </TableBody>
+  </Table>
+</div>  

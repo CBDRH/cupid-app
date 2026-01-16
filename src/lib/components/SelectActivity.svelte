@@ -15,9 +15,9 @@
     }
 
 
-onMount(() => {
-  // This only runs in the browser
-  document.addEventListener("click", handleClickOutside);
+  onMount(() => {
+    // This only runs in the browser
+    document.addEventListener("click", handleClickOutside);
 
   return () => {
     document.removeEventListener("click", handleClickOutside);
@@ -151,7 +151,7 @@ onMount(() => {
     {/if}  
     <span>Prevention activity:</span>
     {#if selectedOption}
-        <span class="font-bold">{selectedLabel} - {selectedOption}</span>
+        <span class="font-bold">{selectedLabel}: {selectedOption}</span>
     {/if} 
   </button>
 
@@ -186,6 +186,7 @@ onMount(() => {
                       on:click={() => {
                         selectedOption = option;
                         selectedLabel = group.label;
+                        open = false;
                         }}>
                       {option}
                     </button>

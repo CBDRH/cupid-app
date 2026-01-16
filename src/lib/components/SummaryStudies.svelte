@@ -1,4 +1,5 @@
 <script>
+  import { slide } from "svelte/transition";
   import { Tooltip } from "flowbite-svelte";
   import { filteredData } from "$lib/stores/filterStores";
 
@@ -16,9 +17,9 @@
     const data = $filteredData; // automatically reactive
     total = data.length;
 
-    supportive = data.filter(d => d.setting === "Schools").length;
-    mixed = data.filter(d => d.setting === "Medium community").length;
-    noImpact = data.filter(d => d.setting != "Schools" && d.setting != "Medium community").length;
+    supportive = data.filter(d => d.study_summary === 1).length;
+    mixed = data.filter(d => d.study_summary === 2).length;
+    noImpact = data.filter(d => d.study_summary == 3).length;
 
     values = [supportive, mixed, noImpact]
 
@@ -33,9 +34,9 @@
   let text = ["green-100", "orange-100", "red-100"];
   let message = ["were supportive", "had mixed results", "had no impact"];
   let legend = [
-    { color: "green-500", label: "Supportive" },
-    { color: "orange-400", label: "Mixed" },
-    { color: "red-500", label: "No Impact" },
+    { color: "green-500", label: "Supportive", hoverColor: "green-900", tooltip: "The selected activity had a statistically significant positive impact on at least one outcome" },
+    { color: "orange-400", label: "Mixed", hoverColor: "pink-600", tooltip: "The selected activity did not have a statistically significant positive impact on any outcome" },
+    { color: "red-500", label: "No Impact", hoverColor: "red-900", tooltip: "The selected activity had a statistically significant negative impact on at least one outcome" },
   ];
 
   
@@ -47,7 +48,7 @@
 </div>
 
 
-<div class="flex w-[95%] m-auto h-8 rounded overflow-hidden border border-gray-300">
+<div class="flex w-[100%] m-auto h-8 rounded overflow-hidden border border-gray-300">
   {#each values as value, i}
     <div 
       class={`h-full flex items-center justify-center cursor-pointer text-${text[i]} font-bold bg-${colors[i]}`}
@@ -59,10 +60,10 @@
       </div>
 
       <!-- Must be placed right after the trigger -->
-      <Tooltip
+      <Tooltip type="light" transition={slide}
         triggeredBy={"#segment-" + i}
         placement="top"
-        class="bg-gray-800 text-white text-sm px-2 py-1 rounded"
+        class="max-w-sm font-normal leading-relaxed whitespace-normal"
       >
         {value} out of {total} eligible studies {message[i]}
       </Tooltip>
@@ -76,7 +77,12 @@
   {#each legend as item}
     <div class="flex items-center gap-2">
       <!-- Colored box -->
-      <div class={`w-4 h-4 bg-${item.color} rounded-sm`}></div>
+      <div class={`w-4 h-4 bg-${item.color} rounded-sm cursor-pointer hover:border hover:border-gray-300`}></div>
+      <!-- Tooltip -->
+      <Tooltip type="light" transition={slide} placement="bottom" >
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">{item.tooltip}</div>  
+      </Tooltip>
+
       <!-- Label -->
       <span class="text-gray-700 text-sm">{item.label}</span>
     </div>
