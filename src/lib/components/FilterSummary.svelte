@@ -9,8 +9,6 @@
 
     $: isLow = selected < 10;
 
-    console.log(isLow)
-
 </script>
 
 <div class="grid grid-cols-[auto_1fr] gap-4 mb-6 items-center max-h-[20vh]">

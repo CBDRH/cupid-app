@@ -117,7 +117,7 @@ $effect(() => {
   </AccordionItem>
 
   <!-- Participants -->
-  <AccordionItem>
+  <AccordionItem  open={false}>
     {#snippet header()}    
       <div class="flex items-center gap-2">
         <AdjustmentsHorizontalSolid />
@@ -190,7 +190,7 @@ $effect(() => {
 
 
   <!-- Community context -->
-  <AccordionItem open>
+  <AccordionItem  open={false}>
     {#snippet header()}    
       <div class="flex items-center gap-2">
         <AdjustmentsHorizontalSolid />
@@ -265,13 +265,5 @@ $effect(() => {
   
   
   </AccordionItem>
-
-
-
-
-
-
-  
 </Accordion>  
-
 

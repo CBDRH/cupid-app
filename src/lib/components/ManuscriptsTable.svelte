@@ -1,10 +1,9 @@
 <script lang="ts">
   import {
     Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell,
-    Checkbox, Button, Modal, Clipboard, Label, Input, Tooltip
+    Checkbox, Button
   } from "flowbite-svelte";
-  import { slide } from "svelte/transition";
-  import { ClipboardCleanSolid, ShareNodesOutline, CheckOutline } from "flowbite-svelte-icons";
+  import { ClipboardCleanSolid, CheckOutline } from "flowbite-svelte-icons";
   import { filteredData } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare, faSquareCheck, faSquareMinus } from "@fortawesome/free-solid-svg-icons";

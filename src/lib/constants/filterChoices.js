@@ -1,17 +1,18 @@
 // All the filter choices
 
 export const drugChoices = [
+  { value: "Unspecified", label: "Unspecified"},
   { value: "Alcohol", label: "Alcohol"},
   { value: "Nicotine", label: "Nicotine"},
   { value: "Cannabis", label: "Cannabis"},
-  { value: "Unspecified", label: "Other drugs"}
+  { value: "Other drugs", label: "Other drugs"}
 ];
 
 export const genderChoices = [
-  { value: "No", label: "Unspecified in evaluation"},
-  { value: "Male", label: "Male"},
-  { value: "Female", label: "Female"},
-  { value: "Non-binary", label: "Non-binary"}
+  { value: "No", label: "Any gender"},
+  { value: "Male", label: "Male only"},
+  { value: "Female", label: "Female only"},
+  { value: "Non-binary", label: "Non-binary only"}
 ];
 
 export const lifestagesChoices = [

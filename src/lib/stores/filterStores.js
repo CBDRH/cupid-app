@@ -1,6 +1,6 @@
 
 import { writable, derived } from 'svelte/store';
-import { dataStore } from './dataStore';
+import { dataStore, activityStore } from './dataStore';
 
 // Store for selected drug options
 export const drugStore = writable([]); 
@@ -10,12 +10,25 @@ export const priorityStore = writable([]);
 export const continentStore = writable([]); 
 export const urbanicityStore = writable([]); 
 export const settingStore = writable([]); 
+export const selectedLabel = writable("Mobilisation");
+export const selectedOption = writable("Alternative activities");
+export const selectedActivity = writable("mobilisation_activity___1");
+
 
 // Derived store: filtered data based on drugStore
 export const filteredData = derived(
-  [dataStore, drugStore, genderStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore],
-  ([$dataStore, $drugStore, $genderStore, $lifestagesStore, $priorityStore, $continentStore, $urbanicityStore, $settingStore]) => {
+  [selectedActivity, dataStore, drugStore, genderStore, lifestagesStore, priorityStore, continentStore, 
+    urbanicityStore, settingStore],
+  ([$selectedActivity, $dataStore, $drugStore, $genderStore, $lifestagesStore, $priorityStore, $continentStore, 
+    $urbanicityStore, $settingStore]) => {
     let result = $dataStore;
+
+    // Activity filter
+    if ($selectedActivity.length > 0) {
+      result = result.filter(item =>
+        item[$selectedActivity] === 1
+      );
+    }
 
     // Drug filter
     if ($drugStore.length > 0) {
@@ -69,3 +82,23 @@ export const filteredData = derived(
     return result;
   }
 );
+
+
+// derived store for filtered activities
+export const filteredActivity = derived(
+  [selectedOption, activityStore],
+  ([$selectedOption, $activityStore]) => {
+
+let result = $activityStore;
+
+    // Activity filter
+    if ($selectedOption.length > 0) {
+      result = result.filter(item =>
+        item.activity.includes($selectedOption)
+      );
+    }
+    return result;
+
+  }
+);
+

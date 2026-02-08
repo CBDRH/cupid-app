@@ -2,16 +2,22 @@
   import Sidebar from '$lib/components/Sidebar.svelte';
   import Header from '$lib/components/Header.svelte';
   import Tabset from '$lib/components/Tabset.svelte';
+  import Footer from '$lib/components/Footer.svelte';
   import SelectActivity from '$lib/components/SelectActivity.svelte';
   import { onMount } from 'svelte';
-  import { dataStore } from '$lib/stores/dataStore';
-  import { filteredData } from '$lib/stores/filterStores';
+  import { dataStore, activityStore } from '$lib/stores/dataStore';
 
   onMount(async () => {
+    
+    // Initialise dataStore with study-level data
     const res = await fetch('/data/study_level_data.json');
     const jsonData = await res.json();
     dataStore.set(jsonData);      // store full dataset
-    filteredData.set(jsonData);  // initialize filtered data
+    
+    // Initialise activityStore with activity-level data
+    const res1 = await fetch('/data/activity_level_data.json');
+    const jsonData1 = await res1.json();
+    activityStore.set(jsonData1);      // store full dataset
   });
 
 </script>
@@ -27,6 +33,8 @@
     <Tabset />
   </div>
 </div>
+
+<Footer />
 
 <style lang="postcss">
   @reference "tailwindcss";
