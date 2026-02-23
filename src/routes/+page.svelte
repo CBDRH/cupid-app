@@ -6,6 +6,25 @@
   import SelectActivity from '$lib/components/SelectActivity.svelte';
   import { onMount } from 'svelte';
   import { dataStore, activityStore } from '$lib/stores/dataStore';
+  import { writable } from 'svelte/store';
+  import { goto } from '$app/navigation';
+
+  // modal visibility
+  let showModal = writable(false);
+
+  onMount(() => {
+    // show modal when page loads
+    showModal.set(true);
+  });
+
+  function closeModal() {
+    showModal.set(false);
+  }
+
+  function closeAbout() {
+    showModal.set(false);
+    goto('/about');
+  }
 
   onMount(async () => {
     
@@ -35,6 +54,42 @@
 </div>
 
 <Footer />
+
+
+<!-- Modal -->
+{#if $showModal}
+  <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
+      <button 
+        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 font-bold"
+        onclick={closeModal}
+      >
+        ✕
+      </button>
+
+      <h2 class="text-xl font-bold mb-2">Welcome to the CommUnity Prevention Initiative Dashboard (CUPID)!</h2>
+      <p class="mb-4">
+        This free, public resource helps community members, policy makers, and program managers find and understand research on how community action can impact alcohol and other drug (AOD) use, related harms and associated behaviours.
+      </p>
+
+    <div class="flex justify-center gap-4">
+        <button
+          class="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
+          onclick={closeModal}
+        >
+          🚀 Launch Dashboard
+        </button>
+
+        <button
+          class="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-600 transition"
+          onclick={closeAbout}
+        >
+          ❔About
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <style lang="postcss">
   @reference "tailwindcss";

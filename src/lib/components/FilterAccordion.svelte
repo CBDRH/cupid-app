@@ -7,7 +7,7 @@ import { drugChoices, genderChoices, lifestagesChoices, priorityChoices, contine
 import { drugStore, genderStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
 
 let selectedDrug = $state([]);
-let allDrug = $state(true);
+let allDrug = $state(false);
 
 let selectedGender = $state([]);
 let allGender = $state(true);
@@ -92,11 +92,11 @@ $effect(() => {
     {/snippet}
     
     <label class="font-semibold flex items-center gap-1">
-      <span>Drug type</span>
+      <span>Filter drug type</span>
       <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
       <Tooltip placement="right" type="light" transition={slide}>
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
-          Select one or more drug types. Nicotine includes tobacco,
+          Click to filter results to specific drug types. Nicotine includes tobacco,
           smokeless tobacco, and vaping. Other drugs includes methamphetamine,
           ecstasy, cocaine, inhalants, opioids, caffeine, pharmaceuticals,
           nitrous oxide, and any unspecified substance.
@@ -105,10 +105,10 @@ $effect(() => {
     </label>
 
     <!-- Drug type -->
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
+    <!-- <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
       <Checkbox bind:checked={allDrug} color="green" class="scale-100"/>
       Select all
-    </label>
+    </label> -->
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedDrug} choices={drugChoices} color="green" classes={{ div: "p-2"}} />

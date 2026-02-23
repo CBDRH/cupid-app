@@ -1,7 +1,6 @@
 <script>
-  import { slide, fly } from "svelte/transition";
-  import { Tooltip, Modal, Card } from "flowbite-svelte";
-  import { FilePdfSolid } from "flowbite-svelte-icons";
+  import { slide } from "svelte/transition";
+  import { Tooltip, Modal } from "flowbite-svelte";
   import { filteredData, selectedOption, filteredActivity } from "$lib/stores/filterStores";
   import {
     Table, TableHead, TableHeadCell,
@@ -75,12 +74,7 @@ function toggleRow(index) {
   // Trigger Svelte update
   expandedRows = new Set(expandedRows);
 }
-
-
-
 </script>
-
-<!-- <pre>{JSON.stringify($filteredActivity.slice(0, 5), null, 2)}</pre> -->
 
 <h2>Previous community-wide studies</h2>
 

@@ -2,7 +2,7 @@
     import Footer from "$lib/components/Footer.svelte"
 </script>
 
-<div class="p-3">
+<div class="p-3 mx-50">
 
 <h1 class="my-3">CUPID HOMEPAGE</h1>
 

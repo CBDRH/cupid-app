@@ -1,7 +1,6 @@
 // All the filter choices
 
 export const drugChoices = [
-  { value: "Unspecified", label: "Unspecified"},
   { value: "Alcohol", label: "Alcohol"},
   { value: "Nicotine", label: "Nicotine"},
   { value: "Cannabis", label: "Cannabis"},

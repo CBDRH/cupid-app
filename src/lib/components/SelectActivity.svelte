@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { slide } from "svelte/transition"
-    import { Tooltip, Carousel } from "flowbite-svelte";
+    import { Tooltip} from "flowbite-svelte";
     import { derived } from "svelte/store";
     import { ChevronDoubleDownOutline, ChevronDoubleUpOutline, InfoCircleOutline } from "flowbite-svelte-icons";
     import { activityList } from "$lib/constants/activityList";

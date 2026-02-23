@@ -37,47 +37,47 @@ export const filteredData = derived(
       );
     }
 
-    // Gender filter
-    if ($genderStore.length > 0) {
-      result = result.filter(item =>
-        $genderStore.includes(item.gender)
-      );
-    }
+    // // Gender filter
+    // if ($genderStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $genderStore.includes(item.gender)
+    //   );
+    // }
 
-    // Lifestages filter
-    if ($lifestagesStore.length > 0) {
-      result = result.filter(item =>
-        $lifestagesStore.includes(item.lifestages)
-      );
-    }
+    // // Lifestages filter
+    // if ($lifestagesStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $lifestagesStore.includes(item.lifestages)
+    //   );
+    // }
 
-    // Priority populations filter
-    if ($priorityStore.length > 0) {
-      result = result.filter(item =>
-        $priorityStore.includes(item.priority)
-      );
-    } 
+    // // Priority populations filter
+    // if ($priorityStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $priorityStore.includes(item.priority)
+    //   );
+    // } 
     
-    // Continent filter
-    if ($continentStore.length > 0) {
-      result = result.filter(item =>
-        $continentStore.includes(item.continent)
-      );
-    }        
+    // // Continent filter
+    // if ($continentStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $continentStore.includes(item.continent)
+    //   );
+    // }        
 
-    // Urbanicity filter
-    if ($urbanicityStore.length > 0) {
-      result = result.filter(item =>
-        $urbanicityStore.includes(item.urbanicity)
-      );
-    }     
+    // // Urbanicity filter
+    // if ($urbanicityStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $urbanicityStore.includes(item.urbanicity)
+    //   );
+    // }     
 
-    // Setting filter
-    if ($settingStore.length > 0) {
-      result = result.filter(item =>
-        $settingStore.includes(item.setting)
-      );
-    }    
+    // // Setting filter
+    // if ($settingStore.length > 0) {
+    //   result = result.filter(item =>
+    //     $settingStore.includes(item.setting)
+    //   );
+    // }    
 
     return result;
   }
