@@ -1,36 +1,19 @@
-<script>
-  import { filteredData } from "$lib/stores/filterStores";
-
-  //   Reactive counts for each category
-  let total = $state(0);
-
-  $effect(() => {
-    total = $filteredData.length
-  })
-
-export function bigorsmall(number) { 
-
-    if (number < 20) return 0
-    else return 1
-
-}
-
-let bigOrSmallValue = 0;
-
-$effect(() => {
-    bigOrSmallValue = bigorsmall(total);
-});
-
-const colors = ["bg-red-500", "bg-green-100"]
-
+<script lang="ts">
+  import { evidenceLevels } from "$lib/constants/evidenceLevels.js";
 </script>
 
-
-
-<p>Total: {total}</p>
-<p>Big or Small: {bigOrSmallValue}</p>
-<p>Background: {colors[bigOrSmallValue]}</p>
-
-<div class={`border ${colors[bigOrSmallValue]}` }>
-    <p>Well Head</p>
+<div class="flex gap-3">
+  {#each evidenceLevels as level}
+    <div
+      class={`w-32 h-20 rounded-lg flex flex-col items-center justify-center
+              ${level.bgColor}`}
+    >
+      <div class={`text-sm font-semibold ${level.labelColor}`}>
+        {level.label}
+      </div>
+      <div class={`text-xs ${level.textColor}`}>
+        Text sample
+      </div>
+    </div>
+  {/each}
 </div>

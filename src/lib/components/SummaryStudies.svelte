@@ -105,7 +105,7 @@ function toggleRow(index) {
 
       <!-- Trigger element must wrap the part you want hover on -->
       <div id={"segment-" + i} class="w-full h-full flex items-center justify-center">
-        {value}
+        {value === 0 ? null : value}
       </div>
 
       <!-- Must be placed right after the trigger -->

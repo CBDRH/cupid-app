@@ -83,11 +83,13 @@
       </label>
 
         <!-- Background icon -->
-        <FontAwesomeIcon
-          icon={card.icon}
-          style="width: 5rem; height: 5rem"
-          class={`absolute right-3 bottom-5 ${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
-        /> 
+        {#key summaryArray[i]}
+          <FontAwesomeIcon
+            icon={card.icon}
+            style="width: 3rem; height: 3rem"
+            class={`absolute right-3 bottom-5 ${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
+          />
+        {/key}
 
         <!-- Footer -->
         <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left font-semibold`}>
