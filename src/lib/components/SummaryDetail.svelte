@@ -166,9 +166,12 @@
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[useSummary[i]].bgColor} ${evidenceLevels[useSummary[i]].labelColor}`}
           onclick={() => useModals[i] = true}
           >
-          <FontAwesomeIcon
-            style="width: 1rem; height: 1rem"  
-            icon={evidenceLevels[useSummary[i]].icon} />
+          {#key useSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[useSummary[i]].icon}
+            />
+          {/key}
           {evidenceLevels[useSummary[i]].label}
       </button>
       </div>
@@ -185,9 +188,12 @@
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[harmSummary[i]].bgColor} ${evidenceLevels[harmSummary[i]].labelColor}`}
           onclick={() => harmModals[i] = true}
           >
-          <FontAwesomeIcon
-            style="width: 1rem; height: 1rem"  
-            icon={evidenceLevels[harmSummary[i]].icon} />
+          {#key harmSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[harmSummary[i]].icon}
+            />
+          {/key}
           {evidenceLevels[harmSummary[i]].label}
       </button>
       </div>
@@ -204,9 +210,12 @@
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[behavSummary[i]].bgColor} ${evidenceLevels[behavSummary[i]].labelColor}`}
           onclick={() => behavModals[i] = true}
           >
-          <FontAwesomeIcon 
-            style="width: 1rem; height: 1rem"    
-            icon={evidenceLevels[behavSummary[i]].icon} />
+          {#key behavSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[behavSummary[i]].icon}
+            />
+          {/key}
           {evidenceLevels[behavSummary[i]].label}
       </button>
       </div>
@@ -223,9 +232,12 @@
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[economicSummary[i]].bgColor} ${evidenceLevels[economicSummary[i]].labelColor}`}
           onclick={() => economicModals[i] = true}
           >
-          <FontAwesomeIcon 
-            style="width: 1rem; height: 1rem"  
-            icon={evidenceLevels[economicSummary[i]].icon} />
+          {#key economicSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[economicSummary[i]].icon}
+            />
+          {/key}
           {evidenceLevels[economicSummary[i]].label}
       </button>
       </div>
