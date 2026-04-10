@@ -3,7 +3,6 @@
   import Header from '$lib/components/Header.svelte';
   import Tabset from '$lib/components/Tabset.svelte';
   import Footer from '$lib/components/Footer.svelte';
-  import Test from '$lib/components/Test.svelte';
   import SelectActivity from '$lib/components/SelectActivity.svelte';
   import { onMount } from 'svelte';
   import { dataStore, activityStore } from '$lib/stores/dataStore';
@@ -49,7 +48,6 @@
   <!-- Main content -->
   <div class="flex-1 flex flex-col overflow-auto">
     <Header />
-    <Test />
     <SelectActivity />
     <Tabset />
   </div>
