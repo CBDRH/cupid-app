@@ -55,46 +55,47 @@
 
 </script>
 
-<h2>
-  <span>Potential Impact</span>
-  <span class="text-sm font-normal ml-2">
+<div class="mt-6">
+  <h2>
+    <span>Potential Impact</span>
+    <span class="text-sm font-normal ml-2">
 
-  </span>
-</h2>
+    </span>
+  </h2>
 
 
-<div class="flex flex-row gap-4"> 
-    {#each cards as card, i} 
-    
-    <div class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300`}> 
-    
-    <!-- Box title and info icon -->
-    <label class="my-2 flex items-baseline gap-1">
-      <h3 class={`text-4xl ${evidenceLevels[summaryArray[i]].textColor} text-left`}>
-          {evidenceLevels[summaryArray[i]].label}
-        </h3>
-      <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
-      <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
-          {@html evidenceLevels[summaryArray[i]].hoverMessage}
-        </div>
-      </Tooltip>
-    </label>
+  <div class="flex flex-row gap-4"> 
+      {#each cards as card, i} 
+      
+      <div class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300`}> 
+      
+      <!-- Box title and info icon -->
+      <label class="my-2 flex items-baseline gap-1">
+        <h3 class={`text-4xl ${evidenceLevels[summaryArray[i]].textColor} text-left`}>
+            {evidenceLevels[summaryArray[i]].label}
+          </h3>
+        <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
+        <Tooltip placement="right" type="light" transition={slide}>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+            {@html evidenceLevels[summaryArray[i]].hoverMessage}
+          </div>
+        </Tooltip>
+      </label>
 
-      <!-- Background icon -->
-      <FontAwesomeIcon
-        icon={card.icon}
-        style="width: 5rem; height: 5rem"
-        class={`absolute right-3 bottom-5 ${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
-      /> 
+        <!-- Background icon -->
+        <FontAwesomeIcon
+          icon={card.icon}
+          style="width: 5rem; height: 5rem"
+          class={`absolute right-3 bottom-5 ${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
+        /> 
 
-      <!-- Footer -->
-      <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left font-semibold`}>
-        {card.label}
-      </p> 
+        <!-- Footer -->
+        <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left font-semibold`}>
+          {card.label}
+        </p> 
 
-    </div>
-    {/each}
-</div>    
-
+      </div>
+      {/each}
+  </div>    
+</div>
 

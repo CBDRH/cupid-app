@@ -2,15 +2,17 @@
     import { onMount } from "svelte";
     import { slide } from "svelte/transition"
     import { Tooltip} from "flowbite-svelte";
-    import { derived } from "svelte/store";
     import { ChevronDoubleDownOutline, ChevronDoubleUpOutline, InfoCircleOutline } from "flowbite-svelte-icons";
     import { activityList } from "$lib/constants/activityList";
-    import { selectedLabel, selectedOption, selectedActivity, filteredActivity } from "$lib/stores/filterStores.js"
-  
+    import { selectedLabel, selectedOption, selectedActivity} from "$lib/stores/filterStores.js"
+
+
+
 
     let open = false;
     let menuEl: HTMLDivElement | null = null;
     let buttonEl: HTMLButtonElement | null = null;
+    let activities = []; // This is the placehoder for the augmented activity list that includes the evidence
 
   // Function to close the menu if click is outside
     function handleClickOutside(event: MouseEvent) {
@@ -20,19 +22,6 @@
     }
     }
 
-  // Count number of activities 
-  export const activityCounts = derived(filteredActivity, ($filteredActivity) => {
-  const counts = {};
-
-  $filteredActivity.forEach(item => {
-    if (!counts[item.activity]) counts[item.activity] = 0;
-    counts[item.activity] += 1;
-  });
-
-  return counts; // e.g. { "Alternative activities": 5, "Education": 3 }
-});
-
-
   onMount(() => {
     // This only runs in the browser
     document.addEventListener("click", handleClickOutside);
@@ -41,6 +30,66 @@
     document.removeEventListener("click", handleClickOutside);
   };
 });
+
+// Code to add the activity evidence from activity-level-data.json to the activityList data structure
+// Thank the lord for copilot
+
+// Function to normalise strings
+const normalizeKey = (s: string) =>
+  s.trim().toLowerCase();
+
+onMount(async () => {
+  const res = await fetch("/data/activity_level_data.json");
+  const data = await res.json();
+
+  const normalizeActivity = (activity: string) =>
+    activity.replace(/^\d+(\.\d+)*\s*/, "").trim();
+
+  // collapse
+const collapsed = data.reduce(
+  (acc: Record<string, { positive: number; null: number; negative: number }>, row: any) => {
+  const key = normalizeActivity(row.activity); // JSON side only
+
+    // only take the FIRST occurrence
+    if (!acc[key]) {
+      acc[key] = {
+        positive: row.positive ?? 0,
+        null: row.null ?? 0,
+        negative: row.negative ?? 0
+      };
+    }
+
+    return acc;
+  },
+  {}
+);
+
+
+activityList.forEach(group => {
+  group.options.forEach(option => {
+    const lookupKey = normalizeActivity(option);
+    if (!collapsed[lookupKey]) {
+      console.warn("No match for option:", option, "→", lookupKey);
+    }
+  });
+});
+
+  // merge into activityList
+  const enrichedActivityList = activityList.map(group => ({
+    ...group,
+    options: group.options.map((option, i) => ({
+      label: option,
+      variable: group.variable[i],
+      definition: group.definition[i],
+      positive: collapsed[option]?.positive ?? 0,
+      null:     collapsed[option]?.null ?? 0,
+      negative: collapsed[option]?.negative ?? 0
+    }))
+  }));
+
+  activities = enrichedActivityList;
+});
+
 
 </script>
 
@@ -81,7 +130,7 @@
 
         <!-- Grouped selector -->
         <div class="columns-5 gap-6">
-          {#each activityList as activity}
+          {#each activities as activity}
             <div class="mb-6 break-inside-avoid">
               <!-- Group header -->
               <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
@@ -92,6 +141,7 @@
               <ul class="space-y-0">
                 {#each activity.options as option, i}
                   <li class="flex">
+                    
                     <InfoCircleOutline 
                       class="cursor-pointer"
                       onclick={() => {
@@ -100,6 +150,7 @@
                         selectedActivity.set(activity.variable[i]);
                         open = false;
                         }} />
+                    
                     <Tooltip type="light" transition={slide}>
                       <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
                         {activity.definition[i]}
@@ -110,21 +161,27 @@
                       class="w-full text-left text-xs px-2 py-1 rounded
                              cursor-pointer
                              hover:bg-gray-200
-                             transition-colors duration-200"
+                             transition-colors duration-300"
                       class:bg-gray-400={$selectedOption === option}
                       onclick={() => {
                           [
-                            [selectedOption, option],
+                            [selectedOption, option.label],
                             [selectedLabel, activity.label],
                             [selectedActivity, activity.variable[i]]
                           ].forEach(([store, value]) => store.set(value));
                           open = false;
                         }}>
-                    <span>{option}</span>
-                    <span class="ml-2 text-xs font-semibold text-gray-500">
-                      {$activityCounts[option] ?? 0}
-                    </span>
-                    </button> 
+                    
+                    <span>{option.label}</span>
+                    
+                    <div class="bg-gray-100 mt-1 text-xs text-center rounded w-16">
+                      <span class="text-green-500">{option.positive}</span> | 
+                      <span class="text-orange-400">{option.null}</span> |
+                      <span class="text-red-500">{option.negative}</span>
+                    </div>
+                    
+                  </button> 
+                  
                   </li>
                 {/each}
               </ul>

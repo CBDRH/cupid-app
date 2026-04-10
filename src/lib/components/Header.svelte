@@ -18,7 +18,7 @@
         style="width: 1rem; height: 1rem"  
         icon={faCircleQuestion} class="ms-2 h-6 w-6"/>
     </A>
-    <A href="/resources">Resources
+    <A href="/resources">Additional support
       <FontAwesomeIcon 
         style="width: 1rem; height: 1rem"  
         icon={faCircleNodes} class="ms-2 h-6 w-6"/>

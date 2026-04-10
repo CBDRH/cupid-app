@@ -28,8 +28,12 @@
   });
 </script>
 
-<div class="text-sm mb-3 font-semibold text-gray-700">
+<h2>
     Details of the {total} studies included in the CUPID study
+</h2>
+
+<div class="text-sm mb-3 text-gray-700">
+    This table lists all of the studies that are included in CUPID.
 </div>
 
 <div class="max-h-screen overflow-y-auto">

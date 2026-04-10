@@ -4,9 +4,10 @@
   import Bibliography from './Bibliography.svelte';
   import SummaryDrugs from './SummaryDrugs.svelte';
   import SummaryDetail from './SummaryDetail.svelte';
+  import SummaryTable from './SummaryTable.svelte';
 
   let activeTab = 0;
-  const tabs = ["Evidence Summary", "Manuscripts", "Bibliography"];
+  const tabs = ["Evidence Summary", "Filtered Manuscripts", "Bibliography"];
 </script>
 
 <div>
@@ -27,6 +28,7 @@
       <SummaryStudies />
       <SummaryDrugs />
       <SummaryDetail />
+      <SummaryTable />
     {:else if activeTab === 1}
       <ManuscriptsTable />
     {:else}

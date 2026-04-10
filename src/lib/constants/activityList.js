@@ -122,7 +122,7 @@ export const activityList = [
   {
     label: "Police / local authorities",
     options: [
-      "Punishment",
+      "Legal consequences",
       "Presence",
       "Information dissemination",
       "Roadside checkpoints",
@@ -136,7 +136,7 @@ export const activityList = [
       "police_activity___5"
     ],
     definition: [
-      "Changing the way in which an individual is punished for breaking a substance-related law such as by changing the amount of a fine or through diversion programs",
+      "Changing the legal consequences for breaking a substance-related law such as by changing the amount of a fine or through diversion programs",
       "Increasing the actual or perceived presence of police or local authorities by increasing patrols in certain locations or at certain times",
       "Utilising police or local authority community patrols as a means for information dissemination",
       "Activities involving roadside checkpoints such as increasing the frequency of roadside alcohol breath testing",

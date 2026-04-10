@@ -49,8 +49,12 @@
 
 </script>
 
-<div class="text-sm mb-3 font-semibold text-gray-700">
-    Details of the {total} studies that match your search criteria:
+<h2>
+  Details of the {total} studies that match your search criteria:
+</h2>
+
+<div class="text-sm mb-3 text-gray-700">
+    This table shows all studies that matched your search criteria. If you want to copy the fully citation to your clipboard you can tick the checkbox next to studies of interest then click on copy.
 </div>
 
 <div class="flex flex-row gap-2 mb-2">

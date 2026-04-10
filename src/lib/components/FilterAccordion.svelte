@@ -87,7 +87,7 @@ $effect(() => {
     {#snippet header()}    
       <div class="flex items-center gap-2">
         <AdjustmentsHorizontalSolid />
-        <span>Intervention</span>
+        <span>Target drugs</span>
       </div>
     {/snippet}
     

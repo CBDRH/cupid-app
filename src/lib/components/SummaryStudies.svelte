@@ -2,10 +2,8 @@
   import { slide } from "svelte/transition";
   import { Tooltip, Modal } from "flowbite-svelte";
   import { filteredData, selectedOption, filteredActivity } from "$lib/stores/filterStores";
-  import {
-    Table, TableHead, TableHeadCell,
-    TableBody, TableBodyRow, TableBodyCell
-  } from "flowbite-svelte";
+  import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
+  import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
   //   Reactive counts for each category
   let total = $state(0);
@@ -16,6 +14,7 @@
   let widths = $state([0, 0, 0]);
   let studyModal = $state(false);
   
+
   // Whenever filteredData changes, update counts
   $effect(() => {
     const data = $filteredData; // automatically reactive
@@ -32,13 +31,26 @@
 
   });
 
+  let subset = $state(null); // The selected bar (positive/no impact/negative)
+  function handleSegmentClick(i) { // The function that runs when the user clicks the bar
+    subset = i + 1
+    studyModal = true
+  }
+
+let filteredBySubset = $derived( // The subset of the filtered data that matche th users click
+  $filteredData.filter(study => study.study_summary === subset)
+);
+
+
+
+
   
   let colors = ["green-500", "orange-400", "red-500"];
   let text = ["green-100", "orange-100", "red-100"];
   let message = ["had a positive impact", "had no impact", "had a negative impact"];
   let legend = [
     { color: "green-500", label: "Positive impact", hoverColor: "green-900", tooltip: "The selected activity had a statistically significant positive impact on at least one outcome" },
-    { color: "orange-400", label: "No impact", hoverColor: "pink-600", tooltip: "The selected activity did not have a statistically significant positive impact on any outcome" },
+    { color: "orange-400", label: "No impact", hoverColor: "orange-900", tooltip: "The selected activity did not have a statistically significant positive impact on any outcome" },
     { color: "red-500", label: "Negative impact", hoverColor: "red-900", tooltip: "The selected activity had a statistically significant negative impact on at least one outcome" },
   ];
 
@@ -62,7 +74,6 @@ const columns = [
   { key: "satisfaction_v1_1_v2", label: "Satisfaction", width: "max-w-[140px]"  }
 ];
 
-
 let expandedRows = $state(new Set());
 
 function toggleRow(index) {
@@ -82,13 +93,15 @@ function toggleRow(index) {
     <p>{positive} out of {total} studies showed support for this initiative</p>
 </div>
 
-<button 
+<div 
   class="flex w-[100%] m-auto h-8 rounded overflow-hidden border border-gray-300 cursor-pointer"
-  onclick={() => studyModal = !studyModal}>
+  >
   {#each values as value, i}
-    <div 
-      class={`h-full flex items-center justify-center cursor-pointer text-${text[i]} font-bold bg-${colors[i]}`}
-      style="width: {widths[i]}%">
+    <button 
+      class={`h-full flex items-center justify-center border-0 hover:border-2  hover:border-${colors[i]} cursor-pointer text-${text[i]} font-bold bg-${colors[i]}`}
+      style="width: {widths[i]}%"
+      onclick={() => handleSegmentClick(i)}
+    >
 
       <!-- Trigger element must wrap the part you want hover on -->
       <div id={"segment-" + i} class="w-full h-full flex items-center justify-center">
@@ -101,12 +114,12 @@ function toggleRow(index) {
         placement="top"
         class="max-w-sm font-normal leading-relaxed whitespace-normal"
       >
-        {value} out of {total} eligible studies {message[i]}<br><span class="text-gray-400">Click bar for more</span>
+        {value} out of {total} eligible studies {message[i]}<br><span class="text-gray-700">Click bar for more</span>
       </Tooltip>
 
-    </div>
+    </button>
   {/each}
-  </button>
+  </div>
 
 <!-- Legend -->
 <div class="flex gap-4 mt-4 justify-center">
@@ -129,8 +142,11 @@ function toggleRow(index) {
 <Modal bind:open={studyModal} size="xl">
 
   <h3 class="text-md font-semibold tracking-widest uppercase text-center text-gray-200">
-    Activity summary:{$selectedOption} ({numActivities} Studies)
+    Activity summary:{$selectedOption} 
   </h3>
+  <p>
+    Details of {values[subset-1]} studies that {message[subset-1]}
+  </p>
 
 
 <div class="max-h-[60vh] overflow-y-auto">
@@ -155,7 +171,7 @@ function toggleRow(index) {
 
     <!-- Body -->
     <tbody>
-      {#each $filteredActivity as study, i}
+      {#each filteredBySubset as study, i}
         <tr
           class="border-t hover:bg-gray-50 hover:text-blue-950 transition-colors cursor-pointer"
           onclick={() => toggleRow(i)}
@@ -167,7 +183,20 @@ function toggleRow(index) {
                   expandedRows.has(i) ? "max-h-[1000px]" : "max-h-[9rem]"
                 } whitespace-normal break-words`}
               >
+
+                {#if col.key === "study_author"}
+                  <a
+                    href={study.study_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:underline"
+                  >
+                    {study[col.key] ?? "—"} 
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                  </a>
+                {:else}
                 {study[col.key] ?? "—"}
+                {/if}
               </div>
             </td>
           {/each}
