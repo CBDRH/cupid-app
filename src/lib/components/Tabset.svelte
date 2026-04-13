@@ -8,7 +8,7 @@
   import { dataStore } from '$lib/stores/dataStore';
   import { filteredData } from "$lib/stores/filterStores";
 
-  let activeTab = 0;
+  let activeTab = $state(0);
 
   let total = $derived($dataStore.length);
   let selected = $derived($filteredData.length);

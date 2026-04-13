@@ -68,9 +68,6 @@ const collapsed = data.reduce(
 activityList.forEach(group => {
   group.options.forEach(option => {
     const lookupKey = normalizeActivity(option);
-    if (!collapsed[lookupKey]) {
-      console.warn("No match for option:", option, "→", lookupKey);
-    }
   });
 });
 

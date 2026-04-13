@@ -3,7 +3,7 @@
   import { Tooltip } from "flowbite-svelte";
   import { filteredData } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import { faWineBottle, faSmoking, faCannabis, faPills } from "@fortawesome/free-solid-svg-icons";
+  import { faWineBottle, faSmoking, faCannabis, faPills, faPrescriptionBottle } from "@fortawesome/free-solid-svg-icons";
   import { InfoCircleSolid } from "flowbite-svelte-icons";
   import { classifyEvidence } from "$lib/utils/classifyEvidence";
   import { evidenceLevels } from "$lib/constants/evidenceLevels";
@@ -18,6 +18,8 @@
   let cannabisAgainst = $state(0);
   let illicitFor = $state(0);
   let illicitAgainst = $state(0);
+  let unspecifiedFor = $state(0);
+  let unspecifiedAgainst = $state(0);
 
   // Update evidence based on filtered studies
   $effect(() => {
@@ -29,6 +31,8 @@
     cannabisAgainst = $filteredData.map(d => d.cannabis_summary).filter(d => d != null && d >= 3).length;
     illicitFor = $filteredData.map(d => d.illicit_summary).filter(d => d != null && d == 1 || d == 2).length;
     illicitAgainst = $filteredData.map(d => d.illicit_summary).filter(d => d != null && d >= 3).length;
+    unspecifiedFor = $filteredData.map(d => d.unspecified_summary).filter(d => d != null && d == 1 || d == 2).length;
+    unspecifiedAgainst = $filteredData.map(d => d.unspecified_summary).filter(d => d != null && d >= 3).length;
   })
 
   //   Reactive summary for each drug type
@@ -36,14 +40,16 @@
   let nicotineSummary = $state(0);
   let cannabisSummary = $state(0);
   let illicitSummary = $state(0);
-  let summaryArray = $state([0, 0, 0, 0])
+  let unspecifiedSummary = $state(0);
+  let summaryArray = $state([0, 0, 0, 0, 0])
 
   $effect(() => {
     alcoholSummary = classifyEvidence(alcoholFor, alcoholAgainst);
     nicotineSummary = classifyEvidence(nicotineFor, nicotineAgainst);
     cannabisSummary = classifyEvidence(cannabisFor, cannabisAgainst);
     illicitSummary = classifyEvidence(illicitFor, illicitAgainst);
-    summaryArray = [alcoholSummary, nicotineSummary, cannabisSummary, illicitSummary]
+    unspecifiedSummary = classifyEvidence(unspecifiedFor, unspecifiedAgainst);
+    summaryArray = [alcoholSummary, nicotineSummary, cannabisSummary, illicitSummary, unspecifiedSummary]
   })
 
   const cards = [
@@ -51,6 +57,7 @@
     { key: "nicotine", label: "NICOTINE", icon: faSmoking},
     { key: "cannabis", label: "CANNABIS", icon: faCannabis},
     { key: "illicit", label: "ILLICIT DRUGS", icon: faPills},
+    { key: "unspecified", label: "UNSPECIFIED DRUGS", icon: faPills}
   ];
 
 </script>
@@ -92,7 +99,7 @@
         {/key}
 
         <!-- Footer -->
-        <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left font-semibold`}>
+        <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left text-sm font-normal font-semibold`}>
           {card.label}
         </p> 
 
