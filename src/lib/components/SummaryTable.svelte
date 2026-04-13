@@ -40,8 +40,10 @@
     <div class="max-h-screen overflow-y-auto">
     <Table color="custom" hoverable class="table w-full">
         <TableHead class = "bg-gray-700 text-white">
-        <TableHeadCell>Reference</TableHeadCell>
-        <TableHeadCell>Study URL</TableHeadCell>
+        <TableHeadCell>Lead author</TableHeadCell>
+        <TableHeadCell>Publication year</TableHeadCell>
+        <TableHeadCell>Activity</TableHeadCell>
+        <TableHeadCell>Rating</TableHeadCell>
         </TableHead>
 
         <TableBody>
@@ -59,13 +61,22 @@
                     target="_blank"
                     rel="noopener noreferrer"    
                     >
-                {row.reference} <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                {row.study_author} <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
                 </a>
             </TableBodyCell>
 
             <TableBodyCell class="whitespace-normal break-all max-w-sm">
-                hi
+                {row.study_year}
             </TableBodyCell>
+
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+                {row.activity}
+            </TableBodyCell>
+
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+                {row.quality_rating}
+            </TableBodyCell>
+
             </TableBodyRow>
         {/each}
         </TableBody>

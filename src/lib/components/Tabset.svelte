@@ -20,8 +20,8 @@
     {#each ["Evidence Summary", `Filtered study list (n=${selected})`, `CUPID study list (n=${total})`] as tab, i}
       <button
         onclick={() => activeTab = i}
-        class={`px-3 py-1 text-gray-700 rounded w-48
-                ${activeTab === i ? 'font-semibold border-b-4 border-blue-950' : 'font-normal border border-gray-200'}`}>
+        class={`px-3 py-1 text-gray-700 rounded w-56  
+                ${activeTab === i ? 'font-semibold border-b-4 border-blue-950' : 'font-normal border border-gray-400'}`}>
         {tab}
       </button>
     {/each}

@@ -1,6 +1,6 @@
 <script>
   export let title = "CommUnity Prevention Initiative Dashboard (CUPID)";
-  import image from '$lib/assets/template2.png';
+  import image from '$lib/assets/template3.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faCircleQuestion, faCircleNodes, faEnvelope } from "@fortawesome/free-solid-svg-icons";
