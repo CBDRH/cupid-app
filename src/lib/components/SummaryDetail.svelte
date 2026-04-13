@@ -3,7 +3,8 @@
   import { classifyEvidence } from "$lib/utils/classifyEvidence";
   import { evidenceLevels } from "$lib/constants/evidenceLevels";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import { Modal } from "flowbite-svelte";
+  import { Modal, Tooltip } from "flowbite-svelte";
+  import { slide } from "svelte/transition";
   import {
     faPersonFallingBurst,
     faGaugeHigh,
@@ -131,7 +132,6 @@
   let harmSummary = $state([0, 0, 0, 0, 0]);
   let behavSummary = $state([0, 0, 0, 0, 0]);
   let economicSummary = $state([0, 0, 0, 0, 0]);
-  let unspecifiedSummary = $state([0, 0, 0, 0, 0]);
 
   $effect(() => {
     useSummary = [
@@ -181,12 +181,17 @@
       
       <!-- USE -->
       <div class="flex items-baseline mb-1">
-        <div class="w-20 flex items-baseline gap-2">
+        <div class="w-20 flex items-baseline gap-2 cursor-pointer">
           <FontAwesomeIcon 
             icon={faGaugeHigh} 
             style="width: 1rem; height: 1rem"  />
           <span class="font-semibold">Use</span>
         </div>
+        <Tooltip placement="right" type="light" transition={slide}>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+            <b>Use</b> Examples of use outcomes include any use within a timeframe, frequency of use, volume of use, and sales data? 
+          </div>
+        </Tooltip>
         <button 
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[useSummary[i]].bgColor} ${evidenceLevels[useSummary[i]].labelColor}`}
           onclick={() => useModals[i] = true}
@@ -209,6 +214,11 @@
             icon={faPersonFallingBurst} />
           <span class="font-semibold">Harm</span>
         </div>
+        <Tooltip placement="right" type="light" transition={slide}>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+            <b>Harm</b> Examples of harm outcomes include substance-related injuries, related health conditions, related deaths, and related crimes 
+          </div>
+        </Tooltip>
         <button 
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[harmSummary[i]].bgColor} ${evidenceLevels[harmSummary[i]].labelColor}`}
           onclick={() => harmModals[i] = true}
@@ -231,6 +241,11 @@
             icon={faUserGroup} />
           <span class="font-semibold">Behaviour</span>
         </div>
+        <Tooltip placement="right" type="light" transition={slide}>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+            <b>Behaviour</b> Examples of behaviour outcomes include unlawful supply, unlafwul access, intentions and attitudes, and desire to quit  
+          </div>
+        </Tooltip>
         <button 
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[behavSummary[i]].bgColor} ${evidenceLevels[behavSummary[i]].labelColor}`}
           onclick={() => behavModals[i] = true}
@@ -253,6 +268,11 @@
             icon={faDollarSign} />
           <span class="font-semibold">Economic</span>
         </div>
+        <Tooltip placement="right" type="light" transition={slide}>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+            <b>Economic</b> Economic outcomes refer to cost-effectiveness, i.e. whether there is a net financial benefit to the community as compared to what it would cost if the community    
+          </div>
+        </Tooltip>
         <button 
           class={`ml-6 w-32 border rounded-lg py-1 text-left pl-6 cursor-pointer ${evidenceLevels[economicSummary[i]].bgColor} ${evidenceLevels[economicSummary[i]].labelColor}`}
           onclick={() => economicModals[i] = true}

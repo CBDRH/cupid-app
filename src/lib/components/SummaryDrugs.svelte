@@ -20,6 +20,13 @@
   let illicitAgainst = $state(0);
   let unspecifiedFor = $state(0);
   let unspecifiedAgainst = $state(0);
+  let drugInfo = [
+    "<b>Alcohol</b> includes all types of standard alcoholic beverages",
+    "<b>Nicotene</b> includes cigarattes, smokeless tobacco, vapes, and second-hand smoke",
+    "<b>Cannabis</b> includes smoked cannabis, vaporised cannabis, and edibles",
+    "<b>Illicit drugs</b> includes methamphetamines, cocaine, inhalents, opioids, performance enhancers, hallucinogens, depressants and phamaceuticals (used outside of prescription)",
+    "<b>Unspecified</b> includes studies where the target substance was general or unspecified"
+  ]
 
   // Update evidence based on filtered studies
   $effect(() => {
@@ -80,7 +87,7 @@
       <label class="my-2 flex items-baseline gap-1">
         <h3 class={`text-4xl ${evidenceLevels[summaryArray[i]].textColor} text-left`}>
             {evidenceLevels[summaryArray[i]].label}
-          </h3>
+        </h3>
         <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
         <Tooltip placement="right" type="light" transition={slide}>
           <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
@@ -99,9 +106,15 @@
         {/key}
 
         <!-- Footer -->
-        <p class={`mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left text-sm font-normal font-semibold`}>
-          {card.label}
-        </p> 
+        <span class={`inline-flex gap-1 mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left text-sm font-normal font-semibold`}>
+            {card.label}
+            <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
+            <Tooltip placement="right" type="light" transition={slide}>
+            <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+              {@html drugInfo[i]}
+            </div>
+          </Tooltip>
+        </span>
 
       </div>
       {/each}
