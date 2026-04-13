@@ -5,16 +5,21 @@
   import SummaryDrugs from './SummaryDrugs.svelte';
   import SummaryDetail from './SummaryDetail.svelte';
   import SummaryTable from './SummaryTable.svelte';
+  import { dataStore } from '$lib/stores/dataStore';
+  import { filteredData } from "$lib/stores/filterStores";
 
   let activeTab = 0;
-  const tabs = ["Evidence Summary", "Filtered Manuscripts", "Bibliography"];
+
+  let total = $derived($dataStore.length);
+  let selected = $derived($filteredData.length);
+
 </script>
 
 <div>
   <div class="flex gap-0">
-    {#each tabs as tab, i}
+    {#each ["Evidence Summary", `Filtered study list (n=${selected})`, `CUPID study list (n=${total})`] as tab, i}
       <button
-        on:click={() => activeTab = i}
+        onclick={() => activeTab = i}
         class={`px-3 py-1 text-gray-700 rounded w-48
                 ${activeTab === i ? 'font-semibold border-b-4 border-blue-950' : 'font-normal border border-gray-200'}`}>
         {tab}

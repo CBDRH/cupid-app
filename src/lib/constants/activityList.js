@@ -1,6 +1,6 @@
 export const activityList = [
   {
-    label: "Mobilisation",
+    label: "Local action",
     options: [
       "Alternative activities",
       "Dry events",
@@ -18,11 +18,11 @@ export const activityList = [
     ]
   },
   {
-    label: "Community coalitions",
+    label: "Community partnerships",
     options: [
-      "Establishing a coalition and building its capacity",
+      "Establishing a partnership and building its capacity",
       "Community education",
-      "Coordinating coalition activities"
+      "Coordinating partnership activities"
     ],
     variable: [
       "coalition_activity___1",
@@ -30,9 +30,9 @@ export const activityList = [
       "coalition_activity___3"
     ],
     definition: [
-      "Establishing a community coalition and/or building its capacity through networking, meetings, or awareness raising (e.g. via newsletter or website)",
+      "Establishing a community partnership and/or building its capacity through networking, meetings, or awareness raising (e.g. via newsletter or website)",
       "Community education aimed at preventing or reducing alcohol and other drug use or harms and delivered by experts or trained individuals (e.g. via workshops or by providing information on local alcohol or other drug use and harms)",
-      "Designing and/or deciding on which activities to facilitate. This may include community engagement and needs assessments, coordinating different coalition partners, monitoring activity implementation, and planning for sustainability"
+      "Designing and/or deciding on which activities to facilitate. This may include community engagement and needs assessments, coordinating different partners, monitoring activity implementation, and planning for sustainability"
     ]
   },
   {
@@ -122,7 +122,7 @@ export const activityList = [
   {
     label: "Police / local authorities",
     options: [
-      "Legal consequences",
+      "Sanctions and penalties",
       "Presence",
       "Information dissemination",
       "Roadside checkpoints",
@@ -136,7 +136,7 @@ export const activityList = [
       "police_activity___5"
     ],
     definition: [
-      "Changing the legal consequences for breaking a substance-related law such as by changing the amount of a fine or through diversion programs",
+      "Changing the sactions/penalities for breaking a substance-related law such as by changing the amount of a fine or through diversion programs",
       "Increasing the actual or perceived presence of police or local authorities by increasing patrols in certain locations or at certain times",
       "Utilising police or local authority community patrols as a means for information dissemination",
       "Activities involving roadside checkpoints such as increasing the frequency of roadside alcohol breath testing",
