@@ -4,7 +4,7 @@
     import { Tooltip} from "flowbite-svelte";
     import { ChevronDoubleDownOutline, ChevronDoubleUpOutline, InfoCircleOutline } from "flowbite-svelte-icons";
     import { activityList } from "$lib/constants/activityList";
-    import { selectedLabel, selectedOption, selectedActivity} from "$lib/stores/filterStores.js"
+    import { selectedLabel, selectedOption, selectedOption2, selectedActivity} from "$lib/stores/filterStores.js"
 
 
 
@@ -143,6 +143,7 @@ activityList.forEach(group => {
                       class="cursor-pointer"
                       onclick={() => {
                         selectedOption.set(option);
+                        selectedOption2.set(activity.option2[i]);
                         selectedLabel.set(activity.label);
                         selectedActivity.set(activity.variable[i]);
                         open = false;
@@ -163,6 +164,7 @@ activityList.forEach(group => {
                       onclick={() => {
                           [
                             [selectedOption, option.label],
+                            [selectedOption2, activity.options2[i]],
                             [selectedLabel, activity.label],
                             [selectedActivity, activity.variable[i]]
                           ].forEach(([store, value]) => store.set(value));

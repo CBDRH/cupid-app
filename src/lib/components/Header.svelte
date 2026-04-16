@@ -1,6 +1,5 @@
 <script>
-  export let title = "CommUnity Prevention Initiative Dashboard (CUPID)";
-  import image from '$lib/assets/template3.png';
+  import image from '$lib/assets/template4.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faCircleQuestion, faCircleNodes, faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -8,8 +7,7 @@
 </script>
 
 <div class="bg-white border border-gray-50 shadow-md rounded-lg mb-2">
-  <img src={image} alt="Landscape" style="width: 100%; max-height: 200px; object-fit: cover;" />
-  <h1 class="text-center pt-4">{title}</h1>
+  <img src={image} alt="Landscape" style="width: 100%; max-height: 2230px; object-fit: cover;" />
 
   <div class="flex flex-row gap-4 mb-4 pr-4 justify-end">
 

@@ -12,6 +12,7 @@ export const urbanicityStore = writable([]);
 export const settingStore = writable([]); 
 export const selectedLabel = writable("Mobilisation");
 export const selectedOption = writable("Alternative activities");
+export const selectedOption2 = writable("1.1 Alternative activities");
 export const selectedActivity = writable("mobilisation_activity___1");
 
 
@@ -83,22 +84,23 @@ export const filteredData = derived(
   }
 );
 
-
-// derived store for filtered activities
 export const filteredActivity = derived(
-  [selectedOption, activityStore],
-  ([$selectedOption, $activityStore]) => {
+  [activityStore, filteredData, selectedActivity],
+  ([$activityStore, $filteredData, $selectedActivity]) => {
+    // // 1. Get all record_id values from filteredData
+    // const validRecordIds = new Set(
+    //   $filteredData.map(item => item.record_id)
+    // );
 
-let result = $activityStore;
+    let result = $activityStore;
 
-    // Activity filter
-    if ($selectedOption.length > 0) {
-      result = result.filter(item =>
-        item.activity.includes($selectedOption)
+    // 3. Apply selected activity filter
+    if ($selectedActivity?.length > 0) {
+      result = result.filter(activity =>
+        activity[$selectedActivity] === 1
       );
     }
-    return result;
 
+    return result;
   }
 );
-

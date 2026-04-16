@@ -2,7 +2,7 @@
   import {
     Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, TableSearch
   } from "flowbite-svelte";
-  import { filteredData, selectedLabel, selectedOption } from "$lib/stores/filterStores";
+  import { filteredActivity, selectedLabel, selectedOption } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 
@@ -13,18 +13,18 @@
   let filteredRows = $state([]);
 
   $effect(() => {
-    filteredRows = $filteredData
+    filteredRows = $filteredActivity
       .filter(row => selectedIds.includes(row.record_id))   // first: keep only selected rows
       .map(row => row.reference);                           // then: pick the `reference` property
   });
 
   $effect(() => {
-    const data = $filteredData; // automatically reactive
+    const data = $filteredActivity; // automatically reactive
     total = data.length;
   });
 
   let searchTerm = $state("");
-  let filteredItems = $derived.by(() => $filteredData.filter((study) => !searchTerm || study.reference.toLowerCase().includes(searchTerm.toLowerCase())));
+  let filteredItems = $derived.by(() => $filteredActivity.filter((study) => !searchTerm || study.reference.toLowerCase().includes(searchTerm.toLowerCase())));
 </script>
 
 <div class="mt-12">
@@ -38,12 +38,12 @@
     
     <TableSearch placeholder="Search by study title or authors" hoverable bind:inputValue={searchTerm}>
     <div class="max-h-screen overflow-y-auto">
-    <Table color="custom" hoverable class="table w-full">
+    <Table color="custom" hoverable class="table w-full table-fixed">
         <TableHead class = "bg-gray-700 text-white">
-        <TableHeadCell>Lead author</TableHeadCell>
-        <TableHeadCell>Publication year</TableHeadCell>
-        <TableHeadCell>Activity</TableHeadCell>
-        <TableHeadCell>Rating</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Lead author</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Publication year</TableHeadCell>
+        <TableHeadCell class="w-[70%]">Activity</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Rating</TableHeadCell>
         </TableHead>
 
         <TableBody>
@@ -65,12 +65,12 @@
                 </a>
             </TableBodyCell>
 
-            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+            <TableBodyCell class="whitespace-normal break-all">
                 {row.study_year}
             </TableBodyCell>
 
-            <TableBodyCell class="whitespace-normal break-all max-w-sm">
-                {row.activity}
+            <TableBodyCell class="whitespace-normal break-normal max-w-sm">
+                {row.activity_script_v1_1}
             </TableBodyCell>
 
             <TableBodyCell class="whitespace-normal break-all max-w-sm">

@@ -6,6 +6,11 @@ export const activityList = [
       "Dry events",
       "Building community support"
     ],
+    options2: [
+      "1.1 Alternative activities",
+      "1.2 Dry events",
+      "1.3 Building community support"
+    ],
     variable: [
       "mobilisation_activity___1",
       "mobilisation_activity___2",
@@ -23,6 +28,11 @@ export const activityList = [
       "Establishing a partnership and building its capacity",
       "Community education",
       "Coordinating partnership activities"
+    ],
+    options2: [
+      "2.1 Establishing a partnership and building its capacity",
+      "2.2 Community education",
+      "2.3 Coordinating partnership activities"
     ],
     variable: [
       "coalition_activity___1",
@@ -50,6 +60,20 @@ export const activityList = [
       "Health warning labels",
       "Modification to existing policies",
       "Other policy"
+    ],
+    options2: [
+      "3.1 Banning production",
+      "3.2 Limiting sales",
+      "3.3 Licensed premises outlet density",
+      "3.4 Licensed premises outlet operating hours",
+      "3.5 Legal purchasing age",
+      "3.6 Product strength",
+      "3.7 Advertising / marketing restrictions",
+      "3.8 Price regulation",
+      "3.9 Location bans",
+      "3.10 Health warning labels",
+      "3.11 Modification to existing policies",
+      "3.12 Other policy"
     ],
     variable: [
       "policy_activity___1",
@@ -89,6 +113,13 @@ export const activityList = [
       "School environment policy",
       "Education and training for teachers"
     ],
+    options2: [
+      "4.1 School curriculum change (community-wide)",
+      "4.2 School curriculum change (individual school[s])",
+      "4.3 School non-curriculum sessions or activities",
+      "4.4 School environment policy",
+      "4.5 Education and training for teachers"
+    ],
     variable: [
       "school_activity___1",
       "school_activity___2",
@@ -110,6 +141,10 @@ export const activityList = [
       "Parent arm to school-based initiative",
       "Parenting"
     ],
+    options2: [
+      "5.1 Parent arm to school-based initiative",
+      "5.2 Parenting"
+    ],
     variable: [
       "parenting_activity___1",
       "parenting_activity___2"
@@ -127,6 +162,13 @@ export const activityList = [
       "Information dissemination",
       "Roadside checkpoints",
       "Compliance checking"
+    ],
+    options2: [
+      "6.1 Sanctions and penalties",
+      "6.2 Presence",
+      "6.3 Information dissemination",
+      "6.4 Roadside checkpoints",
+      "6.5 Compliance checking"
     ],
     variable: [
       "police_activity___1",
@@ -151,6 +193,12 @@ export const activityList = [
       "Environmental safety (individual vendor[s])",
       "Restrictions for high risk patrons"
     ],
+    options2: [
+      "7.1 Responsible service training",
+      "7.2 Policy change (individual vendor, voluntary)",
+      "7.3 Environmental safety (individual vendor[s])",
+      "7.4 Restrictions for high risk patrons"
+    ],
     variable: [
       "vendor_activity___1",
       "vendor_activity___2",
@@ -170,6 +218,10 @@ export const activityList = [
       "Community-wide (radio, television, etc.)",
       "Targeted (Social media, event specific, etc.)"
     ],
+    options2: [
+      "8.1 Community-wide (radio, television, etc.)",
+      "8.2 Targeted (Social media, event specific, etc.)"
+    ],
     variable: [
       "media_activity___1",
       "media_activity___2"
@@ -184,6 +236,10 @@ export const activityList = [
     options: [
       "Workplace policies",
       "Workplace support and education"
+    ],
+    options2: [
+      "9.1 Workplace policies",
+      "9.2 Workplace support and education"
     ],
     variable: [
       "workplace_activity___1",
@@ -203,6 +259,13 @@ export const activityList = [
       "Offering additional services",
       "Mobile health services"
     ],
+    options2: [
+      "10.1 Remotely delivered services",
+      "10.2 Staff upskilling",
+      "10.3 New health services",
+      "10.4 Offering additional services",
+      "10.5 Mobile health services"
+    ],
     variable: [
       "health_activity___1",
       "health_activity___2",
@@ -213,7 +276,7 @@ export const activityList = [
     definition: [
       "Providing remotely delivered early intervention or treatment services with the aim of preventing or reducing alcohol and other drug use or harm",
       "Providing education or training to improve knowledge of health service staff around alcohol or other drug use or harms with or without implementing a specific intervention",
-      "Providing a new health service to a community with the aim of preventing or reducing alcohol and other drug harm among clients",
+      "Providing a new health service to a community with the aim of preventing or reducing alcohol or other drug harm among clients",
       "Providing new alcohol or other drug services within existing health services e.g. General Practitioners provide Screening and Brief Intervention",
       "Providing mobile health services to a community such as through directly approaching individuals in need"
     ]
@@ -223,6 +286,10 @@ export const activityList = [
     options: [
       "Risk assessment and environment improvement",
       "Transport options"
+    ],
+    options2: [
+      "11.1 Risk assessment and environment improvement",
+      "11.2 Transport options"
     ],
     variable: [
       "environmental_activity___1",
