@@ -85,19 +85,24 @@ export const filteredData = derived(
 );
 
 export const filteredActivity = derived(
-  [activityStore, filteredData, selectedActivity],
-  ([$activityStore, $filteredData, $selectedActivity]) => {
-    // // 1. Get all record_id values from filteredData
-    // const validRecordIds = new Set(
-    //   $filteredData.map(item => item.record_id)
-    // );
+  [activityStore, filteredData, selectedOption2],
+  ([$activityStore, $filteredData, $selectedOption2]) => {
+    // 1. Get all record_id2 values from filteredData
+    const validRecordIds = new Set(
+      $filteredData.map(item => item.record_id)
+    );
 
     let result = $activityStore;
 
+    // 2. Keep only activities belonging to filtered studies
+    result = result.filter(activity =>
+      validRecordIds.has(activity.record_id)
+    );
+
     // 3. Apply selected activity filter
-    if ($selectedActivity?.length > 0) {
-      result = result.filter(activity =>
-        activity[$selectedActivity] === 1
+    if ($selectedOption2.length > 0) {
+      result = result.filter(item =>
+        item.activity === $selectedOption2
       );
     }
 

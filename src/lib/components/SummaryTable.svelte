@@ -1,15 +1,25 @@
 <script lang="ts">
   import {
-    Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, TableSearch
+    Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, TableSearch,
+     ImagePlaceholder, Modal, Indicator, Button
   } from "flowbite-svelte";
   import { filteredActivity, selectedLabel, selectedOption } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
+  import { InfoCircleSolid } from "flowbite-svelte-icons";
 
   let total = $state(0)
   
-  // Array of IDs (or indices) that are selected
-  let selectedIds = $state([]);
+
+  // Handles clickable row in table
+  let openRow: number | null | undefined = $state();
+
+  const toggleRow = (i: number) => {
+    openRow = openRow === i ? null : i;
+  };
+
+  // Handles text table search 
+  let selectedIds = $state([]); // Array of IDs (or indices) that are selected
   let filteredRows = $state([]);
 
   $effect(() => {
@@ -42,8 +52,9 @@
         <TableHead class = "bg-gray-700 text-white">
         <TableHeadCell class="w-[10%]">Lead author</TableHeadCell>
         <TableHeadCell class="w-[10%]">Publication year</TableHeadCell>
-        <TableHeadCell class="w-[70%]">Activity</TableHeadCell>
+        <TableHeadCell class="w-[60%]">Activity</TableHeadCell>
         <TableHeadCell class="w-[10%]">Rating</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Details</TableHeadCell>
         </TableHead>
 
         <TableBody>
@@ -77,7 +88,53 @@
                 {row.quality_rating}
             </TableBodyCell>
 
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+
+                    <Button    
+                        onclick={() => {
+                            if (row.extraInfo > 0) {
+                                toggleRow(i);
+                            }
+                        }}
+                        class="relative bg-blue-950 text-gray-100 cursor-pointer 
+                                disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+                        size="sm" 
+                        disabled={row.extraInfo === 0} >
+                        <InfoCircleSolid class="text-white dark:text-white" />
+                        
+                        <Indicator color="blue" border size="xl" placement="top-right" class="text-xs font-bold">
+                            {row.extraInfo}
+                        </Indicator>
+                    </Button>
+
+            </TableBodyCell>
+
             </TableBodyRow>
+            {#if openRow === i}
+            <TableBodyRow>
+                <TableBodyCell colspan="5" class="p-4">
+                <!-- Expanded content goes here -->
+                <Table class="w-full table-fixed" color="custom" hoverable={false}>
+                    <TableHead class="bg-blue-950 hover:bg-blue-950">
+                    <TableHeadCell>Facilitators</TableHeadCell>
+                    <TableHeadCell>Barriers</TableHeadCell>
+                    <TableHeadCell>Risks</TableHeadCell>
+                    <TableHeadCell>Participation</TableHeadCell>
+                    <TableHeadCell>Satisfaction</TableHeadCell>
+                    </TableHead>
+                    <TableBody>
+                    <TableBodyRow>
+                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.facilitators_v1_1_v2}</TableBodyCell>
+                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.barriers_v1_1_v2}</TableBodyCell>
+                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.risks_v1_1_v2}</TableBodyCell>
+                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.participation_v1_1_v2}</TableBodyCell>
+                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.satistfaction_v1_1_v2}</TableBodyCell>
+                    </TableBodyRow>
+                    </TableBody>
+                </Table>
+                </TableBodyCell>
+            </TableBodyRow>
+            {/if}
         {/each}
         </TableBody>
     </Table>
