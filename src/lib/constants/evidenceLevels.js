@@ -49,9 +49,9 @@ export const evidenceLevels = [
   },
   {
     label: "Probable",
-    bgColor: "bg-lime-400",
-    textColor: "text-lime-700",
-    labelColor: "text-lime-50",
+    bgColor: "bg-emerald-200",
+    textColor: "text-emerald-600",
+    labelColor: "text-emerald-600",
     icon: faCheck,
     hoverMessage:
       "<b>Probable</b> At least three studies that met your search criteria have evaluated this activity and most studies (at least 60%) report a positive or mixed impact on outcomes (a ratio between 1.5:1 and 2:1)",

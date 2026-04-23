@@ -7,8 +7,7 @@ export const drugChoices = [
   { value: "Other drugs", label: "Other drugs"}
 ];
 
-export const genderChoices = [
-  { value: "No", label: "Any gender"},
+export const sexChoices = [
   { value: "Male", label: "Male only"},
   { value: "Female", label: "Female only"},
   { value: "Non-binary", label: "Non-binary only"}

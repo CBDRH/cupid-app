@@ -4,6 +4,7 @@
   import { filteredData, selectedOption, filteredActivity } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+  import { InfoCircleSolid } from "flowbite-svelte-icons";
 
   //   Reactive counts for each category
   let total = $state(0);
@@ -87,7 +88,32 @@ function toggleRow(index) {
 }
 </script>
 
-<h2>Previous community-wide studies</h2>
+<h2 class="flex gap-1 items-baseline ">
+  Evidence from previous community-wide studies
+    <InfoCircleSolid class="hover:text-gray-600 cursor-pointer"/>
+      <Tooltip placement="right" type="light" transition={slide}>
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+          <h2>Interpreting the overall study impact</h2>
+          
+          <div class="flex w-[100%] m-auto h-2 rounded overflow-hidden">
+          {#each values as value, i}
+            <div 
+              class={`h-full flex items-center justify-center bg-${colors[i]}`}
+              style="width: {widths[i]}%"
+            >
+          </div>
+          {/each}
+          </div>
+          This bar shows the strenth of evidence based on the {total} studies that match your selected activities and filter settings.
+          <br>
+          <b>Positive impact</b> means that the evaluation study found that the included activities had a statistically significant positive impact on at least one outcome.
+          <br>
+          <b>No impact</b> means that the evaluation study did not find that the included activities had a statistically significant positive impact on any outcome.
+          <br>
+          <b>Negative impact</b> means that the evaluation study found that the included activities had a statistically significant negative impact on at least one outcome
+        </div>
+      </Tooltip>
+</h2>
 
 <div class="text-sm mb-3">
     <p>{positive} out of {total} studies showed support for this initiative</p>

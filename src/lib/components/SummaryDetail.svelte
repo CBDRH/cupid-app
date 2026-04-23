@@ -181,7 +181,7 @@
       
       <!-- USE -->
       <div class="flex items-baseline mb-1">
-        <div class="w-20 flex items-baseline gap-2 cursor-pointer">
+        <div class="w-20 flex items-baseline gap-2 cursor-help">
           <FontAwesomeIcon 
             icon={faGaugeHigh} 
             style="width: 1rem; height: 1rem"  />
@@ -208,7 +208,7 @@
 
       <!-- HARM -->
       <div class="flex items-baseline mb-1">
-        <div class="w-20 flex items-baseline gap-2">
+        <div class="w-20 flex items-baseline gap-2 cursor-help">
           <FontAwesomeIcon 
             style="width: 1rem; height: 1rem"  
             icon={faPersonFallingBurst} />
@@ -235,7 +235,7 @@
 
       <!-- BEHAV -->
       <div class="flex items-baseline mb-1">
-        <div class="w-20 flex items-baseline gap-2">
+        <div class="w-20 flex items-baseline gap-2 cursor-help">
           <FontAwesomeIcon
             style="width: 1rem; height: 1rem"  
             icon={faUserGroup} />
@@ -262,7 +262,7 @@
 
       <!-- ECONOMIC -->
       <div class="flex items-baseline">
-        <div class="w-20 flex items-baseline gap-2">
+        <div class="w-20 flex items-baseline gap-2 cursor-help">
           <FontAwesomeIcon
             style="width: 1rem; height: 1rem"  
             icon={faDollarSign} />

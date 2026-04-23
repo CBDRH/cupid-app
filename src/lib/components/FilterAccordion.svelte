@@ -1,68 +1,24 @@
 <script lang="ts">
 
 import { AccordionItem, Accordion, Checkbox, Listgroup, Tooltip } from "flowbite-svelte";
-import { AdjustmentsHorizontalSolid, InfoCircleSolid } from "flowbite-svelte-icons";
+import { AdjustmentsHorizontalSolid, InfoCircleSolid, CloseCircleSolid } from "flowbite-svelte-icons";
 import { slide } from "svelte/transition";
-import { drugChoices, genderChoices, lifestagesChoices, priorityChoices, continentChoices, urbanicityChoices, settingChoices } from "$lib/constants/filterChoices.js";
-import { drugStore, genderStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
+import { drugChoices, sexChoices, lifestagesChoices, priorityChoices, continentChoices, urbanicityChoices, settingChoices } from "$lib/constants/filterChoices.js";
+import { drugStore, sexStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
+import { derived } from 'svelte/store';
 
 let selectedDrug = $state([]);
-let allDrug = $state(false);
-
-let selectedGender = $state([]);
-let allGender = $state(true);
-
+let selectedSex = $state([]);
 let selectedLifestages = $state([]);
-let allLifestages = $state(true);
-
 let selectedPriority = $state([]);
-let allPriority = $state(true);
-
 let selectedContinent = $state([]);
-let allContinent = $state(true);
-
 let selectedUrbanicity = $state([]);
-let allUrbanicity = $state(true);
-
 let selectedSetting = $state([]);
-let allSetting = $state(true);
-
-
-// When allDrug checkbox is ticked, select all drugs
-$effect(() => {
-  if (allDrug) {selectedDrug = drugChoices.map(d => d.value);}
-  if (allGender) {selectedGender = genderChoices.map(d => d.value);}
-  if (allLifestages) {selectedLifestages = lifestagesChoices.map(d => d.value);}
-  if (allPriority) {selectedPriority = priorityChoices.map(d => d.value);}
-  if (allContinent) {selectedContinent = continentChoices.map(d => d.value);}
-  if (allUrbanicity) {selectedUrbanicity = urbanicityChoices.map(d => d.value);}
-  if (allSetting) {selectedSetting = settingChoices.map(d => d.value);}
-});
-
-// If any drug is unticked, unticked the allDrug checkbox
-$effect(() => {
-    if (allDrug===true && selectedDrug.length != drugChoices.length) {allDrug = false;}
-    if (allGender===true && selectedGender.length != genderChoices.length) {allGender = false;}
-    if (allLifestages===true && selectedLifestages.length != lifestagesChoices.length) {allLifestages = false;}
-    if (allPriority===true && selectedPriority.length != priorityChoices.length) {allPriority = false;}
-    if (allContinent===true && selectedContinent.length != continentChoices.length) {allContinent = false;}
-    if (allUrbanicity===true && selectedUrbanicity.length != urbanicityChoices.length) {allUrbanicity = false;}
-    if (allSetting===true && selectedSetting.length != settingChoices.length) {allSetting = false;}
-});
-
-// If all drugs are ticked then tick the allDrug checkbox
-$effect(() => {if (selectedDrug.length === drugChoices.length) {allDrug = true;}});
-$effect(() => {if (selectedGender.length === genderChoices.length) {allGender = true;}});
-$effect(() => {if (selectedLifestages.length === lifestagesChoices.length) {allLifestages = true;}});
-$effect(() => {if (selectedPriority.length === priorityChoices.length) {allPriority = true;}});
-$effect(() => {if (selectedContinent.length === continentChoices.length) {allContinent = true;}});
-$effect(() => {if (selectedUrbanicity.length === urbanicityChoices.length) {allUrbanicity = true;}});
-$effect(() => {if (selectedSetting.length === settingChoices.length) {allSetting = true;}});
 
 // Update the store based on the values of selected checkboxes
 $effect(() => {
   drugStore.set(selectedDrug);
-  genderStore.set(selectedGender);
+  sexStore.set(selectedSex);
   lifestagesStore.set(selectedLifestages);
   priorityStore.set(selectedPriority);
   continentStore.set(selectedContinent);
@@ -70,11 +26,71 @@ $effect(() => {
   settingStore.set(selectedSetting);
 });
 
+export const combinedFiltersArrayStore = derived(
+  [
+    drugStore,
+    sexStore,
+    lifestagesStore,
+    priorityStore,
+    continentStore,
+    urbanicityStore,
+    settingStore
+  ],
+  (stores) =>
+    stores
+      .filter(Array.isArray)   // guards against null
+      .flat()                  // concatenates all arrays
+);
+
+// This function removes filter items from the arrays
+function removeFromArray(arr, value) {
+  return Array.isArray(arr)
+    ? arr.filter(item => item !== value)
+    : arr;
+}
+
+// This function runs removeFromStore across all Stores
+function removeFilterItem(value) {
+  selectedDrug = removeFromArray(selectedDrug, value);
+  selectedSex = removeFromArray(selectedSex, value);
+  selectedLifestages = removeFromArray(selectedLifestages, value);
+  selectedPriority = removeFromArray(selectedPriority, value);
+  selectedContinent = removeFromArray(selectedContinent, value);
+  selectedUrbanicity = removeFromArray(selectedUrbanicity, value);
+  selectedSetting = removeFromArray(selectedSetting, value);
+}
+
+
+
+
 </script>
 
-<!-- <p>{JSON.stringify($genderStore)}</p>
+<!-- <p>{JSON.stringify($sexStore)}</p> -->
 
-<p>{allGender}</p> -->
+
+
+  {#if ($combinedFiltersArrayStore).length > 0}
+    
+    <div class="w-full border border-blue-950 rounded-lg p-2 mb-1">
+      <div class="flex flex-row gap-1">
+        <AdjustmentsHorizontalSolid />
+        Selected Filters        
+      </div>
+    
+      <div class="flex flex-wrap items-center gap-2 p-2">
+        {#each $combinedFiltersArrayStore as item}
+          <div class = "flex flex-row bg-gray-300 rounded-lg text-gray-600 gap-1">
+            {item}
+            <CloseCircleSolid 
+            class="inline-block align-text-bottom ml-1 hover:text-gray-900 cursor-pointer"
+            onclick={() => removeFilterItem(item)}
+            />
+          </div>
+        {/each}
+      </div>
+    </div>
+  {/if}
+
 
 <Accordion 
   class = "h-screen overflow-y-auto text-sm"
@@ -105,10 +121,7 @@ $effect(() => {
     </label>
 
     <!-- Drug type -->
-    <!-- <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allDrug} color="green" class="scale-100"/>
-      Select all
-    </label> -->
+     
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedDrug} choices={drugChoices} color="green" classes={{ div: "p-2"}} />
@@ -125,24 +138,20 @@ $effect(() => {
       </div>
     {/snippet}
     
-    <!-- Gender -->
+    <!-- Sex -->
     <label class="font-semibold flex items-center gap-1">
-      <span>Gender</span>
+      <span>Sex</span>
       <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
       <Tooltip placement="right" type="light" transition={slide}>
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
-          Filters to activities that were specific to a particularly gender
+          Filters to activities that were specific to a particularly sex
         </div>
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allGender} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedGender} choices={genderChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={selectedSex} choices={sexChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
     <!-- Lifestage -->
@@ -156,10 +165,6 @@ $effect(() => {
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allLifestages} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedLifestages} choices={lifestagesChoices} color="green" classes={{ div: "p-2"}} />
@@ -176,10 +181,6 @@ $effect(() => {
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allPriority} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedPriority} choices={priorityChoices} color="green" classes={{ div: "p-2"}} />
@@ -209,10 +210,6 @@ $effect(() => {
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allContinent} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedContinent} choices={continentChoices} color="green" classes={{ div: "p-2"}} />
@@ -230,10 +227,6 @@ $effect(() => {
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allUrbanicity} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedUrbanicity} choices={urbanicityChoices} color="green" classes={{ div: "p-2"}} />
@@ -251,10 +244,6 @@ $effect(() => {
       </Tooltip>
     </label>
 
-    <label class="flex items-center pl-2 pb-2 text-sm text-blue-950">
-      <Checkbox bind:checked={allSetting} color="green" class="scale-100"/>
-      Select all
-    </label>
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={selectedSetting} choices={settingChoices} color="green" classes={{ div: "p-2"}} />
