@@ -22,7 +22,6 @@ export const lifestagesChoices = [
 ];
 
 export const priorityChoices = [
-  { value: "No", label: "No specific priority"},
   { value: "CALD", label: "CALD"},
   { value: "First Nations", label: "First Nations"},
   { value: "LGBTQI+", label: "LGBTQI+"},
