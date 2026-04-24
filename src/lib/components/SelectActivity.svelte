@@ -96,9 +96,9 @@ activityList.forEach(group => {
   <!-- Trigger button -->
   <button
     bind:this={buttonEl}
-    class="w-full flex justify-left items-center gap-2 px-3 py-6 mb-6
-           bg-gray-300 text-gray-700 font-sm rounded
-           hover:bg-gray-700 hover:text-gray-300 text-base font-semibold uppercase tracking-wide
+    class="w-full flex justify-left items-center gap-2 px-3 py-4 mb-6
+           bg-gray-300 text-gray-700 rounded
+           hover:bg-gray-700 hover:text-gray-300 text-base font-semibold uppercase tracking-wide text-sm
            transition-colors cursor-pointer"
     onclick={() => open = !open}
   >

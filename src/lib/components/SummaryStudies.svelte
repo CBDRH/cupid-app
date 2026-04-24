@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
   import { slide } from "svelte/transition";
-  import { Tooltip, Modal } from "flowbite-svelte";
+  import { Tooltip, Modal, Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell,
+     Indicator, Button } from "flowbite-svelte";
   import { filteredData, selectedOption, filteredActivity } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-  import { InfoCircleSolid } from "flowbite-svelte-icons";
+  import { InfoCircleSolid, StarSolid } from "flowbite-svelte-icons";
+  import { studyDetails } from "$lib/constants/studyDetails.js";
 
   //   Reactive counts for each category
   let total = $state(0);
@@ -38,13 +40,6 @@
     studyModal = true
   }
 
-let filteredBySubset = $derived( // The subset of the filtered data that matche th users click
-  $filteredData.filter(study => study.study_summary === subset)
-);
-
-
-
-
   
   let colors = ["green-500", "orange-400", "red-500"];
   let text = ["green-100", "orange-100", "red-100"];
@@ -63,29 +58,36 @@ $effect(() => {
   numActivities = data.length
 })
 
-// Columns of the data
-const columns = [
-  { key: "study_author", label: "Author", width: "100px"  },
-  { key: "study_year", label: "Year", width: "100px"  },
-  { key: "activity_script_v1_1", label: "Activity", width: "max-w-[140px]"  },
-  { key: "facilitators_v1_1_v2", label: "Facilitators", width: "max-w-[140px]"  },
-  { key: "barriers_v1_1_v2", label: "Barriers", width: "max-w-[140px]"  },
-  { key: "risks_v1_1_v2", label: "Risks", width: "max-w-[140px]"  },
-  { key: "participation_v1_1_v2", label: "Participation", width: "max-w-[140px]"  },
-  { key: "satisfaction_v1_1_v2", label: "Satisfaction", width: "max-w-[140px]"  }
-];
+ // Handles clickable row in table
+  let openRow: number | null | undefined = $state();
 
-let expandedRows = $state(new Set());
+  const toggleRow = (i: number) => {
+    openRow = openRow === i ? null : i;
+  };
 
-function toggleRow(index) {
-  if (expandedRows.has(index)) {
-    expandedRows.delete(index);
-  } else {
-    expandedRows.add(index);
-  }
-  // Trigger Svelte update
-  expandedRows = new Set(expandedRows);
-}
+  // Handles text table search 
+  let selectedIds = $state([]); // Array of IDs (or indices) that are selected
+  let filteredRows = $state([]);
+
+  $effect(() => {
+    filteredRows = $filteredActivity
+      .filter(row => selectedIds.includes(row.record_id))   // first: keep only selected rows
+      .map(row => row.reference);                           // then: pick the `reference` property
+  });
+
+  $effect(() => {
+    const data = $filteredActivity; // automatically reactive
+    total = data.length;
+  });
+
+  let searchTerm = $state("");
+
+  let filteredItems = $derived.by(() => $filteredActivity.filter((study) => !searchTerm || study.reference.toLowerCase().includes(searchTerm.toLowerCase())));
+  
+  let filteredBySubset = $derived( // The subset of the filtered data that matches the users click
+    filteredItems.filter(study => study.study_summary === subset)
+  );
+
 </script>
 
 <h2 class="flex gap-1 items-baseline ">
@@ -175,62 +177,98 @@ function toggleRow(index) {
   </p>
 
 
-<div class="max-h-[60vh] overflow-y-auto">
-  <table class="w-full text-sm table-fixed border-collapse">
-    <!-- Column widths -->
-    <colgroup>
-      {#each columns as col}
-        <col style={`width: ${col.width}`} />
-      {/each}
-    </colgroup>
+    <div class="max-h-screen overflow-y-auto">
+    <Table color="custom" hoverable={false} class="table w-full table-fixed">
+        <TableHead class = "bg-gray-700 text-white">
+        <TableHeadCell class="w-[10%]">Lead author</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Publication year</TableHeadCell>
+        <TableHeadCell class="w-[60%]">Activity</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Rating</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Details</TableHeadCell>
+        </TableHead>
 
-    <!-- Header -->
-    <thead class="bg-gray-50 sticky top-0">
-      <tr>
-        {#each columns as col}
-          <th class="px-3 py-2 text-left font-medium text-blue-950">
-            {col.label}
-          </th>
-        {/each}
-      </tr>
-    </thead>
-
-    <!-- Body -->
-    <tbody>
-      {#each filteredBySubset as study, i}
-        <tr
-          class="border-t hover:bg-gray-50 hover:text-blue-950 transition-colors cursor-pointer"
-          onclick={() => toggleRow(i)}
-        >
-          {#each columns as col}
-            <td class="px-3 py-2 align-top">
-              <div
-                class={`overflow-hidden transition-all duration-300 ${
-                  expandedRows.has(i) ? "max-h-[1000px]" : "max-h-[9rem]"
-                } whitespace-normal break-words`}
-              >
-
-                {#if col.key === "study_author"}
-                  <a
-                    href={study.study_url}
+        <TableBody class="bg-gray-50">
+        {#each filteredBySubset as row, i}
+            <TableBodyRow class="text-gray-800">
+            <TableBodyCell class="whitespace-normal break-words max-w-md">
+                <a
+                    href={row.study_url}
+                    class="inline-flex gap-1 cursor-pointer hover:underline"
                     target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:underline"
-                  >
-                    {study[col.key] ?? "—"} 
-                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
-                  </a>
-                {:else}
-                {study[col.key] ?? "—"}
-                {/if}
-              </div>
-            </td>
-          {/each}
-        </tr>
-      {/each}
-    </tbody>
+                    rel="noopener noreferrer"    
+                    >
+                {row.study_author} <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                </a>
+            </TableBodyCell>
 
-  </table>
-</div>
+            <TableBodyCell class="whitespace-normal break-all">
+                {row.study_year}
+            </TableBodyCell>
+
+            <TableBodyCell class="whitespace-normal break-normal max-w-sm">
+                {row.activity_script_v1_1}
+            </TableBodyCell>
+
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">  
+                
+                    <div class="flex gap-1">
+                        {#each Array(4) as _, i}
+                        <StarSolid class={`h-5 w-5 ${i < row.rating_star ? 'text-yellow-400' : 'text-gray-300'}`}/>
+                        {/each}
+                    </div>
+
+            </TableBodyCell>
+
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+
+                    <Button    
+                        onclick={() => {
+                            if (row.extraInfo > 0) {
+                                toggleRow(i);
+                            }
+                        }}
+                        class="relative cursor-pointer bg-gray-800 hover:bg-gray-500
+                                disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+                        size="sm" 
+                        disabled={row.extraInfo === 0} >
+                        <InfoCircleSolid class="text-white dark:text-white" />
+                        
+                        <Indicator color="blue" border size="xl" placement="top-right" class="text-xs font-bold">
+                            {row.extraInfo}
+                        </Indicator>
+                    </Button>
+
+            </TableBodyCell> 
+
+            </TableBodyRow>
+            <!-- Here is the optionally expanding row -->
+            {#if openRow === i} 
+            <TableBodyRow class="text-gray-600">
+                <TableBodyCell colspan="5" class="p-0"> 
+                <!-- Expanded content goes here -->
+                <Table class="w-full table-fixed" color="custom">
+
+                    {#each studyDetails as item, i}
+
+                        {#if row[item.variable] != null && row[item.variable] !== ''} 
+                                <TableBodyRow class="align-top">
+                                    <TableBodyCell class="w-[10%] uppercase text-xs"></TableBodyCell>
+                                    <TableBodyCell class="w-[10%] uppercase text-xs">{item.label}</TableBodyCell>
+                                    <TableBodyCell class="w-[60%] whitespace-normal break-normal max-w-sm">{row[item.variable]}</TableBodyCell>
+                                    <TableBodyCell class="w-[20%] whitespace-normal break-normal max-w-sm"></TableBodyCell>
+                                </TableBodyRow>
+
+                        {/if}   
+
+                    {/each}
+                    
+                </Table>
+                </TableBodyCell>
+            </TableBodyRow>
+            {/if}  
+        {/each}
+        </TableBody>
+    </Table> 
+    </div>
 
 </Modal>

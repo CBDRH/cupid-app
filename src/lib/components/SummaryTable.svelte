@@ -136,25 +136,6 @@
                     {/each}
                     
                 </Table>
-
-                <!-- <Table class="w-full table-fixed" color="custom" hoverable={false}>
-                    <TableHead>
-                    <TableHeadCell>Facilitators</TableHeadCell>
-                    <TableHeadCell>Barriers</TableHeadCell>
-                    <TableHeadCell>Risks</TableHeadCell>
-                    <TableHeadCell>Participation</TableHeadCell>
-                    <TableHeadCell>Satisfaction</TableHeadCell>
-                    </TableHead>
-                    <TableBody>
-                    <TableBodyRow>
-                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.facilitators_v1_1_v2}</TableBodyCell>
-                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.barriers_v1_1_v2}</TableBodyCell>
-                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.risks_v1_1_v2}</TableBodyCell>
-                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.participation_v1_1_v2}</TableBodyCell>
-                        <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.satistfaction_v1_1_v2}</TableBodyCell>
-                    </TableBodyRow>
-                    </TableBody>
-                </Table> -->
                 </TableBodyCell>
             </TableBodyRow>
             {/if}
