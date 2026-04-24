@@ -82,22 +82,24 @@ let infoTooltipOpen = $state(false);
       <InfoCircleSolid class="hover:text-gray-600 cursor-pointer"/>
         <Tooltip placement="right" type="light" transition={slide} trigger="hover" class="shadow-lg border border-blue-950" 
                 onclose={() => infoReveal = null}>
-          <div class="max-w-sm font-normal leading-relaxed whitespace-normal pointer-events-auto ">
-          <h2>Interpreting the impact on specific drugs</h2>
-          <div class="flex gap-2">
 
-          {#each cards as card, i}
-            <div class={`flex flex-col flex-1 rounded-l shadow w-12 h-8 p-4 items-center justify-center ${evidenceLevels[summaryArray[i]].bgColor}`}>
-              {#key summaryArray[i]}
-                <FontAwesomeIcon
-                  icon={card.icon}
-                  style="width: 1rem; height: 1rem"
-                  class={`${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
-                />
-                {/key}   
-            </div>
-          {/each}
-          </div>
+          <div class="max-w-sm font-normal leading-relaxed whitespace-normal pointer-events-auto ">
+            <h2>Interpreting the impact on specific drugs</h2>
+              <div class="flex gap-2">
+
+                {#each cards as card, i}
+                  <div class={`flex flex-col flex-1 rounded-l shadow w-12 h-8 p-4 items-center justify-center ${evidenceLevels[summaryArray[i]].bgColor}`}>
+                    {#key summaryArray[i]}
+                      <FontAwesomeIcon
+                        icon={card.icon}
+                        style="width: 1rem; height: 1rem"
+                        class={`${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
+                      />
+                      {/key}   
+                  </div>
+                {/each}
+              </div>
+              
 
           <div class="w-64 px-1 py-2">
             For each substance category, we aggregate the evidence for all the studies 
@@ -110,35 +112,35 @@ let infoTooltipOpen = $state(false);
             Click on the buttons below to learn more about each definition
           </div>
 
-          <div class = "overflow-y-auto">
-            
-          {#each [...evidenceLevels].reverse() as level, i}
-            <button
-              class={`flex flex-wrap mx-auto w-64 my-2 border rounded cursor-pointer
-                      ${level.textColor} ${level.bgColor}`}
-              onclick={() =>
-                infoReveal = infoReveal === level.label ? null : level.label
-              }
-            >
-                <!-- Fixed-width icon column -->
-                <span class="flex flex-column gap-2 ml-3">
-                  <InfoCircleSolid />
-                  {level.label}
-                </span>
-            </button>
+            <div class = "overflow-y-auto">
               
-              {#if infoReveal === level.label}
-                <div class="mx-auto w-64 my-2 text-gray-600 bg-gray-50 p-1 rounded cursor-pointer">
-                  {@html level.hoverMessage}
-                </div>
-              {/if}
-          {/each}
-          
-          </div>
-        </Tooltip>
+            {#each [...evidenceLevels].reverse() as level, i}
+              <button
+                class={`flex flex-wrap mx-auto w-64 my-2 border rounded cursor-pointer
+                        ${level.textColor} ${level.bgColor}`}
+                onclick={() =>
+                  infoReveal = infoReveal === level.label ? null : level.label
+                }
+              >
+                  <!-- Fixed-width icon column -->
+                  <span class="flex flex-column gap-2 ml-3">
+                    <InfoCircleSolid />
+                    {level.label}
+                  </span>
+              </button>
+                
+                {#if infoReveal === level.label}
+                  <div class="mx-auto w-64 my-2 text-gray-600 bg-gray-50 p-1 rounded cursor-pointer">
+                    {@html level.hoverMessage}
+                  </div>
+                {/if}
+            {/each}
+            
+            </div>
+          </div>  
+        </Tooltip>  
       </div>
 </h2>
-
 
   <div class="flex flex-row gap-4"> 
       {#each cards as card, i} 

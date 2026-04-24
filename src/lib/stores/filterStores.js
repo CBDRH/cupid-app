@@ -106,6 +106,11 @@ export const filteredActivity = derived(
       );
     }
 
+    // 4. Sort by rating_total (highest first)
+    result = result.slice().sort(
+      (a, b) => b.rating_total - a.rating_total
+    );
+
     return result;
   }
 );

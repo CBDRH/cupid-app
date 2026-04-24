@@ -1,12 +1,13 @@
 <script lang="ts">
   import {
     Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, TableSearch,
-     ImagePlaceholder, Modal, Indicator, Button
+     Indicator, Button
   } from "flowbite-svelte";
   import { filteredActivity, selectedLabel, selectedOption } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
-  import { InfoCircleSolid } from "flowbite-svelte-icons";
+  import { InfoCircleSolid, StarSolid } from "flowbite-svelte-icons";
+  import { studyDetails } from "$lib/constants/studyDetails.js";
 
   let total = $state(0)
   
@@ -48,7 +49,7 @@
     
     <TableSearch placeholder="Search by study title or authors" hoverable bind:inputValue={searchTerm}>
     <div class="max-h-screen overflow-y-auto">
-    <Table color="custom" hoverable class="table w-full table-fixed">
+    <Table color="custom" hoverable={false} class="table w-full table-fixed">
         <TableHead class = "bg-gray-700 text-white">
         <TableHeadCell class="w-[10%]">Lead author</TableHeadCell>
         <TableHeadCell class="w-[10%]">Publication year</TableHeadCell>
@@ -59,12 +60,7 @@
 
         <TableBody>
         {#each filteredItems as row, i}
-            <TableBodyRow 
-            class={`
-            ${i % 2 === 0 ? 'bg-white' : 'bg-gray-100'}
-            hover:bg-blue-50
-            text-gray-700
-            `}>
+            <TableBodyRow class="text-gray-800">
             <TableBodyCell class="whitespace-normal break-words max-w-md">
                 <a
                     href={row.study_url}
@@ -84,8 +80,14 @@
                 {row.activity_script_v1_1}
             </TableBodyCell>
 
-            <TableBodyCell class="whitespace-normal break-all max-w-sm">
-                {row.quality_rating}
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">  
+                
+                    <div class="flex gap-1">
+                        {#each Array(4) as _, i}
+                        <StarSolid class={`h-5 w-5 ${i < row.rating_star ? 'text-yellow-400' : 'text-gray-300'}`}/>
+                        {/each}
+                    </div>
+
             </TableBodyCell>
 
             <TableBodyCell class="whitespace-normal break-all max-w-sm">
@@ -96,7 +98,7 @@
                                 toggleRow(i);
                             }
                         }}
-                        class="relative bg-blue-950 text-gray-100 cursor-pointer 
+                        class="relative cursor-pointer bg-gray-800 hover:bg-gray-500
                                 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
                         size="sm" 
                         disabled={row.extraInfo === 0} >
@@ -111,11 +113,30 @@
 
             </TableBodyRow>
             {#if openRow === i}
-            <TableBodyRow>
-                <TableBodyCell colspan="5" class="p-4">
+            <TableBodyRow class="text-gray-600">
+                <TableBodyCell colspan="5" class="p-0">
                 <!-- Expanded content goes here -->
-                <Table class="w-full table-fixed" color="custom" hoverable={false}>
-                    <TableHead class="bg-blue-950 hover:bg-blue-950">
+                <Table class="w-full table-fixed" color="custom">
+
+                    {#each studyDetails as item, i}
+
+                        {#if row[item.variable] != null && row[item.variable] !== ''}
+
+                            <TableBodyRow class="align-top">
+                                <TableBodyCell class="w-[10%] uppercase text-xs"></TableBodyCell>
+                                <TableBodyCell class="w-[10%] uppercase text-xs">{item.label}</TableBodyCell>
+                                <TableBodyCell class="w-[60%] whitespace-normal break-normal max-w-sm">{row[item.variable]}</TableBodyCell>
+                                <TableBodyCell class="w-[20%] whitespace-normal break-normal max-w-sm"></TableBodyCell>
+                            </TableBodyRow>
+
+                        {/if}   
+
+                    {/each}
+                    
+                </Table>
+
+                <!-- <Table class="w-full table-fixed" color="custom" hoverable={false}>
+                    <TableHead>
                     <TableHeadCell>Facilitators</TableHeadCell>
                     <TableHeadCell>Barriers</TableHeadCell>
                     <TableHeadCell>Risks</TableHeadCell>
@@ -131,7 +152,7 @@
                         <TableBodyCell class="whitespace-normal break-normal max-w-sm">{row.satistfaction_v1_1_v2}</TableBodyCell>
                     </TableBodyRow>
                     </TableBody>
-                </Table>
+                </Table> -->
                 </TableBodyCell>
             </TableBodyRow>
             {/if}

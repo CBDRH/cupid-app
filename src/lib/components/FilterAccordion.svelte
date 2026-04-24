@@ -71,24 +71,29 @@ function removeFilterItem(value) {
 
   {#if ($combinedFiltersArrayStore).length > 0}
     
-    <div class="w-full border border-blue-950 rounded-lg p-2 mb-1">
+    <div class="w-full bg-gray-100 rounded-lg p-1 mb-1">
+
       <div class="flex flex-row gap-1">
         <AdjustmentsHorizontalSolid />
         Selected Filters        
       </div>
     
       <div class="flex flex-wrap items-center gap-2 p-2">
+      
         {#each $combinedFiltersArrayStore as item}
-          <div class = "flex flex-row bg-gray-300 rounded-lg text-gray-600 gap-1">
+          <div class = "flex flex-row bg-gray-300 rounded-lg text-gray-600 px-2 py-1 gap-2">
             {item}
             <CloseCircleSolid 
-            class="inline-block align-text-bottom ml-1 hover:text-gray-900 cursor-pointer"
+            class="inline-block align-text-bottom hover:text-gray-900 cursor-pointer"
             onclick={() => removeFilterItem(item)}
             />
           </div>
         {/each}
+
       </div>
+
     </div>
+
   {/if}
 
 
