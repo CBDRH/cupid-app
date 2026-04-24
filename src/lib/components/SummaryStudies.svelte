@@ -91,7 +91,7 @@ function toggleRow(index) {
 <h2 class="flex gap-1 items-baseline ">
   Evidence from previous community-wide studies
     <InfoCircleSolid class="hover:text-gray-600 cursor-pointer"/>
-      <Tooltip placement="right" type="light" transition={slide}>
+      <Tooltip placement="right" type="light" transition={slide} class="shadow-lg border border-blue-950">
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
           <h2>Interpreting the overall study impact</h2>
           

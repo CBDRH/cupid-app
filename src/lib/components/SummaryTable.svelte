@@ -112,7 +112,8 @@
             </TableBodyCell>
 
             </TableBodyRow>
-            {#if openRow === i}
+            <!-- Here is the optionally expanding row -->
+            {#if openRow === i} 
             <TableBodyRow class="text-gray-600">
                 <TableBodyCell colspan="5" class="p-0">
                 <!-- Expanded content goes here -->
@@ -121,13 +122,14 @@
                     {#each studyDetails as item, i}
 
                         {#if row[item.variable] != null && row[item.variable] !== ''}
-
-                            <TableBodyRow class="align-top">
-                                <TableBodyCell class="w-[10%] uppercase text-xs"></TableBodyCell>
-                                <TableBodyCell class="w-[10%] uppercase text-xs">{item.label}</TableBodyCell>
-                                <TableBodyCell class="w-[60%] whitespace-normal break-normal max-w-sm">{row[item.variable]}</TableBodyCell>
-                                <TableBodyCell class="w-[20%] whitespace-normal break-normal max-w-sm"></TableBodyCell>
-                            </TableBodyRow>
+                            <!-- <div class=""> -->
+                                <TableBodyRow class="align-top">
+                                    <TableBodyCell class="w-[10%] uppercase text-xs"></TableBodyCell>
+                                    <TableBodyCell class="w-[10%] uppercase text-xs">{item.label}</TableBodyCell>
+                                    <TableBodyCell class="w-[60%] whitespace-normal break-normal max-w-sm">{row[item.variable]}</TableBodyCell>
+                                    <TableBodyCell class="w-[20%] whitespace-normal break-normal max-w-sm"></TableBodyCell>
+                                </TableBodyRow>
+                            <!-- </div> -->
 
                         {/if}   
 

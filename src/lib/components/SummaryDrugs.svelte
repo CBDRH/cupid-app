@@ -69,7 +69,6 @@
 
 // This controls the information revealed in the info box for the potential impact on specific drugs
 let infoReveal = $state(""); 
-let infoTooltipOpen = $state(false);
 
 </script>
 
