@@ -7,6 +7,7 @@
   import { InfoCircleSolid } from "flowbite-svelte-icons";
   import { classifyEvidence } from "$lib/utils/classifyEvidence";
   import { evidenceLevels } from "$lib/constants/evidenceLevels";
+  import { drugStore } from "$lib/stores/filterStores";
 
 
   //   Reactive counts for each category
@@ -60,12 +61,18 @@
   })
 
   const cards = [
-    { key: "alcohol", label: "ALCOHOL", icon: faWineBottle},
-    { key: "nicotine", label: "NICOTINE", icon: faSmoking},
-    { key: "cannabis", label: "CANNABIS", icon: faCannabis},
-    { key: "illicit", label: "ILLICIT DRUGS", icon: faPills},
-    { key: "unspecified", label: "UNSPECIFIED DRUGS", icon: faPrescriptionBottle}
+    { key: "alcohol", filter: "Alcohol", label: "ALCOHOL", icon: faWineBottle},
+    { key: "nicotine", filter: "Nicotine", label: "NICOTINE", icon: faSmoking},
+    { key: "cannabis", filter: "Cannabis", label: "CANNABIS", icon: faCannabis},
+    { key: "illicit", filter: "Illicit", label: "ILLICIT DRUGS", icon: faPills},
+    { key: "unspecified", filter: "Unspecified", label: "UNSPECIFIED DRUGS", icon: faPrescriptionBottle}
   ];
+
+  let selectedDrug = $state([]);
+  // Update the store based on the values of selected checkboxes
+  $effect(() => {
+    drugStore.set(selectedDrug);
+  })
 
 // This controls the information revealed in the info box for the potential impact on specific drugs
 let infoReveal = $state(""); 
@@ -87,7 +94,9 @@ let infoReveal = $state("");
               <div class="flex gap-2">
 
                 {#each cards as card, i}
-                  <div class={`flex flex-col flex-1 rounded-l shadow w-12 h-8 p-4 items-center justify-center ${evidenceLevels[summaryArray[i]].bgColor}`}>
+                  <div 
+                    class={`flex flex-col flex-1 rounded-s shadow w-12 h-8 p-4 items-center justify-center ${evidenceLevels[summaryArray[i]].bgColor}`}
+                  >
                     {#key summaryArray[i]}
                       <FontAwesomeIcon
                         icon={card.icon}
@@ -95,7 +104,7 @@ let infoReveal = $state("");
                         class={`${evidenceLevels[summaryArray[i]].textColor} pointer-events-none`}
                       />
                       {/key}   
-                  </div>
+              </div>
                 {/each}
               </div>
               
@@ -144,7 +153,10 @@ let infoReveal = $state("");
   <div class="flex flex-row gap-4"> 
       {#each cards as card, i} 
       
-      <div class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300`}> 
+      <button 
+        class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300 cursor-pointer`}
+        onclick={selectedDrug = selectedDrug === card.filter ? null : card.filter}
+        > 
       
       <!-- Box title and info icon -->
       <label class="my-2 flex items-baseline gap-1">
@@ -179,7 +191,7 @@ let infoReveal = $state("");
           </Tooltip>
         </span>
 
-      </div>
+      </button>
       {/each}
   </div>    
 </div>

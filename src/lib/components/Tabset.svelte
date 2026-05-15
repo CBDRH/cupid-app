@@ -30,9 +30,13 @@
 
   <div class="mt-4 p-4 border border-gray-300">
     {#if activeTab === 0}
-      <SummaryStudies />
-      <SummaryDrugs />
-      <SummaryDetail />
+      <div class="bg-blue-950/2 rounded-lg p-4">
+        <SummaryStudies />
+      </div>
+      <div class="mt-4 bg-blue-950/2 rounded-lg p-4">
+        <SummaryDrugs />
+        <SummaryDetail />
+      </div>
       <SummaryTable />
     {:else if activeTab === 1}
       <ManuscriptsTable />
