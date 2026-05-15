@@ -3,7 +3,7 @@
   import FilterSummary from './FilterSummary.svelte';
   import { Button } from "flowbite-svelte";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import { faCircleArrowRight, faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+  import { faAnglesRight, faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
 
   let collapseSidebar = $state(true);
 
@@ -16,9 +16,9 @@
     
     <div class="flex justify-end">
       <Button
-        class="bg-transparent text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl"
+        class="bg-transparent text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl focus:ring-0"
         onclick={() => collapseSidebar = !collapseSidebar}>
-      <FontAwesomeIcon icon={faCircleArrowLeft}/>
+      <FontAwesomeIcon icon={faAnglesLeft}/>
       </Button>
     </div>
     
@@ -32,10 +32,10 @@
   <aside class="bg-gray-50 p-3 w-[4%] border border-gray-300">
     <div class="flex justify-start">
       <Button
-        class="bg-transparent text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl"
+        class="bg-transparent text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl focus:ring-0"
         onclick={() => collapseSidebar = !collapseSidebar} 
       >
-      <FontAwesomeIcon icon={faCircleArrowRight}/>
+      <FontAwesomeIcon icon={faAnglesRight}/>
       </Button>
     </div>
   </aside>
