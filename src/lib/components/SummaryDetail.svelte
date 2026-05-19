@@ -11,6 +11,8 @@
     faUserGroup,
     faDollarSign
   } from "@fortawesome/free-solid-svg-icons";
+  import { faWineBottle, faSmoking, faCannabis, faPills, faPrescriptionBottle } from "@fortawesome/free-solid-svg-icons";
+  import { selectedLabel, selectedOption} from "$lib/stores/filterStores.js"
 
   // --- USE ---
   let alcoholUseFor = $state(0);
@@ -127,11 +129,17 @@
     unspecifiedEconomicAgainst = $filteredData.map(d => d.economic_unspecified).filter(d => d != null && d >= 3).length;
   });
 
-  // --- SUMMARY ARRAYS ---
+  // The summary arrays hold the numeric value that equates to the evidence level for each drug and outcome type, which is used to determine the colour and label of the summary cards
   let useSummary = $state([0, 0, 0, 0, 0]);
   let harmSummary = $state([0, 0, 0, 0, 0]);
   let behavSummary = $state([0, 0, 0, 0, 0]);
   let economicSummary = $state([0, 0, 0, 0, 0]);
+
+  // The data arrays hold the raw counts of for/against studies for each drug and outcome type, which is used to populate the modals when the user clicks on the summary cards
+  let useData = $state([ [0, 0], [0, 0], [0, 0], [0, 0], [0, 0] ]);
+  let harmData = $state([ [0, 0], [0, 0], [0, 0], [0, 0], [0, 0] ]);
+  let behavData = $state([ [0, 0], [0, 0], [0, 0], [0, 0], [0, 0] ]);
+  let economicData = $state([ [0, 0], [0, 0], [0, 0], [0, 0], [0, 0] ]);
 
   $effect(() => {
     useSummary = [
@@ -142,12 +150,28 @@
       classifyEvidence(unspecifiedUseFor, unspecifiedUseAgainst)
     ];
 
+    useData = [
+      [alcoholUseFor, alcoholUseAgainst],
+      [nicotineUseFor, nicotineUseAgainst],
+      [cannabisUseFor, cannabisUseAgainst],
+      [illicitUseFor, illicitUseAgainst],
+      [unspecifiedUseFor, unspecifiedUseAgainst]
+    ];
+
     harmSummary = [
       classifyEvidence(alcoholHarmFor, alcoholHarmAgainst),
       classifyEvidence(nicotineHarmFor, nicotineHarmAgainst),
       classifyEvidence(cannabisHarmFor, cannabisHarmAgainst),
       classifyEvidence(illicitHarmFor, illicitHarmAgainst),
       classifyEvidence(unspecifiedHarmFor, unspecifiedHarmAgainst)
+    ];
+
+    harmData = [
+      [alcoholHarmFor, alcoholHarmAgainst],
+      [nicotineHarmFor, nicotineHarmAgainst],
+      [cannabisHarmFor, cannabisHarmAgainst],
+      [illicitHarmFor, illicitHarmAgainst],
+      [unspecifiedHarmFor, unspecifiedHarmAgainst]
     ];
 
     behavSummary = [
@@ -158,6 +182,14 @@
       classifyEvidence(unspecifiedBehavFor, unspecifiedBehavAgainst)
     ];
 
+    behavData = [
+      [alcoholBehavFor, alcoholBehavAgainst],
+      [nicotineBehavFor, nicotineBehavAgainst],
+      [cannabisBehavFor, cannabisBehavAgainst],
+      [illicitBehavFor, illicitBehavAgainst],
+      [unspecifiedBehavFor, unspecifiedBehavAgainst]
+    ];
+
     economicSummary = [
       classifyEvidence(alcoholEconomicFor, alcoholEconomicAgainst),
       classifyEvidence(nicotineEconomicFor, nicotineEconomicAgainst),
@@ -165,19 +197,33 @@
       classifyEvidence(illicitEconomicFor, illicitEconomicAgainst),
       classifyEvidence(unspecifiedEconomicFor, unspecifiedEconomicAgainst)
     ];
+
+    economicData = [
+      [alcoholEconomicFor, alcoholEconomicAgainst],
+      [nicotineEconomicFor, nicotineEconomicAgainst],
+      [cannabisEconomicFor, cannabisEconomicAgainst],
+      [illicitEconomicFor, illicitEconomicAgainst],
+      [unspecifiedEconomicFor, unspecifiedEconomicAgainst]
+    ];
+
   });
 
+  // There is one card for each drug type, and the summary for each drug type 
   let cards = ["Alcohol", "Nicotine", "Cannabis", "Other illicit drugs", "Unspecified drugs"]
+  let iconList = [faWineBottle, faSmoking, faCannabis, faPills, faPrescriptionBottle]
+
+  // The modals are indexed in the same order as the cards and summary arrays, so use the same index to determine which modal to open when a card is clicked and which data to display in the modal     
   let useModals = $state([false, false, false, false, false])
   let harmModals = $state([false, false, false, false, false])
   let behavModals = $state([false, false, false, false, false])
   let economicModals = $state([false, false, false, false, false])
-  
+
+
 </script>
 
 <div class="flex flex-row text-sm gap-4">
   {#each cards as card, i}
-    <div class="flex flex-col flex-1 rounded-xl shadow w-64 h-42 p-4 mt-3 relative transition-colors duration-300">
+    <div class="flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative transition-colors duration-300">
       
       <!-- USE -->
       <div class="flex items-baseline mb-1">
@@ -189,7 +235,7 @@
         </div>
         <Tooltip placement="right" type="light" transition={slide}>
           <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
-            <b>Use</b> Examples of use outcomes include any use within a timeframe, frequency of use, volume of use, and sales data? 
+            <b>Use</b> Examples of use outcomes include any use within a timeframe, frequency of use, volume of use, and sales data 
           </div>
         </Tooltip>
         <button 
@@ -289,20 +335,119 @@
 
     </div>
 
-  <Modal form bind:open={useModals[i]} size="md">
-    <p>Use: {card}</p>
+  <!-- Modal for use outcomes   -->
+  <Modal bind:open={useModals[i]} dismissable class="max-w-[30rem]">
+    <h1 class="text-xl font-bold mb-2 text-gray-100 uppercase tracking-wide">{$selectedLabel}: {$selectedOption}</h1>
+    
+    <div class="flex items-baseline gap-2 mb-4">
+      <h3 class="text-md font-normal uppercase">{cards[i]}</h3>
+      <FontAwesomeIcon icon={iconList[i]} style="width: 1rem; height: 1rem"/>
+    </div>
+
+    <div class="flex flex-row  mb-1 gap-4">
+      <h2 class="text-lg font-semibold text-gray-100">Impact on use</h2>
+
+      <div class={`flex items-center justify-center w-24 gap-1 rounded-lg ${evidenceLevels[useSummary[i]].bgColor} ${evidenceLevels[useSummary[i]].labelColor}`}>
+          {#key useSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[useSummary[i]].icon}
+            />
+          {/key}
+          {evidenceLevels[useSummary[i]].label}
+      </div>
+    </div>
+
+    <p>
+     {useData[i][0]} {useData[i][0] === 1 ? 'study' : 'studies'} had a statistically significant positive effect and {useData[i][1]} {useData[i][1] === 1 ? 'study' : 'studies'} had a null effect or statistically significant negative effect.
+    </p>
   </Modal>
 
-  <Modal form bind:open={harmModals[i]} size="md">
-    <p>Harm: {card}</p>
+
+  <!-- Modal for harm outcomes   -->
+  <Modal bind:open={harmModals[i]} dismissable class="max-w-[30rem]">
+    <h1 class="text-xl font-bold mb-2 text-gray-100 uppercase tracking-wide">{$selectedLabel}: {$selectedOption}</h1>
+    
+    <div class="flex items-baseline gap-2 mb-4">
+      <h3 class="text-md font-normal uppercase">{cards[i]}</h3>
+      <FontAwesomeIcon icon={iconList[i]} style="width: 1rem; height: 1rem"/>
+    </div>
+
+    <div class="flex flex-row  mb-1 gap-4">
+      <h2 class="text-lg font-semibold text-gray-100">Impact on harm</h2>
+
+      <div class={`flex items-center justify-center w-24 gap-1 rounded-lg ${evidenceLevels[harmSummary[i]].bgColor} ${evidenceLevels[harmSummary[i]].labelColor}`}>
+          {#key harmSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[harmSummary[i]].icon}
+            />
+          {/key}
+          {evidenceLevels[harmSummary[i]].label}
+      </div>
+    </div>
+
+    <p>
+     {harmData[i][0]} {harmData[i][0] === 1 ? 'study' : 'studies'} had a statistically significant positive effect and {harmData[i][1]} {harmData[i][1] === 1 ? 'study' : 'studies'} had a null effect or statistically significant negative effect.
+    </p>
   </Modal>
 
-  <Modal form bind:open={behavModals[i]} size="md">
-    <p>Behaviour: {card}</p>
+
+  <!-- Modal for behaviour outcomes   -->
+  <Modal bind:open={behavModals[i]} dismissable class="max-w-[30rem]">
+    <h1 class="text-xl font-bold mb-2 text-gray-100 uppercase tracking-wide">{$selectedLabel}: {$selectedOption}</h1>
+    
+    <div class="flex items-baseline gap-2 mb-4">
+      <h3 class="text-md font-normal uppercase">{cards[i]}</h3>
+      <FontAwesomeIcon icon={iconList[i]} style="width: 1rem; height: 1rem"/>
+    </div>
+
+    <div class="flex flex-row  mb-1 gap-4">
+      <h2 class="text-lg font-semibold text-gray-100">Impact on behaviour</h2>
+
+      <div class={`flex items-center justify-center w-24 gap-1 rounded-lg ${evidenceLevels[behavSummary[i]].bgColor} ${evidenceLevels[behavSummary[i]].labelColor}`}>
+          {#key behavSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[behavSummary[i]].icon}
+            />
+          {/key}
+          {evidenceLevels[behavSummary[i]].label}
+      </div>
+    </div>
+
+    <p>
+     {behavData[i][0]} {behavData[i][0] === 1 ? 'study' : 'studies'} had a statistically significant positive effect and {behavData[i][1]} {behavData[i][1] === 1 ? 'study' : 'studies'} had a null effect or statistically significant negative effect.
+    </p>
   </Modal>
 
-  <Modal form bind:open={economicModals[i]} size="md">
-    <p>Economic: {card}</p>
+
+  <!-- Modal for economic outcomes   -->
+  <Modal bind:open={economicModals[i]} dismissable class="max-w-[30rem]">
+    <h1 class="text-xl font-bold mb-2 text-gray-100 uppercase tracking-wide">{$selectedLabel}: {$selectedOption}</h1>
+    
+    <div class="flex items-baseline gap-2 mb-4">
+      <h3 class="text-md font-normal uppercase">{cards[i]}</h3>
+      <FontAwesomeIcon icon={iconList[i]} style="width: 1rem; height: 1rem"/>
+    </div>
+
+    <div class="flex flex-row  mb-1 gap-4">
+      <h2 class="text-lg font-semibold text-gray-100">Impact on economic outcomes</h2>
+
+      <div class={`flex items-center justify-center w-24 gap-1 rounded-lg ${evidenceLevels[economicSummary[i]].bgColor} ${evidenceLevels[economicSummary[i]].labelColor}`}>
+          {#key economicSummary[i]}
+            <FontAwesomeIcon
+              style="width: 1rem; height: 1rem"
+              icon={evidenceLevels[economicSummary[i]].icon}
+            />
+          {/key}
+          {evidenceLevels[economicSummary[i]].label}
+      </div>
+    </div>
+
+    <p>
+     {economicData[i][0]} {economicData[i][0] === 1 ? 'study' : 'studies'} had a statistically significant positive effect and {economicData[i][1]} {economicData[i][1] === 1 ? 'study' : 'studies'} had a null effect or statistically significant negative effect.
+    </p>
   </Modal>
 
   {/each}

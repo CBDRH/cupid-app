@@ -81,11 +81,11 @@ let infoReveal = $state("");
 
 <div class="mt-6">
 
-<h2 class="flex gap-1 items-baseline ">
+<h2 class="flex gap-1 items-baseline">
   Potential impact on specific drugs
 
     <div class="relative inline-block group">
-      <InfoCircleSolid class="hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="hover:text-gray-600 cursor-help"/>
         <Tooltip placement="right" type="light" transition={slide} trigger="hover" class="shadow-lg border border-blue-950" 
                 onclose={() => infoReveal = null}>
 
@@ -138,7 +138,7 @@ let infoReveal = $state("");
               </button>
                 
                 {#if infoReveal === level.label}
-                  <div class="mx-auto w-64 my-2 text-gray-600 bg-gray-50 p-1 rounded cursor-pointer">
+                  <div class="mx-auto w-64 my-2 text-gray-600 bg-gray-50 p-1 rounded cursor-help">
                     {@html level.hoverMessage}
                   </div>
                 {/if}
@@ -150,12 +150,12 @@ let infoReveal = $state("");
       </div>
 </h2>
 
-  <div class="flex flex-row gap-4"> 
+  <div class="flex flex-row gap-4 w-[100%]"> 
       {#each cards as card, i} 
       
       <button 
-        class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300 cursor-pointer`}
-        onclick={selectedDrug = selectedDrug === card.filter ? null : card.filter}
+        class={`flex flex-col flex-1 rounded-xl shadow w-64 h-40 p-4 mt-3 relative ${evidenceLevels[summaryArray[i]].bgColor} transition-colors duration-300`}
+        // onclick={selectedDrug = selectedDrug === card.filter ? null : card.filter} Suggest removing this it doesn't work well (ambiguity over whether filtering to Alcohol or to Likely for example)
         > 
       
       <!-- Box title and info icon -->
@@ -163,7 +163,7 @@ let infoReveal = $state("");
         <h3 class={`text-4xl ${evidenceLevels[summaryArray[i]].textColor} text-left`}>
             {evidenceLevels[summaryArray[i]].label}
         </h3>
-        <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
+        <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-help`}/>
         <Tooltip placement="right" type="light" transition={slide}>
           <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
             {@html evidenceLevels[summaryArray[i]].hoverMessage}
@@ -183,7 +183,7 @@ let infoReveal = $state("");
         <!-- Footer -->
         <span class={`inline-flex gap-1 mt-auto text-lg ${evidenceLevels[summaryArray[i]].labelColor} text-left text-sm font-normal font-semibold`}>
             {card.label}
-            <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-pointer`}/>
+            <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-help`}/>
             <Tooltip placement="right" type="light" transition={slide}>
             <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
               {@html drugInfo[i]}

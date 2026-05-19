@@ -92,9 +92,10 @@ $effect(() => {
 
 <h2 class="flex gap-1 items-baseline ">
   Evidence from previous community-wide studies
-    <InfoCircleSolid class="hover:text-gray-600 cursor-pointer"/>
-      <Tooltip placement="right" type="light" transition={slide} class="shadow-lg border border-blue-950">
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+  <div class="relative inline-block group">
+    <InfoCircleSolid class="hover:text-gray-600 cursor-help"/>
+      <Tooltip placement="right" type="light" transition={slide} trigger="hover" class="shadow-lg border border-blue-950">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal pointer-events-auto">
           <h2>Interpreting the overall study impact</h2>
           
           <div class="flex w-[100%] m-auto h-2 rounded overflow-hidden">
@@ -115,6 +116,7 @@ $effect(() => {
           <b>Negative impact</b> means that the evaluation study found that the included activities had a statistically significant negative impact on at least one outcome
         </div>
       </Tooltip>
+  </div>   
 </h2>
 
 <div class="text-sm mb-3">
@@ -122,11 +124,11 @@ $effect(() => {
 </div>
 
 <div 
-  class="flex w-[100%] m-auto h-8 rounded overflow-hidden border border-gray-300 cursor-pointer"
+  class="flex w-[100%] m-auto h-8 rounded overflow-hidden border border-gray-300"
   >
   {#each values as value, i}
     <button 
-      class={`h-full flex items-center justify-center border-0 hover:border-2  hover:border-${colors[i]} cursor-pointer text-${text[i]} font-bold bg-${colors[i]}`}
+      class={`h-full flex items-center justify-center border-1 hover:border-2  hover:border-${colors[i]} cursor-pointer text-${text[i]} font-bold bg-${colors[i]}`}
       style="width: {widths[i]}%"
       onclick={() => handleSegmentClick(i)}
     >
@@ -154,7 +156,7 @@ $effect(() => {
   {#each legend as item}
     <div class="flex items-center gap-2">
       <!-- Colored box -->
-      <div class={`w-4 h-4 bg-${item.color} rounded-sm cursor-pointer hover:border hover:border-gray-300`}></div>
+      <div class={`w-4 h-4 bg-${item.color} rounded-sm cursor-help hover:border hover:border-gray-300`}></div>
       <!-- Tooltip -->
       <Tooltip type="light" transition={slide} placement="bottom" >
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal">{item.tooltip}</div>  

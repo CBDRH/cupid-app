@@ -19,3 +19,4 @@ export function classifyEvidence(forValue, againstValue) {
   // fallback
   return 0;
 }
+

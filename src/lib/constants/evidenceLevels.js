@@ -5,8 +5,8 @@ export const evidenceLevels = [
   {
     label: "Unknown",
     bgColor: "bg-gray-50",
-    textColor: "text-gray-300",
-    labelColor: "text-gray-300",
+    textColor: "text-gray-400",
+    labelColor: "text-gray-400",
     icon: faXmark,
     hoverMessage:
       "<b>Unknown</b> No studies that met your search criteria have evaluated this activity",
