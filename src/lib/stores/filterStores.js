@@ -14,13 +14,15 @@ export const selectedLabel = writable("Mobilisation");
 export const selectedOption = writable("Alternative activities");
 export const selectedOption2 = writable("1.1 Alternative activities");
 export const selectedActivity = writable("mobilisation_activity___1");
+export const minYearStore = writable([1970]);
+export const maxYearStore = writable([2026]);
 
 
 // Derived store: filtered data based on drugStore
 export const filteredData = derived(
-  [selectedActivity, dataStore, drugStore, sexStore, lifestagesStore, priorityStore, continentStore, 
+  [selectedActivity, dataStore, drugStore, minYearStore, maxYearStore, sexStore, lifestagesStore, priorityStore, continentStore, 
     urbanicityStore, settingStore],
-  ([$selectedActivity, $dataStore, $drugStore, $sexStore, $lifestagesStore, $priorityStore, $continentStore, 
+  ([$selectedActivity, $dataStore, $drugStore, $minYearStore, $maxYearStore, $sexStore, $lifestagesStore, $priorityStore, $continentStore, 
     $urbanicityStore, $settingStore]) => {
     let result = $dataStore;
 
@@ -36,6 +38,19 @@ export const filteredData = derived(
       result = result.filter(item =>
         $drugStore.includes(item.drug)
       );
+    }
+
+    // Publication year filter
+    if ($minYearStore.length > 0 || $maxYearStore.length > 0) {
+      result = result.filter(item => {
+        const year = Number(item.study_year);
+        return (
+          item.study_year != null &&
+          !isNaN(year) &&
+          year >= Number($minYearStore) &&
+          year <= Number($maxYearStore)
+        );
+      });
     }
 
     // Sex filter

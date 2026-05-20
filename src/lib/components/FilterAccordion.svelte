@@ -1,15 +1,17 @@
 <script lang="ts">
 
-import { AccordionItem, Accordion, Checkbox, Listgroup, Tooltip } from "flowbite-svelte";
+import { AccordionItem, Accordion, Checkbox, Listgroup, Tooltip, Input } from "flowbite-svelte";
 import { AdjustmentsHorizontalSolid, InfoCircleSolid, CloseCircleSolid } from "flowbite-svelte-icons";
 import { slide } from "svelte/transition";
 import { drugChoices, sexChoices, lifestagesChoices, priorityChoices, continentChoices, urbanicityChoices, settingChoices } from "$lib/constants/filterChoices.js";
-import { drugStore, sexStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
+import { drugStore, minYearStore, maxYearStore, sexStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
 import { derived } from 'svelte/store';
 
 export const combinedFiltersArrayStore = derived(
   [
     drugStore,
+    minYearStore,
+    maxYearStore,
     sexStore,
     lifestagesStore,
     priorityStore,
@@ -17,10 +19,29 @@ export const combinedFiltersArrayStore = derived(
     urbanicityStore,
     settingStore
   ],
-  (stores) =>
-    stores
-      .filter(Array.isArray)   // guards against null
-      .flat()                  // concatenates all arrays
+  ([
+    drug,
+    minYear,
+    maxYear,
+    sex,
+    lifestages,
+    priority,
+    continent,
+    urbanicity,
+    setting
+  ]) => {
+    return [
+      ...drug,
+      ...(minYear != null && minYear != "1970" ? [`Min: ${minYear}`] : []),
+      ...(maxYear != null && maxYear != "2026" ? [`Max: ${maxYear}`] : []),
+      ...sex,
+      ...lifestages,
+      ...priority,
+      ...continent,
+      ...urbanicity,
+      ...setting
+    ];
+  }
 );
 
 // This function removes filter items from the arrays
@@ -33,6 +54,10 @@ function removeFromArray(arr, value) {
 // This function runs removeFromStore across all Stores
 function removeFilterItem(value) {
   $drugStore = removeFromArray($drugStore, value);
+  
+  if (value.startsWith("Min:")) $minYearStore = "1970";
+  if (value.startsWith("Max:")) $maxYearStore = "2026";
+
   $sexStore = removeFromArray($sexStore, value);
   $lifestagesStore = removeFromArray($lifestagesStore, value);
   $priorityStore = removeFromArray($priorityStore, value);
@@ -41,14 +66,12 @@ function removeFilterItem(value) {
   $settingStore = removeFromArray($settingStore, value);
 }
 
-
-
+// Store current year
+const currentYear = new Date().getFullYear();
 
 </script>
 
 <!-- <p>{$combinedFiltersArrayStore.length}</p> -->
-
-
 
   {#if ($combinedFiltersArrayStore).length > 0}
     
@@ -72,7 +95,6 @@ function removeFilterItem(value) {
         {/each}
 
       </div>
-
     </div>
 
   {/if}
@@ -112,8 +134,38 @@ function removeFilterItem(value) {
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$drugStore} choices={drugChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
+  
+  </AccordionItem>
+
+  <!-- Study details -->
+   <AccordionItem  open={false}>
+    {#snippet header()}    
+      <div class="flex items-center gap-2">
+        <AdjustmentsHorizontalSolid />
+        <span>Study details</span>
+      </div>
+    {/snippet}
+
+        <label class="font-semibold flex items-center gap-1">
+    <span>Study year</span>
+    <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+    <Tooltip placement="right" type="light" transition={slide}>
+      <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        Publication year range of the study. Use this filter to limit results to a specific time period.
+      </div>
+    </Tooltip>
+  </label>
+
+  <div class="relative flex items-center gap-2 mb-6">
+
+      <Input bind:value={$minYearStore} type="number" id="quantity-input" aria-describedby="helper-text-explanation" min="1970" max={currentYear} placeholder="1970" step="1" required class="w-18! text-center" />
+      <div>—</div>
+      <Input bind:value={$maxYearStore} type="number" id="quantity-input" aria-describedby="helper-text-explanation" min="{$minYearStore}" max={currentYear} placeholder="2026" step="1" required class="w-18! text-center" />
+
+  </div>
 
   </AccordionItem>
+
 
   <!-- Participants -->
   <AccordionItem  open={false}>

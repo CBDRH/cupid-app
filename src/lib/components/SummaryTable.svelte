@@ -78,6 +78,7 @@
 
             <TableBodyCell class="whitespace-normal break-normal max-w-sm">
                 {row.activity_script_v1_1}
+                {row.use_summary_1}
             </TableBodyCell>
 
             <TableBodyCell class="whitespace-normal break-all max-w-sm">  
