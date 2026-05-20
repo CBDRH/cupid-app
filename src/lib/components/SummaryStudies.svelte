@@ -98,7 +98,7 @@ $effect(() => {
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal pointer-events-auto">
           <h2>Interpreting the overall study impact</h2>
           
-          <div class="flex w-[100%] m-auto h-2 rounded overflow-hidden">
+          <div class="flex w-[100%] m-auto h-3 rounded overflow-hidden">
           {#each values as value, i}
             <div 
               class={`h-full flex items-center justify-center bg-${colors[i]}`}
@@ -106,20 +106,30 @@ $effect(() => {
             >
           </div>
           {/each}
+
           </div>
-          This bar shows the strenth of evidence based on the {total} studies that match your selected activities and filter settings.
-          <br>
-          <b>Positive impact</b> means that the evaluation study found that the included activities had a statistically significant positive impact on at least one outcome.
-          <br>
-          <b>No impact</b> means that the evaluation study did not find that the included activities had a statistically significant positive impact on any outcome.
-          <br>
-          <b>Negative impact</b> means that the evaluation study found that the included activities had a statistically significant negative impact on at least one outcome
+          
+          <div class="text-sm mt-1 text-gray-600 italic">
+          This bar shows the strength of evidence based on the {total} studies that match your selected activity and filter settings.
+          </div>
+
+          <div class="flex flex-col gap-1 mt-2">
+            <div class="bg-green-50 px-2 py-2 rounded text-green-950">
+              <span class="font-bold text-green-50 bg-green-500 px-2 py-1 rounded">Positive impact</span> means that, overall, the evaluation studies found that the selected activity had a statistically significant positive impact on at least one outcome.
+            </div>
+            <div class="bg-orange-50 px-2 py-2 rounded text-orange-950">
+              <span class="font-bold text-orange-50 bg-orange-500 px-2 py-1 rounded">No impact</span> means that, overall, the evaluation studies did not find that the selected activity had a statistically significant positive impact on any outcome.
+            </div>
+            <div class="bg-red-50 px-2 py-2 rounded text-red-950">  
+              <span class="font-bold text-red-50 bg-red-500 px-2 py-1 rounded">Negative impact</span> means that, overall, the evaluation studies found that the selected activity had a statistically significant negative impact on at least one outcome
+            </div>  
+          </div>
         </div>
       </Tooltip>
   </div>   
 </h2>
 
-<div class="text-sm mb-3">
+<div class="text-sm mb-3 text-gray-700 italic">
     <p>{positive} out of {total} studies showed support for this initiative</p>
 </div>
 

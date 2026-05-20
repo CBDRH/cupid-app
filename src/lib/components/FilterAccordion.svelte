@@ -235,9 +235,6 @@ function removeFilterItem(value) {
       <Checkbox bind:group={$settingStore} choices={settingChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
-
-  
-  
   
   </AccordionItem>
 </Accordion>  

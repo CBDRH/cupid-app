@@ -60,7 +60,7 @@
 
         <TableBody>
         {#each filteredItems as row, i}
-            <TableBodyRow class="text-gray-800">
+            <TableBodyRow class="text-gray-800 align-top">
             <TableBodyCell class="whitespace-normal break-words max-w-md">
                 <a
                     href={row.study_url}
