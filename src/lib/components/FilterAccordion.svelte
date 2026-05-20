@@ -7,25 +7,6 @@ import { drugChoices, sexChoices, lifestagesChoices, priorityChoices, continentC
 import { drugStore, sexStore, lifestagesStore, priorityStore, continentStore, urbanicityStore, settingStore } from "$lib/stores/filterStores";
 import { derived } from 'svelte/store';
 
-let selectedDrug = $state([]);
-let selectedSex = $state([]);
-let selectedLifestages = $state([]);
-let selectedPriority = $state([]);
-let selectedContinent = $state([]);
-let selectedUrbanicity = $state([]);
-let selectedSetting = $state([]);
-
-// Update the store based on the values of selected checkboxes
-$effect(() => {
-  drugStore.set(selectedDrug);
-  sexStore.set(selectedSex);
-  lifestagesStore.set(selectedLifestages);
-  priorityStore.set(selectedPriority);
-  continentStore.set(selectedContinent);
-  urbanicityStore.set(selectedUrbanicity);
-  settingStore.set(selectedSetting);
-});
-
 export const combinedFiltersArrayStore = derived(
   [
     drugStore,
@@ -51,13 +32,13 @@ function removeFromArray(arr, value) {
 
 // This function runs removeFromStore across all Stores
 function removeFilterItem(value) {
-  selectedDrug = removeFromArray(selectedDrug, value);
-  selectedSex = removeFromArray(selectedSex, value);
-  selectedLifestages = removeFromArray(selectedLifestages, value);
-  selectedPriority = removeFromArray(selectedPriority, value);
-  selectedContinent = removeFromArray(selectedContinent, value);
-  selectedUrbanicity = removeFromArray(selectedUrbanicity, value);
-  selectedSetting = removeFromArray(selectedSetting, value);
+  $drugStore = removeFromArray($drugStore, value);
+  $sexStore = removeFromArray($sexStore, value);
+  $lifestagesStore = removeFromArray($lifestagesStore, value);
+  $priorityStore = removeFromArray($priorityStore, value);
+  $continentStore = removeFromArray($continentStore, value);
+  $urbanicityStore = removeFromArray($urbanicityStore, value);
+  $settingStore = removeFromArray($settingStore, value);
 }
 
 
@@ -65,7 +46,7 @@ function removeFilterItem(value) {
 
 </script>
 
-<!-- <p>{JSON.stringify($sexStore)}</p> -->
+<!-- <p>{$combinedFiltersArrayStore.length}</p> -->
 
 
 
@@ -129,7 +110,7 @@ function removeFilterItem(value) {
      
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedDrug} choices={drugChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$drugStore} choices={drugChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
   </AccordionItem>
@@ -156,7 +137,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedSex} choices={sexChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$sexStore} choices={sexChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
     <!-- Lifestage -->
@@ -172,7 +153,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedLifestages} choices={lifestagesChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$lifestagesStore} choices={lifestagesChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
     <!-- Priority populations -->
@@ -188,7 +169,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedPriority} choices={priorityChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$priorityStore} choices={priorityChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
   </AccordionItem>
@@ -217,7 +198,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedContinent} choices={continentChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$continentStore} choices={continentChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
 
@@ -234,7 +215,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedUrbanicity} choices={urbanicityChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$urbanicityStore} choices={urbanicityChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
 
@@ -251,7 +232,7 @@ function removeFilterItem(value) {
 
     <Listgroup class="mb-6">
       <!-- Directly bind the Checkbox group to the store -->
-      <Checkbox bind:group={selectedSetting} choices={settingChoices} color="green" classes={{ div: "p-2"}} />
+      <Checkbox bind:group={$settingStore} choices={settingChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
 
