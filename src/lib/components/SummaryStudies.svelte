@@ -199,7 +199,7 @@ $effect(() => {
         <TableHeadCell class="w-[10%]">Details</TableHeadCell>
         </TableHead>
 
-        <TableBody class="bg-gray-50">
+        <TableBody class="bg-gray-50 align-top">
         {#each filteredBySubset as row, i}
             <TableBodyRow class="text-gray-800">
             <TableBodyCell class="whitespace-normal break-words max-w-md">

@@ -40,9 +40,9 @@ export const evidenceLevels = [
   },
   {
     label: "Potential",
-    bgColor: "bg-amber-300",
-    textColor: "text-amber-700",
-    labelColor: "text-amber-50",
+    bgColor: "bg-amber-200",
+    textColor: "text-amber-500",
+    labelColor: "text-amber-600",
     icon: faCircleQuestion,
     hoverMessage:
       "<b>Potential</b> At least three studies that met your search criteria have evaluated this activity and approximately half of these studies (between 45.9% to 59.9%) report a positive or mixed impact on outcomes (a ratio between 0.85:1 and 1.5:1)",
