@@ -11,12 +11,12 @@
 
   <div class="flex flex-row gap-4 mb-4 pr-4 justify-end">
 
-    <A href="/about">About
+    <a href="/about">About
       <FontAwesomeIcon
         style="width: 1rem; height: 1rem"  
         icon={faCircleQuestion} class="ms-2 h-6 w-6"/>
-    </A>
-    <A href="/resources">Additional support
+    </a>
+    <A href="/resources">Resources
       <FontAwesomeIcon 
         style="width: 1rem; height: 1rem"  
         icon={faCircleNodes} class="ms-2 h-6 w-6"/>

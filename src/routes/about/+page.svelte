@@ -1,8 +1,10 @@
 <script>
     import Footer from "$lib/components/Footer.svelte"
+    import BackButton from "$lib/components/BackButton.svelte";
+    import {A} from "flowbite-svelte";
 </script>
 
-<div class="p-3 mx-50">
+<main class="px-32 py-16">
 
 <h1 class="my-3">CUPID HOMEPAGE</h1>
 
@@ -61,11 +63,12 @@ When you select filters, CUPID will show a summary of all published evaluation s
 
 <p>All information in CUPID has been extracted from published evaluation studies by a trained researcher at the National Drug and Alcohol Research Centre and checked by a second researcher. Decisions made around the quality of studies was made independently by two researchers with disagreements resolved through discussion. For more details, visit our Contacts page.</p>
 
-Additional resources
-CUPID also provides links to resources for communities interested in delivering CCI and how to evaluate the impact of CCI.
+<h2 class="mt-6">Additional resources</h2>
+<p>CUPID also provides <A class="underline" href="/resources">additional resources</A> for communities interested in delivering CCI and how to evaluate the impact of CCI.</p>
 
-</div>
+<BackButton />
 
+</main> 
 
 <Footer />
 

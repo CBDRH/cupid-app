@@ -1,17 +1,17 @@
 <script lang="ts">
   import {
     Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, TableSearch,
-     Indicator, Button, Popover } from "flowbite-svelte";
+     Indicator, Button, Popover, Clipboard, A } from "flowbite-svelte";
   import { filteredActivity, selectedLabel, selectedOption } from "$lib/stores/filterStores";
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-  import { InfoCircleSolid, StarSolid } from "flowbite-svelte-icons";
+  import { InfoCircleSolid, StarSolid, QuoteSolid, CheckOutline, ClipboardCleanSolid } from "flowbite-svelte-icons";
   import { studyDetails } from "$lib/constants/studyDetails.js";
   import { impactLevels } from "$lib/constants/impactLevels";
   import { impactCodes } from "$lib/constants/impactLevels.js";
 
   let total = $state(0)
-  
+  let success = $state(false);
 
 
   // Handles clickable row in table
@@ -42,19 +42,19 @@
 
     <div class="mt-12">
         <h2 class="mb-4">
-        Details of the {total} studies that evaluated the impact of 
-        <span class="font-semibold text-xs rounded-lg p-2 text-gray-50 bg-gray-700 uppercase tracking-wide">
-            {$selectedLabel}: {$selectedOption}
-        </span>
-    </h2>
+            Details of the {total} studies that evaluated the impact of
+            <span class="font-semibold text-xl rounded-lg p-1 text-gray-50 bg-gray-700 uppercase tracking-wide">
+                {$selectedLabel}: {$selectedOption}
+            </span>
+        </h2>
 
     
+    <div class="max-h-screen mb-16">
     <TableSearch placeholder="Search by study title or authors" hoverable bind:inputValue={searchTerm}>
-    <div class="max-h-screen overflow-y-auto">
-    <Table color="custom" hoverable={false} class="table w-full table-fixed">
+    <Table color="custom" hoverable={false} class="table w-full table-fixed mb-18">
         <TableHead class = "bg-gray-700 text-white">
-        <TableHeadCell class="w-[10%]">Lead author</TableHeadCell>
-        <TableHeadCell class="w-[10%]">Publication year</TableHeadCell>
+        <TableHeadCell class="w-[15%]">Study</TableHeadCell>
+        <TableHeadCell class="w-[5%]">Cite</TableHeadCell>
         <TableHeadCell class="w-[60%]">Activity</TableHeadCell>
         <TableHeadCell class="w-[10%]">Rating</TableHeadCell>
         <TableHeadCell class="w-[10%]">Details</TableHeadCell>
@@ -70,13 +70,51 @@
                     target="_blank"
                     rel="noopener noreferrer"    
                     >
-                {row.study_author} <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                {row.study_author} <em>et al</em> ({row.study_year}) <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
                 </a>
             </TableBodyCell>
 
-            <TableBodyCell class="whitespace-normal break-all">
-                {row.study_year}
+            <!-- Cite -->
+            <TableBodyCell>
+                <!-- Quotation mark that shows the study reference on hover -->
+                <QuoteSolid />
+                <Popover
+                    class="whitespace-normal break-words max-w-sm"
+                    title="Study Reference">
+                    
+                    <div class="flex flex-col">
+                    
+                        <div>
+                            <a
+                                href={row.study_url}
+                                class="inline-flex gap-1 cursor-pointer hover:underline"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                <span>
+                                    {row.reference}
+                                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="inline w-5 h-5 opacity-70" />
+                                </span>
+                            </a>
+                        </div>
+
+                        <Clipboard
+                            value={row.reference}
+                            bind:success
+                            size="xs"
+                            class="mt-2 w-[40%] bg-slate-600 cursor-pointer"
+                            >
+                            {#if success}
+                                <CheckOutline class="w-4 h-4" /> Copied
+                            {:else}
+                                <ClipboardCleanSolid class="w-4 h-4" /> Copy Reference
+                            {/if}
+                        </Clipboard>
+
+                    </div>
+                </Popover>
+
             </TableBodyCell>
+
 
             <TableBodyCell class="whitespace-normal break-normal max-w-sm">
                 {row.activity_script_v1_1}
@@ -168,8 +206,8 @@
         {/each}
         </TableBody>
     </Table>
-    </div>
     </TableSearch>
+   </div> 
 </div>
 
 

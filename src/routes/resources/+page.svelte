@@ -1,24 +1,24 @@
 <script>
+    import BackButton from "$lib/components/BackButton.svelte";
     import Footer from "$lib/components/Footer.svelte"
+    import { TextPlaceholder } from "flowbite-svelte";
 </script>
 
-<h1>Additional supports</h1>
+
+<main class="px-32 py-16">
+
+<h1>Additional Resources</h1>
+<TextPlaceholder size="4xl" />
+
 
 <h2>Supports for CCI Implementation</h2>
+<TextPlaceholder size="4xl" />
 
-Section to list factors associated with impact
--	Multiple activities
--	Community involvement
-Section for references
--	Reviews
--	Articles
+<h2>Supports for CCI Evaluation</h2>
+<TextPlaceholder size="4xl" />
 
-
-<h2>Supports for CCI Evaliuation</h2>
-Section for Program Logic stuff
-Section for references
--	Reviews
--	Articles
+<BackButton />
+</main>
 
 <Footer />
 

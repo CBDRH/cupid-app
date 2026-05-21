@@ -4,7 +4,6 @@
   import Tabset from '$lib/components/Tabset.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import SelectActivity from '$lib/components/SelectActivity.svelte';
-  import TestTable from '$lib/components/TestTable.svelte';
   import { onMount } from 'svelte';
   import { dataStore, activityStore } from '$lib/stores/dataStore';
   import { writable } from 'svelte/store';
@@ -50,21 +49,23 @@
   <b>Note</b> CUPID is still under development and we are continuously addining new features
 </Alert>
 
-<div class="flex h-screen">
-
+<div class="flex min-h-screen">
   <!-- Sidebar -->
-  <Sidebar/>
+  <Sidebar />
 
-  <!-- Main content -->
-  <div class="flex-1 flex flex-col overflow-auto">
+  <!-- Content area -->
+  <div class="flex flex-col flex-1">
     <Header />
-    <TestTable />
-    <SelectActivity />
-    <Tabset />
+
+    <main class="flex-1 pb-12">
+      <SelectActivity />
+      <Tabset />
+    </main>
+  
+  <Footer />
+  
   </div>
 </div>
-
-<Footer />
 
 
 <!-- Modal -->

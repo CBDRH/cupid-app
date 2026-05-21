@@ -41,7 +41,7 @@ export const evidenceLevels = [
   {
     label: "Potential",
     bgColor: "bg-amber-200",
-    textColor: "text-amber-500",
+    textColor: "text-amber-600",
     labelColor: "text-amber-600",
     icon: faCircleQuestion,
     hoverMessage:
