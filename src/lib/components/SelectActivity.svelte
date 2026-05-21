@@ -97,8 +97,8 @@ activityList.forEach(group => {
   <button
     bind:this={buttonEl}
     class="w-full flex justify-left items-center gap-2 px-3 py-4 mb-6
-           bg-gray-300 text-gray-700 rounded
-           hover:bg-gray-700 hover:text-gray-300 text-base font-semibold uppercase tracking-wide text-sm
+           bg-gradient-to-r from-slate-400 to-slate-200 text-slate-800 rounded
+           hover:bg-gradient-to-l hover:from-slate-700 hover:to-slate-800 hover:text-slate-300 text-base font-semibold uppercase tracking-wide text-sm
            transition-colors cursor-pointer"
     onclick={() => open = !open}
   >
@@ -111,7 +111,7 @@ activityList.forEach(group => {
     {/if}  
     <span>Prevention activity:</span>
     {#if $selectedOption}
-        <span class="font-semibold rounded-lg p-2 text-gray-50 bg-gray-700">{$selectedLabel}: {$selectedOption}</span>
+        <span class="font-semibold rounded-lg p-2 text-gray-50 bg-slate-800">{$selectedLabel}: {$selectedOption}</span>
     {/if} 
   </button>
 
