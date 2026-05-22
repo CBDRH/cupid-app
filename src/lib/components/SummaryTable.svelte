@@ -162,7 +162,7 @@
 
                 </Button>
                     <Popover
-                        class="w-188 text-sm font-light border-2 !border-slate-600 "
+                        class="w-216 text-sm font-light border-2 !border-slate-600 "
                         title={`${row.study_author} et al (${row.study_year}): Study Outcomes`}
                         >
 
