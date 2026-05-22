@@ -9,6 +9,8 @@
   import { studyDetails } from "$lib/constants/studyDetails.js";
   import { impactLevels } from "$lib/constants/impactLevels";
   import { impactCodes } from "$lib/constants/impactLevels.js";
+  import { outcomes } from "$lib/constants/outcomeLevels.js";
+
 
   let total = $state(0)
   let success = $state(false);
@@ -55,13 +57,17 @@
         <TableHead class = "bg-gray-700 text-white">
         <TableHeadCell class="w-[15%]">Study</TableHeadCell>
         <TableHeadCell class="w-[5%]">Cite</TableHeadCell>
-        <TableHeadCell class="w-[60%]">Activity</TableHeadCell>
+        <TableHeadCell class="w-[50%]">Activity</TableHeadCell>
+        <TableHeadCell class="w-[10%]">Outcomes</TableHeadCell>
         <TableHeadCell class="w-[10%]">Rating</TableHeadCell>
         <TableHeadCell class="w-[10%]">Details</TableHeadCell>
         </TableHead>
 
         <TableBody>
         {#each filteredItems as row, i}
+
+        {@const count = outcomes.filter(o => row[o.variable] == 1).length}
+
             <TableBodyRow class="text-gray-800 align-top">
             <TableBodyCell class="whitespace-normal break-words max-w-md">
                 <a
@@ -115,7 +121,7 @@
 
             </TableBodyCell>
 
-
+            <!-- The actual activity -->
             <TableBodyCell class="whitespace-normal break-normal max-w-sm">
                 {row.activity_script_v1_1}
 
@@ -140,10 +146,60 @@
                     {/if}
                     {/each}
                 </div>
-                
-
+                            
             </TableBodyCell>
+            
+            <!-- The hoverable button that shows the number of outcomes -->
+            <TableBodyCell class="whitespace-normal break-all max-w-sm">
+                <Button    
+                    class="relative cursor-pointer bg-slate-600 hover:bg-slate-800"
+                    size="sm">
+                    <InfoCircleSolid class="text-white dark:text-white" />
+                    
+                    <Indicator color="blue" border size="xl" placement="top-right" class="text-xs font-bold">
+                        {count}
+                    </Indicator>
 
+                </Button>
+                    <Popover
+                        class="w-188 text-sm font-light border-2 !border-slate-600 "
+                        title={`${row.study_author} et al (${row.study_year}): Study Outcomes`}
+                        >
+
+                    <!-- Table of outcomes examined -->
+                    <Table color="custom" hoverable={true} class="table w-full table-fixed">
+                        <TableHead class = "bg-gray-700 text-slate-100 hover:text-slate-800">
+                            <TableHeadCell class="w-[20%]">Outcome Type</TableHeadCell>
+                            <TableHeadCell class="w-[20%]">Target Drug</TableHeadCell>
+                            <TableHeadCell class="w-[60%]">Description</TableHeadCell>
+                        </TableHead>
+                        <TableBody class="text-white">
+                            {#each outcomes as outcome, i}
+                            {#if row[outcome.variable] === 1}
+                                <TableBodyRow class="text-slate-300 hover:text-slate-800 align-top">
+
+                                    <TableBodyCell class="whitespace-normal break-words max-w-md capitalize py-1">
+                                    {outcome.outcome}
+                                    </TableBodyCell>
+                                    
+                                    <TableBodyCell class="whitespace-normal break-words max-w-md capitalize py-1">
+                                    {outcome.drug}
+                                    </TableBodyCell>
+                                    
+                                    <TableBodyCell class="whitespace-normal break-words max-w-md py-1">
+                                    {outcome.definition}
+                                    </TableBodyCell>
+
+                                </TableBodyRow>
+                                {/if}
+                            {/each}
+                        </TableBody>
+                    </Table> 
+
+                    </Popover>
+            </TableBodyCell>      
+
+            <!-- Star Rating -->
             <TableBodyCell class="whitespace-normal break-all max-w-sm">  
                 
                     <div class="flex gap-1">
@@ -163,7 +219,7 @@
                             }
                         }}
                         class="relative cursor-pointer bg-gray-800 hover:bg-gray-500
-                                disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+                                disabled:bg-gray-500 disabled:cursor-not-allowed"
                         size="sm" 
                         disabled={row.extraInfo === 0} >
                         <InfoCircleSolid class="text-white dark:text-white" />

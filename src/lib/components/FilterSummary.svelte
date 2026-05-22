@@ -2,8 +2,6 @@
     import { dataStore } from '$lib/stores/dataStore';
     import { filteredData } from '$lib/stores/filterStores';
     import { FilePdfSolid } from "flowbite-svelte-icons";
-    import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-    import { faCircleArrowLeft, faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 let total = $state(0);
 let selected = $state(0);
@@ -24,7 +22,7 @@ $effect(() => {
       <!-- Left: vertical bar -->
       <div class="w-6 h-full bg-gray-300 relative rounded">
         <div
-          class={`w-full absolute bottom-0 rounded transition-all duration-500 ease-out
+          class={`w-full absolute bottom-0 rounded transition-all duration-900 ease-out
           ${isLow ? 'bg-red-600' : 'bg-gray-800'}`}
           style="height: {fraction * 100}%"
         ></div>

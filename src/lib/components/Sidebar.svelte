@@ -10,33 +10,34 @@
 </script>
 
 
-<!-- Show when the sidebar is open -->
-{#if ! collapseSidebar}
-  <aside class="bg-gray-50 px-3 w-[20%] border border-gray-300">
-    
-    <div class="flex justify-end">
-      <Button
-        class="bg-transparent text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl focus:ring-0"
-        onclick={() => collapseSidebar = !collapseSidebar}>
-      <FontAwesomeIcon icon={faAnglesLeft}/>
-      </Button>
-    </div>
-    
-    <FilterSummary/>
-    <FilterAccordion/>
-  </aside>
-{/if}  
+<aside
+  class="bg-gray-50 border border-gray-300 transition-all duration-300 ease-in-out overflow-hidden"
+  class:w-[4%]={collapseSidebar}
+  class:w-[20%]={!collapseSidebar}
+  // onmouseenter={() => collapseSidebar = !collapseSidebar}
+  >
+  <div class="flex justify-end">
+    <Button
+      class="bg-transparent text-slate-500 text-xl cursor-pointer hover:text-slate-800 focus:ring-0"
+      onclick={() => collapseSidebar = !collapseSidebar}
+    >
 
-<!-- Show when the sidebar is collapsed -->
-{#if collapseSidebar}
-  <aside class="bg-gray-50 w-[4%] border border-gray-300">
-    <div class="flex flex-row">
-      <Button
-        class="flex justify-start text-gray-950 text-xl transition-colors duration-300 cursor-pointer hover:text-2xl focus:ring-0"
-        onclick={() => collapseSidebar = !collapseSidebar}
-      >
-        <FontAwesomeIcon icon={faAnglesRight}/>
-      </Button>
+    {#key collapseSidebar}
+      <FontAwesomeIcon
+        icon={collapseSidebar ? faAnglesRight : faAnglesLeft}
+        class="transition-transform duration-300"
+      />
+    {/key}
+
+    </Button>
+  </div>
+
+  {#if !collapseSidebar}
+
+  <div class="p-4">
+    <FilterSummary />
+    <FilterAccordion />
     </div>
-  </aside>
-{/if}
+  {/if}
+
+</aside>
