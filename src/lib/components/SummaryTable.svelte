@@ -173,7 +173,7 @@
                             <TableHeadCell class="w-[20%]">Target Drug</TableHeadCell>
                             <TableHeadCell class="w-[60%]">Description</TableHeadCell>
                         </TableHead>
-                        <TableBody class="text-white">
+                        <TableBody>
                             {#each outcomes as outcome, i}
                             {#if row[outcome.variable] === 1}
                                 <TableBodyRow class="text-slate-300 hover:text-slate-800 align-top">
