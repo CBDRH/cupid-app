@@ -20,7 +20,7 @@ $effect(() => {
   <div class="grid grid-cols-[auto_1fr] gap-2 items-center max-h-[20vh] mb-6">
 
       <!-- Left: vertical bar -->
-      <div class="w-6 h-full bg-gray-300 relative rounded">
+      <div class="w-6 h-full bg-foreground relative rounded">
         <div
           class={`w-full absolute bottom-0 rounded transition-all duration-900 ease-out
           ${isLow ? 'bg-red-600' : 'bg-gray-800'}`}

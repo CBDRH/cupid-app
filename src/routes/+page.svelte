@@ -11,6 +11,7 @@
   import { Alert } from 'flowbite-svelte';
   import { ExclamationCircleSolid } from "flowbite-svelte-icons";
   import { fly } from "svelte/transition";
+  import Test from '$lib/components/Test.svelte';
 
   // modal visibility
   let showModal = writable(false);
@@ -43,7 +44,6 @@
   });
 
 </script>
-
 <Alert color="red" dismissable transition={fly} params={{ x: 200 }}>
   {#snippet icon()}<ExclamationCircleSolid/>{/snippet}
   <b>Note</b> CUPID is still under development and we are continuously addining new features
@@ -55,6 +55,8 @@
 
   <!-- Content area -->
   <div class="flex flex-col flex-1">
+    <Test />
+    
     <Header />
 
     <main class="flex-1 pb-12">
@@ -103,9 +105,9 @@
   </div>
 {/if}
 
-<style lang="postcss">
+<!-- <style lang="postcss">
   @reference "tailwindcss";
   :global(html) {
     background-color: theme(--color-white);
   }
-</style>
+</style> -->

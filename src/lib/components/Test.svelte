@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { Table } from "@flowbite-svelte-plugins/datatable";
 
-  let items = [];
-
-  onMount(async () => {
-    const res = await fetch("/data/test.json");
-    items = await res.json();
-  });
 </script>
 
-<Table {items} />
+<div >
+  <p class="text-foreground">Foreground</p>
+  <p class="text-border">Border</p>
+  <p class="text-accent">Accent</p>
+  <p class="text-surface">Surface</p>
+  <p class="text-muted">Muted</p>
+</div>

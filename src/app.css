@@ -1,11 +1,41 @@
 @import "tailwindcss";
-@import "flowbite";
+
 @custom-variant dark (&:where(.dark, .dark *));
+
+@import "flowbite";
+
+:root {
+  --color-background: #f5f8fa;
+  --color-foreground: #0f172a;
+  --color-border: #e2e8f0;
+  --color-accent: #3b82f6;
+  --color-surface: #ffffff;
+  --color-muted: #cbd5e1;
+}
+
+html.dark {
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-border: #334155;
+  --color-accent: #60a5fa;
+  --color-surface: #1e293b;
+  --color-muted: #475569;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
 /* ... */
 @source "../node_modules/flowbite-svelte/dist";
 @source "../node_modules/flowbite-svelte-icons/dist";
 
+/* Light Theme */
+
 @layer base {
+
   h1 {
     @apply text-3xl font-bold mb-4 text-gray-800;
   }

@@ -11,7 +11,7 @@
 
 
 <aside
-  class="bg-gray-50 border border-gray-300 transition-all duration-300 ease-in-out overflow-hidden"
+  class="bg-background text-foreground transition-all duration-300 ease-in-out overflow-hidden"
   class:w-[4%]={collapseSidebar}
   class:w-[20%]={!collapseSidebar}
   // onmouseenter={() => collapseSidebar = !collapseSidebar}
