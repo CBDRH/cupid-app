@@ -1,10 +1,11 @@
 <script>
+    import Header from "$lib/components/Header.svelte";
     import BackButton from "$lib/components/BackButton.svelte";
     import Footer from "$lib/components/Footer.svelte"
     import { TextPlaceholder } from "flowbite-svelte";
 </script>
 
-
+<Header />
 <main class="px-32 py-16">
 
 <h1>Additional Resources</h1>

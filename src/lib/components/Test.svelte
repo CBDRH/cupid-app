@@ -2,10 +2,6 @@
 
 </script>
 
-<div >
-  <p class="text-foreground">Foreground</p>
-  <p class="text-border">Border</p>
-  <p class="text-accent">Accent</p>
-  <p class="text-surface">Surface</p>
-  <p class="text-muted">Muted</p>
+<div class="bg-background text-foreground border border-border p-2 mb-4">
+  Background colour, foreground text
 </div>

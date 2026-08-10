@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import image from '$lib/assets/CUPID_final_OUTLINED.svg';
+  import imageLight from '$lib/assets/cupid-logo-light.png';
+  import imageDark from '$lib/assets/cupid-logo-dark.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faCircleQuestion, faCircleNodes, faEnvelope, faMoon, faLightbulb } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +9,7 @@
   let theme = 'light';
 
   const getButtonClasses = () =>
-    'absolute top-4 right-4 rounded-md border border-border bg-surface px-3 py-2 bg-background text-foreground shadow-sm transition hover:bg-muted active:scale-95';
+    'rounded-md bg-surface px-3 py-2 text-foreground shadow-md transition hover:bg-gray-100 dark:hover:bg-red-500 active:scale-95';
 
   const toggleTheme = () => {
     document.documentElement.classList.toggle('dark');
@@ -30,15 +31,37 @@
   });
 </script>
 
-<div class="bg-background text-foreground border border-border shadow-md rounded-lg mb-2">
+<header class="flex justify-between items-start px-6 shadow border-b border-border">
   
+  <div class="flex items-center ml-4">
+    <a href="/"> 
+      <img
+        src={theme === 'dark' ? imageLight : imageDark}
+        alt="Landscape"
+        class="w-64"
+      />
+    </a>
+</div>
 
-  <div class="relative">
-    <img
-      src={image}
-      alt="Landscape"
-      class="w-full max-h-[2230px] object-cover"
-    />
+  <nav class="flex items-center gap-4 mt-6">
+
+    <A href="/about">About
+      <FontAwesomeIcon
+        style="width: 1rem; height: 1rem"  
+        icon={faCircleQuestion} class="ms-2 h-6 w-6"/>
+    </A>
+
+    <A href="/resources">Resources
+      <FontAwesomeIcon 
+        style="width: 1rem; height: 1rem"  
+        icon={faCircleNodes} class="ms-2 h-6 w-6"/>
+    </A>
+    
+    <A href="/contact">Contact
+      <FontAwesomeIcon
+        style="width: 1rem; height: 1rem"  
+        icon={faEnvelope} class="ms-2 h-6 w-6"/>
+    </A>
 
     <button
       type="button"
@@ -47,34 +70,14 @@
       class={getButtonClasses()}
     >
       {#if theme === 'dark'}
-        <FontAwesomeIcon icon={faLightbulb} class="h-5 w-5" />
+        <FontAwesomeIcon icon={faLightbulb} />
       {:else}
-        <FontAwesomeIcon icon={faMoon} class="h-5 w-5" />
+        <FontAwesomeIcon icon={faMoon} />
       {/if}
       <span class="sr-only">Toggle theme</span>
     </button>
-  
-</div>
-
-  <div class="flex flex-row gap-4 mb-4 pr-4 justify-end">
-
-    <a href="/about">About
-      <FontAwesomeIcon
-        style="width: 1rem; height: 1rem"  
-        icon={faCircleQuestion} class="ms-2 h-6 w-6"/>
-    </a>
-    <A href="/resources">Resources
-      <FontAwesomeIcon 
-        style="width: 1rem; height: 1rem"  
-        icon={faCircleNodes} class="ms-2 h-6 w-6"/>
-    </A>
-    <A href="/contact">Contact
-      <FontAwesomeIcon
-        style="width: 1rem; height: 1rem"  
-        icon={faEnvelope} class="ms-2 h-6 w-6"/>
-    </A>
 
 
-  </div>
-</div>  
+  </nav>
+</header>  
 

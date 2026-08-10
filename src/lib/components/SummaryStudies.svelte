@@ -90,12 +90,14 @@ $effect(() => {
 
 </script>
 
-<h2 class="flex gap-1 items-baseline ">
+<h2 class="flex gap-1 items-baseline bg-background text-foreground">
   Evidence from previous community-wide studies
+
   <div class="relative inline-block group">
     <InfoCircleSolid class="hover:text-gray-600 cursor-help"/>
-      <Tooltip placement="right" type="light" transition={slide} trigger="hover" class="shadow-lg border border-blue-950">
+      <Tooltip placement="right" type="light" transition={slide} trigger="hover" class="shadow-lg border">
         <div class="max-w-sm font-normal leading-relaxed whitespace-normal pointer-events-auto">
+
           <h2>Interpreting the overall study impact</h2>
           
           <div class="flex w-[100%] m-auto h-3 rounded overflow-hidden">
@@ -129,7 +131,7 @@ $effect(() => {
   </div>   
 </h2>
 
-<div class="text-sm mb-3 text-gray-700 italic">
+<div class="text-sm mb-3 italic">
     <p>{positive} out of {total} studies showed support for this initiative</p>
 </div>
 
@@ -154,7 +156,7 @@ $effect(() => {
         placement="top"
         class="max-w-sm font-normal leading-relaxed whitespace-normal"
       >
-        {value} out of {total} eligible studies {message[i]}<br><span class="text-gray-700">Click bar for more</span>
+        {value} out of {total} eligible studies {message[i]}<br><span>Click bar for more</span>
       </Tooltip>
 
     </button>
@@ -173,7 +175,7 @@ $effect(() => {
       </Tooltip>
 
       <!-- Label -->
-      <span class="text-gray-700 text-sm">{item.label}</span>
+      <span class="text-sm">{item.label}</span>
     </div>
   {/each}
 </div>

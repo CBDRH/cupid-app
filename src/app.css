@@ -1,46 +1,52 @@
+@import url('https://fonts.cdnfonts.com/css/clancy');
+@import url('https://fonts.cdnfonts.com/css/roboto');
 @import "tailwindcss";
+@import "flowbite";
+
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@import "flowbite";
-
 :root {
-  --color-background: #f5f8fa;
-  --color-foreground: #0f172a;
-  --color-border: #e2e8f0;
-  --color-accent: #3b82f6;
+  --color-background: #fafaf9;
+  --color-foreground: #1c1917;
+  --color-border: #e7e5e4;
+  --color-accent: #0ea5e9;
   --color-surface: #ffffff;
-  --color-muted: #cbd5e1;
+  --color-muted: #78716c;
 }
 
 html.dark {
-  --color-background: #0f172a;
-  --color-foreground: #f8fafc;
-  --color-border: #334155;
-  --color-accent: #60a5fa;
-  --color-surface: #1e293b;
-  --color-muted: #475569;
+  --color-background: #14080E;
+  --color-foreground: #9AA8AC;
+  --color-border: #292524;
+  --color-accent: #38bdf8;
+  --color-surface: #1c1917;
+  --color-muted: #a8a29e;
 }
 
 body {
   min-height: 100vh;
   background-color: var(--color-background);
   color: var(--color-foreground);
+  font-family: 'Roboto', sans-serif;
 }
 
 /* ... */
 @source "../node_modules/flowbite-svelte/dist";
 @source "../node_modules/flowbite-svelte-icons/dist";
 
-/* Light Theme */
+
+/* Formatting */
+
 
 @layer base {
 
   h1 {
-    @apply text-3xl font-bold mb-4 text-gray-800;
+    @apply text-3xl font-bold mb-4;
   }
 
   h2 {
-    @apply text-2xl font-semibold mt-2 mb-1 text-gray-700;
+    font-family: sans-serif;
+    @apply text-2xl mt-2 mb-1;
   }
 }

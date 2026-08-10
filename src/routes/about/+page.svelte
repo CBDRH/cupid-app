@@ -1,9 +1,12 @@
 <script>
+    import Header from "$lib/components/Header.svelte";
     import Footer from "$lib/components/Footer.svelte"
     import BackButton from "$lib/components/BackButton.svelte";
     import {A} from "flowbite-svelte";
 </script>
 
+
+<Header />
 <main class="px-32 py-16">
 
 <h1 class="my-3">CUPID HOMEPAGE</h1>

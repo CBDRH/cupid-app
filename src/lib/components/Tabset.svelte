@@ -16,24 +16,24 @@
 </script>
 
 <div>
-  <div class="flex gap-0">
+  <div class="flex gap-2">
     {#each ["Evidence Summary", `Filtered study list (n=${selected})`, `CUPID study list (n=${total})`] as tab, i}
       <button
         onclick={() => activeTab = i}
-        class={`px-3 py-1 text-gray-700 rounded w-56 cursor-pointer 
-                ${activeTab === i ? 'font-semibold border-b-4 border-blue-950' : 'font-normal border border-gray-400'}`}>
+        class={`px-3 py-1 rounded w-56 cursor-pointer
+                ${activeTab === i ? 'font-semibold border-b-4 border-border' : 'font-normal border-b-1 border-border'}`}>
         {tab}
       </button>
     {/each}
   </div>
 
 
-  <div class="mt-4 p-4 border border-gray-300">
+  <div class="mt-4 p-4">
     {#if activeTab === 0}
-      <div class="bg-slate-800/2 rounded-lg p-4">
+      <div class="rounded-lg p-4">
         <SummaryStudies />
       </div>
-      <div class="mt-4 bg-slate-800/2 rounded-lg p-4 mb-16">
+      <div class="mt-4 rounded-lg p-4 mb-16">
         <SummaryDrugs />
         <SummaryDetail />
       </div>

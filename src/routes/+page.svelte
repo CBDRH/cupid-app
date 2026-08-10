@@ -49,15 +49,15 @@
   <b>Note</b> CUPID is still under development and we are continuously addining new features
 </Alert>
 
+<Header />
+
 <div class="flex min-h-screen">
   <!-- Sidebar -->
   <Sidebar />
 
   <!-- Content area -->
   <div class="flex flex-col flex-1">
-    <Test />
-    
-    <Header />
+    <!-- <Test /> -->
 
     <main class="flex-1 pb-12">
       <SelectActivity />

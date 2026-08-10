@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // ✅ THIS is the key fix
+  darkMode: 'class', 
   content: [
     './src/**/*.{html,js,svelte,ts}'
   ],
@@ -14,7 +14,6 @@ export default {
         surface: 'var(--color-surface)',
         muted: 'var(--color-muted)'
       }
-    },
-  },
+    }},
   plugins: [],
 };

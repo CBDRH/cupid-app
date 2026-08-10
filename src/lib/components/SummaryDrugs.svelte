@@ -79,7 +79,7 @@ let infoReveal = $state("");
 
 </script>
 
-<div class="mt-6 dark:bg-gray-800">
+<div class="mt-6 bg-background text-foreground">
 
 <h2 class="flex gap-1 items-baseline">
   Potential impact on specific drugs

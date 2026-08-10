@@ -1,10 +1,12 @@
 <script>
+    import Header from "$lib/components/Header.svelte";
     import Footer from "$lib/components/Footer.svelte"
     import { CardPlaceholder } from "flowbite-svelte";
     import BackButton from "$lib/components/BackButton.svelte";
 
 </script>
 
+<Header />
 <main class="px-32 py-16">
 
     <h1>Contacts</h1>
