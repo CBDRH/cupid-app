@@ -21,13 +21,28 @@
   let illicitAgainst = $state(0);
   let unspecifiedFor = $state(0);
   let unspecifiedAgainst = $state(0);
-  let drugInfo = [
-    "<b>Alcohol</b> includes all types of standard alcoholic beverages",
-    "<b>Nicotene</b> includes cigarattes, smokeless tobacco, vapes, and second-hand smoke",
-    "<b>Cannabis</b> includes smoked cannabis, vaporised cannabis, and edibles",
-    "<b>Illicit drugs</b> includes methamphetamines, cocaine, inhalents, opioids, performance enhancers, hallucinogens, depressants and phamaceuticals (used outside of prescription)",
-    "<b>Unspecified</b> includes studies where the target substance was general or unspecified"
-  ]
+    let drugInfo = [
+    {
+      label: "Alcohol",
+      description: " includes all types of standard alcoholic beverages"
+    },
+    {
+      label: "Nicotine",
+      description: " includes cigarettes, smokeless tobacco, vapes, and second-hand smoke"
+    },
+    {
+      label: "Cannabis",
+      description: " includes smoked cannabis, resin, vaporised cannabis, and edibles"
+    },
+    {
+      label: "Illicit drugs",
+      description: " includes methamphetamines, cocaine, inhalants, opioids, performance enhancers, hallucinogens, depressants, and pharmaceuticals used outside of a prescription"
+    },
+    {
+      label: "Unspecified",
+      description: " includes studies where the target substance was general or unspecified"
+    }
+  ];
 
   // Update evidence based on filtered studies
   $effect(() => {
@@ -185,8 +200,8 @@ let infoReveal = $state("");
             {card.label}
             <InfoCircleSolid class={`${evidenceLevels[summaryArray[i]].textColor} hover:text-gray-600 cursor-help`}/>
             <Tooltip placement="right" type="light" transition={slide}>
-            <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
-              {@html drugInfo[i]}
+            <div class="max-w-sm leading-relaxed whitespace-normal">
+              <span class="!font-bold">{drugInfo[i].label}</span>{drugInfo[i].description}
             </div>
           </Tooltip>
         </span>

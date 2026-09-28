@@ -4,12 +4,12 @@
   import imageDark from '$lib/assets/cupid-logo-dark.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import { faCircleQuestion, faCircleNodes, faEnvelope, faMoon, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+  import { faCircleQuestion, faCircleNodes, faEnvelope, faMoon, faLightbulb, faHome } from "@fortawesome/free-solid-svg-icons";
 
   let theme = 'light';
 
   const getButtonClasses = () =>
-    'rounded-md bg-surface px-3 py-2 text-foreground shadow-md transition hover:bg-gray-100 dark:hover:bg-red-500 active:scale-95';
+    'rounded-md bg-surface px-3 py-2 text-foreground shadow-md transition hover:bg-blue-700 dark:hover:bg-red-700 active:scale-95';
 
   const toggleTheme = () => {
     document.documentElement.classList.toggle('dark');
@@ -44,6 +44,12 @@
 </div>
 
   <nav class="flex items-center gap-4 mt-6">
+
+    <A href="/">Home
+      <FontAwesomeIcon
+        style="width: 1rem; height: 1rem"  
+        icon={faHome} class="ms-2 h-6 w-6"/>
+    </A>
 
     <A href="/about">About
       <FontAwesomeIcon

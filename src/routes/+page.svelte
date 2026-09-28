@@ -17,8 +17,12 @@
   let showModal = writable(false);
 
   onMount(() => {
-    // show modal when page loads
-    showModal.set(true);
+    const modalShown = sessionStorage.getItem('cupid-welcome-modal-shown');
+
+    if (!modalShown) {
+      showModal.set(true);
+      sessionStorage.setItem('cupid-welcome-modal-shown', 'true');
+    }
   });
 
   function closeModal() {
@@ -83,7 +87,7 @@
 
       <h2 class="text-xl font-bold mb-2">Welcome to the CommUnity Prevention Initiative Dashboard (CUPID)!</h2>
       <p class="mb-4">
-        This free, public resource helps community members, policy makers, and program managers find and understand research on how community action can impact alcohol and other drug (AOD) use, related harms and associated behaviours.
+        This free resource helps community members, policymakers, and program managers find and understand research on how comprehensive community initiatives (CCIs) can impact alcohol and other drug (AOD) use, related harms, and associated behaviours.
       </p>
 
     <div class="flex justify-center gap-4">
