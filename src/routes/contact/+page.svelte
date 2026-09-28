@@ -80,7 +80,7 @@
       
       <!-- Text Content -->
       <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600 mb-1">Data Visualisation Lead</span>
-      <h3 class="text-xl text-gray-900 mb-2">Mark Hanly</h3>
+      <h3 class="text-xl text-gray-900 mb-2">Dr Mark Hanly</h3>
       <h3 class="text-md text-gray-600 mb-2">Center for Big Data Research in Health</h3>
       
       <!-- Links & Navigation -->
