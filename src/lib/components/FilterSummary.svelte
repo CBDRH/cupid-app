@@ -20,10 +20,10 @@ $effect(() => {
   <div class="grid grid-cols-[auto_1fr] gap-2 items-center max-h-[20vh] mb-6">
 
       <!-- Left: vertical bar -->
-      <div class="w-6 h-full bg-foreground relative rounded">
+      <div class="relative h-16 w-5 overflow-hidden rounded-md !bg-slate-300 dark:bg-slate-700">
         <div
-          class={`w-full absolute bottom-0 rounded transition-all duration-900 ease-out
-          ${isLow ? 'bg-red-600' : 'bg-gray-800'}`}
+          class={`absolute bottom-0 w-full rounded-md transition-[height] duration-700 ease-out
+            ${isLow ? 'bg-red-600' : 'bg-gray-800'}`}
           style="height: {fraction * 100}%"
         ></div>
       </div>
@@ -32,15 +32,17 @@ $effect(() => {
       <div class="flex flex-col justify-end gap-1 h-full">
         
         <!-- Top: big number with icon -->
-        <div class={`flex items-center gap-2 text-6xl font-bold ${isLow ? 'text-red-600' : 'text-gray-800'}`}>
-          <FilePdfSolid class="font-normal h-12 w-12 shrink-0" />
+        <div class={`flex items-center gap-2 text-3xl font-bold ${isLow ? 'text-red-600' : 'text-gray-800'}`}>
+          <FilePdfSolid
+            class={`h-8 w-8 shrink-0 ${isLow ? 'text-red-600 dark:text-red-400' : 'text-gray-800 dark:text-slate-200'}`}
+            />
           <span>{selected}</span>
         </div>
         
 
         <!-- Bottom: explanatory text -->
-        <div class={`text-sm ${isLow ? 'text-red-600' : 'text-gray-600'} `}>
-          studies selected from a total of {total}
+        <div class={`text-xs ${isLow ? 'text-red-600' : 'text-gray-600'} `}>
+        {selected} studies selected from a total of {total}
         </div>
         
       </div>
