@@ -118,7 +118,7 @@
                     target="_blank"
                     rel="noopener noreferrer"    
                     >
-                {row.study_author} <em>et al</em> ({row.study_year}) <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                <span class="text-left">{row.study_author} <span class="!italic">et al</span> ({row.study_year})</span> <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
                 </a>
             </TableBodyCell>
 

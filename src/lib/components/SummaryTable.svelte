@@ -69,14 +69,14 @@
         {@const count = outcomes.filter(o => row[o.variable] == 1).length}
 
             <TableBodyRow class="text-gray-800 align-top">
-            <TableBodyCell class="whitespace-normal break-words max-w-md">
+            <TableBodyCell class="whitespace-normal break-words max-w-md text-left">
                 <a
                     href={row.study_url}
                     class="inline-flex gap-1 cursor-pointer hover:underline"
                     target="_blank"
                     rel="noopener noreferrer"    
                     >
-                {row.study_author} <em>et al</em> ({row.study_year}) <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
+                <span class="text-left">{row.study_author} <span class="!italic">et al</span> ({row.study_year})</span> <FontAwesomeIcon icon={faArrowUpRightFromSquare} class="w-5 h-5 opacity-70" />
                 </a>
             </TableBodyCell>
 
