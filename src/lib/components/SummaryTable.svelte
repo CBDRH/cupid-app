@@ -85,7 +85,7 @@
                 <!-- Quotation mark that shows the study reference on hover -->
                 <QuoteSolid />
                 <Popover
-                    class="whitespace-normal break-words max-w-sm"
+                    class="whitespace-normal break-words max-w-sm !bg-white !text-slate-800"
                     title="Study Reference">
                     
                     <div class="flex flex-col">
@@ -135,7 +135,7 @@
                             <FontAwesomeIcon icon={impactCodes[Number(row[item.variable]) - 1]?.icon} class="w-5 h-5 opacity-70" /> 
                         </span>
                         <Popover
-                        class="w-64 text-md font-light border-2 !border-slate-600 "
+                        class="w-64 text-md font-light border-2 !border-slate-600 !bg-white !text-slate-800"
                         title={`${row.study_author} et al (${row.study_year})`}
                         >
                         <FontAwesomeIcon icon={item.icon} class="w-5 h-5 opacity-70" /> 
@@ -154,7 +154,7 @@
                 <Button    
                     class="relative cursor-pointer bg-slate-600 hover:bg-slate-800"
                     size="sm">
-                    <InfoCircleSolid class="text-white dark:text-white" />
+                    <InfoCircleSolid class="text-white" />
                     
                     <Indicator color="blue" border size="xl" placement="top-right" class="text-xs font-bold">
                         {count}
@@ -162,13 +162,13 @@
 
                 </Button>
                     <Popover
-                        class="w-216 text-sm border-2 !border-slate-600 "
+                        class="w-216 text-sm border-2 !border-slate-600 !bg-white !text-slate-800"
                         title={`${row.study_author} et al (${row.study_year}): Study Outcomes`}
                         >
 
                     <!-- Table of outcomes examined -->
-                    <Table color="custom" hoverable={true} class="table w-full table-fixed">
-                        <TableHead class = "bg-slate-700 text-slate-100 hover:text-slate-800">
+                    <Table hoverable={true} class="table w-full table-fixed">
+                        <TableHead class = "!bg-white !text-slate-800">
                             <TableHeadCell class="w-[20%]">Outcome Type</TableHeadCell>
                             <TableHeadCell class="w-[20%]">Target Drug</TableHeadCell>
                             <TableHeadCell class="w-[60%]">Description</TableHeadCell>
@@ -176,7 +176,7 @@
                         <TableBody>
                             {#each outcomes as outcome, i}
                             {#if row[outcome.variable] === 1}
-                                <TableBodyRow class="bg-slate-800 text-slate-300 hover:text-slate-800 hover:bg-slate-300 align-top">
+                                <TableBodyRow class="!bg-white !text-slate-800 hover:!text-slate-100 hover:!bg-slate-800 align-top">
 
                                     <TableBodyCell class="whitespace-normal break-words max-w-md capitalize py-1">
                                     {outcome.outcome}
@@ -222,7 +222,7 @@
                                 disabled:bg-gray-500 disabled:cursor-not-allowed"
                         size="sm" 
                         disabled={row.extraInfo === 0} >
-                        <InfoCircleSolid class="text-white dark:text-white" />
+                        <InfoCircleSolid class="text-white" />
                         
                         <Indicator color="blue" border size="xl" placement="top-right" class="text-xs font-bold">
                             {row.extraInfo}
