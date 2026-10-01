@@ -1,16 +1,10 @@
 <script>
-  import { onMount } from 'svelte';
   import logo from '$lib/assets/cupid-logo-dark.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
   import { faCircleQuestion, faCircleNodes, faEnvelope, faMoon, faLightbulb, faHome } from "@fortawesome/free-solid-svg-icons";
 
-  let theme = 'light';
-
-  const getButtonClasses = () =>
-    'rounded-md bg-surface px-3 py-2 text-foreground shadow-md transition hover:bg-slate-300 active:scale-95';
-
-</script>
+  </script>
 
 <header class="flex justify-between items-start px-6 shadow border-b border-border">
   

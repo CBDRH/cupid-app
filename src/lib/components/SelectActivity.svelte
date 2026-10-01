@@ -5,14 +5,32 @@
     import { ChevronDoubleDownOutline, ChevronDoubleUpOutline, InfoCircleOutline } from "flowbite-svelte-icons";
     import { activityList } from "$lib/constants/activityList";
     import { selectedLabel, selectedOption, selectedOption2, selectedActivity} from "$lib/stores/filterStores.js"
+    import { activityStore } from "$lib/stores/dataStore.js";
 
 
 
 
-    let open = false;
-    let menuEl: HTMLDivElement | null = null;
+    let open = $state(false);
+    let menuEl = $state<HTMLDivElement | null>(null);
     let buttonEl: HTMLButtonElement | null = null;
-    let activities = []; // This is the placehoder for the augmented activity list that includes the evidence
+    type ActivityOption = {
+      label: string;
+      variable: string;
+      definition: string;
+      positive: number;
+      null: number;
+      negative: number;
+    };
+
+    type EnrichedActivity = {
+      label: string;
+      options: ActivityOption[];
+      options2: string[];
+      variable: string[];
+      definition: string[];
+    };
+
+    let activities = $state<EnrichedActivity[]>([]); // This is the placehoder for the augmented activity list that includes the evidence
 
   // Function to close the menu if click is outside
     function handleClickOutside(event: MouseEvent) {
@@ -38,53 +56,45 @@
 const normalizeKey = (s: string) =>
   s.trim().toLowerCase();
 
-onMount(async () => {
-  const res = await fetch("/data/activity_level_data.json");
-  const data = await res.json();
+$effect(() => {
+  const data = $activityStore;
+
+  if (!data.length) {
+    activities = [];
+    return;
+  }
 
   const normalizeActivity = (activity: string) =>
     activity.replace(/^\d+(\.\d+)*\s*/, "").trim();
 
-  // collapse
-const collapsed = data.reduce(
-  (acc: Record<string, { positive: number; null: number; negative: number }>, row: any) => {
-  const key = normalizeActivity(row.activity); // JSON side only
+  const collapsed = data.reduce(
+    (acc: Record<string, { positive: number; null: number; negative: number }>, row: any) => {
+      const key = normalizeActivity(row.activity);
 
-    // only take the FIRST occurrence
-    if (!acc[key]) {
-      acc[key] = {
-        positive: row.positive ?? 0,
-        null: row.null ?? 0,
-        negative: row.negative ?? 0
-      };
-    }
+      if (!acc[key]) {
+        acc[key] = {
+          positive: row.positive ?? 0,
+          null: row.null ?? 0,
+          negative: row.negative ?? 0
+        };
+      }
 
-    return acc;
-  },
-  {}
-);
+      return acc;
+    },
+    {}
+  );
 
-
-activityList.forEach(group => {
-  group.options.forEach(option => {
-    const lookupKey = normalizeActivity(option);
-  });
-});
-
-  // merge into activityList
-  const enrichedActivityList = activityList.map(group => ({
+  activities = activityList.map(group => ({
     ...group,
     options: group.options.map((option, i) => ({
       label: option,
       variable: group.variable[i],
       definition: group.definition[i],
       positive: collapsed[option]?.positive ?? 0,
-      null:     collapsed[option]?.null ?? 0,
+      null: collapsed[option]?.null ?? 0,
       negative: collapsed[option]?.negative ?? 0
     }))
   }));
-
-  activities = enrichedActivityList;
 });
 
 
@@ -105,9 +115,9 @@ activityList.forEach(group => {
 
         <!-- Selected Option -->
     {#if ! open}
-        <ChevronDoubleDownOutline class="w-5 h-5" />
+      <ChevronDoubleDownOutline class="pointer-events-none w-5 h-5" />
     {:else}
-        <ChevronDoubleUpOutline class="w-5 h-5" />
+      <ChevronDoubleUpOutline class="pointer-events-none w-5 h-5"/>
     {/if}  
     <span>Prevention activity:</span>
     {#if $selectedOption}
@@ -142,8 +152,8 @@ activityList.forEach(group => {
                     <InfoCircleOutline 
                       class="cursor-pointer"
                       onclick={() => {
-                        selectedOption.set(option);
-                        selectedOption2.set(activity.option2[i]);
+                        selectedOption.set(option.label);
+                        selectedOption2.set(activity.options2[i]);
                         selectedLabel.set(activity.label);
                         selectedActivity.set(activity.variable[i]);
                         open = false;
@@ -160,14 +170,12 @@ activityList.forEach(group => {
                              cursor-pointer
                              hover:bg-gray-200
                              transition-colors duration-300"
-                      class:bg-gray-400={$selectedOption === option}
+                      class:bg-gray-400={$selectedOption === option.label}
                       onclick={() => {
-                          [
-                            [selectedOption, option.label],
-                            [selectedOption2, activity.options2[i]],
-                            [selectedLabel, activity.label],
-                            [selectedActivity, activity.variable[i]]
-                          ].forEach(([store, value]) => store.set(value));
+                          selectedOption.set(option.label);
+                          selectedOption2.set(activity.options2[i]);
+                          selectedLabel.set(activity.label);
+                          selectedActivity.set(activity.variable[i]);
                           open = false;
                         }}>
                     

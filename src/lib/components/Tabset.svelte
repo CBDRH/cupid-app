@@ -1,6 +1,5 @@
 <script>
   import SummaryStudies from '$lib/components/SummaryStudies.svelte';
-  import ManuscriptsTable from './ManuscriptsTable.svelte';
   import Bibliography from './Bibliography.svelte';
   import SummaryDrugs from './SummaryDrugs.svelte';
   import SummaryDetail from './SummaryDetail.svelte';
@@ -17,7 +16,7 @@
 
 <div>
   <div class="flex gap-2">
-    {#each ["Evidence Summary", `Filtered study list (n=${selected})`, `CUPID study list (n=${total})`] as tab, i}
+    {#each ["Evidence Summary", `Filtered study list (n=${selected})`, `CUPID activity list (n=${total})`] as tab, i}
       <button
         onclick={() => activeTab = i}
         class={`px-3 py-1 rounded w-56 cursor-pointer

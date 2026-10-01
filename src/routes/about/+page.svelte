@@ -4,6 +4,9 @@
     import BackButton from "$lib/components/BackButton.svelte";
     import { ImagePlaceholder } from "flowbite-svelte";
     import { dataStore } from '$lib/stores/dataStore';
+    import { Alert } from 'flowbite-svelte';
+    import { ExclamationCircleSolid } from "flowbite-svelte-icons";
+    import { fly } from "svelte/transition";
 
     let total = $state(0);
 
@@ -15,6 +18,11 @@
 
 
 <Header />
+
+<Alert color="red" dismissable transition={fly} params={{ x: 200 }}>
+  {#snippet icon()}<ExclamationCircleSolid/>{/snippet}
+  <span class="!font-extrabold">Note</span> This page is still under construction. 
+</Alert>
 
 <div class="max-w-7xl mx-auto px-4 py-12">
   <!-- Layout Wrapper: Stacked on mobile, 4-column grid on desktop -->

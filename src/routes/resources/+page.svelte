@@ -2,10 +2,20 @@
     import Header from "$lib/components/Header.svelte";
     import BackButton from "$lib/components/BackButton.svelte";
     import Footer from "$lib/components/Footer.svelte"
+    import { Alert } from 'flowbite-svelte';
+    import { ExclamationCircleSolid } from "flowbite-svelte-icons";
+    import { fly } from "svelte/transition";
     import { TextPlaceholder } from "flowbite-svelte";
+    
 </script>
 
 <Header />
+
+<Alert color="red" dismissable transition={fly} params={{ x: 200 }}>
+  {#snippet icon()}<ExclamationCircleSolid/>{/snippet}
+  <span class="!font-extrabold">Note</span> This page is still under construction. 
+</Alert>
+
 <main class="px-32 py-16">
 
 <h1>Additional Resources</h1>

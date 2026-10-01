@@ -45,7 +45,7 @@
     <div class="mt-12">
         <h2 class="mb-4">
             Details of the {total} studies that evaluated the impact of
-            <span class="font-semibold text-xl rounded-lg p-1 text-gray-50 bg-gray-700 uppercase tracking-wide">
+            <span class="font-semibold text-lg rounded-lg p-2 text-gray-50 bg-gray-700 uppercase tracking-wide">
                 {$selectedLabel}: {$selectedOption}
             </span>
         </h2>

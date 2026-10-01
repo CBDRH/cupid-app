@@ -1,8 +1,7 @@
 <script>
   import FilterAccordion from '$lib/components/FilterAccordion.svelte';
   import FilterSummary from './FilterSummary.svelte';
-  import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-  import { faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
+  import { AdjustmentsHorizontalSolid, ChevronDoubleLeftOutline } from "flowbite-svelte-icons";
 
   let collapseSidebar = $state(true);
 </script>
@@ -27,17 +26,20 @@
 
     <button
       type="button"
-      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-400 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-400 hover:text-slate-900 focus:outline-none dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
       aria-label={collapseSidebar ? 'Expand sidebar' : 'Collapse sidebar'}
       aria-expanded={!collapseSidebar}
       title={collapseSidebar ? 'Expand sidebar' : 'Collapse sidebar'}
       onclick={() => (collapseSidebar = !collapseSidebar)}
     >
-      <FontAwesomeIcon
-        icon={collapseSidebar ? faAnglesRight : faAnglesLeft}
-        class="text-base"
-      />
-    </button>
+    
+    {#if collapseSidebar}
+      <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700" />
+    {:else}
+      <ChevronDoubleLeftOutline class="h-4 w-4 text-slate-700" />
+    {/if}
+
+  </button>
   </div>
 
   {#if !collapseSidebar}

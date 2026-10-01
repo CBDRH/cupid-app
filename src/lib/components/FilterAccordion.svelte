@@ -75,22 +75,28 @@ const currentYear = new Date().getFullYear();
 
   {#if ($combinedFiltersArrayStore).length > 0}
     
-    <div class="w-full bg-gray-100 rounded-lg p-1 mb-1">
+    <div class="mb-3 w-full rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
 
-      <div class="flex flex-row gap-1">
-        <AdjustmentsHorizontalSolid />
-        Selected Filters        
+      <div class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600">
+        <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700" />
+        <span>Selected filters</span>
+        <span class="ml-auto rounded-full bg-slate-50 px-2 py-0.5 text-slate-800">{$combinedFiltersArrayStore.length}</span>
       </div>
     
-      <div class="flex flex-wrap items-center gap-2 p-2">
+      <div class="flex flex-wrap items-center gap-2">
       
         {#each $combinedFiltersArrayStore as item}
-          <div class = "flex flex-row bg-gray-300 rounded-lg text-gray-600 px-2 py-1 gap-2">
+          <div class="flex items-center gap-1 rounded-xl border border-slate-200 bg-slate-50 py-1 pl-3 pr-1 text-xs font-medium text-slate-700">
             {item}
-            <CloseCircleSolid 
-            class="inline-block align-text-bottom hover:text-gray-900 cursor-pointer"
-            onclick={() => removeFilterItem(item)}
-            />
+            <button
+              type="button"
+              class="rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500"
+              aria-label={`Remove ${item} filter`}
+              title={`Remove ${item}`}
+              onclick={() => removeFilterItem(item)}
+            >
+              <CloseCircleSolid class="h-4 w-4" />
+            </button>
           </div>
         {/each}
 
@@ -100,26 +106,26 @@ const currentYear = new Date().getFullYear();
   {/if}
 
 
-<Accordion 
-  class = "h-screen overflow-y-auto text-sm"
-  activeClass="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800"
-  inactiveClass="text-gray-500 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800"
+<Accordion
+  class="space-y-1 text-sm"
+  activeClass="bg-slate-50 text-slate-900 focus:ring-2 focus:ring-slate-200"
+  inactiveClass="text-slate-700 hover:bg-slate-50"
 >
   
   <!-- Intervention -->
-  <AccordionItem open>
+  <AccordionItem open class="!border-0 overflow-hidden bg-white">
     {#snippet header()}    
-      <div class="flex items-center gap-2">
-        <AdjustmentsHorizontalSolid />
+      <div class="flex items-center gap-2 font-semibold text-base">
+        <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700" />
         <span>Target drugs</span>
       </div>
     {/snippet}
     
-    <label class="font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600">
       <span>Filter drug type</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           Click to filter results to specific drug types. Nicotine includes tobacco,
           smokeless tobacco, and vaping. Other drugs includes methamphetamine,
           ecstasy, cocaine, inhalants, opioids, caffeine, pharmaceuticals,
@@ -130,7 +136,7 @@ const currentYear = new Date().getFullYear();
 
     <!-- Drug type -->
      
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$drugStore} choices={drugChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
@@ -138,28 +144,28 @@ const currentYear = new Date().getFullYear();
   </AccordionItem>
 
   <!-- Study details -->
-   <AccordionItem  open={false}>
+   <AccordionItem open={false} class="overflow-hidden bg-white shadow-sm">
     {#snippet header()}    
-      <div class="flex items-center gap-2">
-        <AdjustmentsHorizontalSolid />
+      <div class="flex items-center gap-2 font-semibold text-base">
+        <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700" />
         <span>Study details</span>
       </div>
     {/snippet}
 
-        <label class="font-semibold flex items-center gap-1">
-    <span>Study year</span>
-    <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+        <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+      <span>Study year</span>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
     <Tooltip placement="right" type="light" transition={slide}>
-      <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+      <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
         Publication year range of the study. Use this filter to limit results to a specific time period.
       </div>
     </Tooltip>
   </label>
 
-  <div class="relative flex items-center gap-2 mb-6">
+    <div class="relative mb-4 flex items-center gap-2">
 
       <Input bind:value={$minYearStore} type="number" id="quantity-input" aria-describedby="helper-text-explanation" min="1970" max={currentYear} placeholder="1970" step="1" required class="w-18! text-center" />
-      <div>—</div>
+      <div class="text-slate-400">to</div>
       <Input bind:value={$maxYearStore} type="number" id="quantity-input" aria-describedby="helper-text-explanation" min="{$minYearStore}" max={currentYear} placeholder="2026" step="1" required class="w-18! text-center" />
 
   </div>
@@ -168,58 +174,58 @@ const currentYear = new Date().getFullYear();
 
 
   <!-- Participants -->
-  <AccordionItem  open={false}>
+  <AccordionItem open={false} class="overflow-hidden bg-white shadow-sm">
     {#snippet header()}    
-      <div class="flex items-center gap-2">
-        <AdjustmentsHorizontalSolid />
+      <div class="flex items-center gap-2 font-semibold text-base">
+        <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700 dark:text-slate-400" />
         <span>Participants</span>
       </div>
     {/snippet}
     
     <!-- Sex -->
-    <label class="font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Sex</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           Filters to activities that were specific to a particularly sex
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$sexStore} choices={sexChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
     <!-- Lifestage -->
-    <label class="my-2 font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Lifestage</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           The age range in which the activity is designed to have the greatest influence
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$lifestagesStore} choices={lifestagesChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
     <!-- Priority populations -->
-    <label class="my-2 font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Priority populations</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           The populations in which the activity is designed to have the greatest influence
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$priorityStore} choices={priorityChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
@@ -229,60 +235,60 @@ const currentYear = new Date().getFullYear();
 
 
   <!-- Community context -->
-  <AccordionItem  open={false}>
+  <AccordionItem open={false} class="overflow-hidden bg-white shadow-sm">
     {#snippet header()}    
-      <div class="flex items-center gap-2">
-        <AdjustmentsHorizontalSolid />
+      <div class="flex items-center gap-2 font-semibold text-base">
+        <AdjustmentsHorizontalSolid class="h-4 w-4 text-slate-700 dark:text-slate-400" />
         <span>Community context</span>
       </div>
     {/snippet}
     
     <!-- Continent -->
-    <label class="font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Continent</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           The continent where the activity took place
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$continentStore} choices={continentChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
 
     <!-- Urbanicity -->
-    <label class="font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Urbanicity</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           The 'urbanicity' or geographical classification of the community
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$urbanicityStore} choices={urbanicityChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 
 
 
     <!-- Setting -->
-    <label class="font-semibold flex items-center gap-1">
+    <label class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
       <span>Setting</span>
-      <InfoCircleSolid class="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"/>
+      <InfoCircleSolid class="h-4 w-4 cursor-help text-slate-400 hover:text-slate-700 dark:hover:text-slate-400"/>
       <Tooltip placement="right" type="light" transition={slide}>
-        <div class="max-w-sm font-normal leading-relaxed whitespace-normal">
+        <div class="max-w-sm font-normal leading-relaxed whitespace-normal normal-case">
           The primary setting where the activity took place
         </div>
       </Tooltip>
     </label>
 
-    <Listgroup class="mb-6">
+    <Listgroup class="mb-4">
       <!-- Directly bind the Checkbox group to the store -->
       <Checkbox bind:group={$settingStore} choices={settingChoices} color="green" classes={{ div: "p-2"}} />
     </Listgroup> 

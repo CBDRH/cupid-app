@@ -8,9 +8,6 @@
   import { dataStore, activityStore } from '$lib/stores/dataStore';
   import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
-  import { Alert } from 'flowbite-svelte';
-  import { ExclamationCircleSolid } from "flowbite-svelte-icons";
-  import { fly } from "svelte/transition";
   import Test from '$lib/components/Test.svelte';
 
   // modal visibility
@@ -48,10 +45,6 @@
   });
 
 </script>
-<Alert color="red" dismissable transition={fly} params={{ x: 200 }}>
-  {#snippet icon()}<ExclamationCircleSolid/>{/snippet}
-  <b>Note</b> CUPID is still under development and we are continuously addining new features
-</Alert>
 
 <Header />
 
