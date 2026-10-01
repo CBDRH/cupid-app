@@ -162,13 +162,13 @@
 
                 </Button>
                     <Popover
-                        class="w-216 text-sm font-light border-2 !border-slate-600 "
+                        class="w-216 text-sm border-2 !border-slate-600 "
                         title={`${row.study_author} et al (${row.study_year}): Study Outcomes`}
                         >
 
                     <!-- Table of outcomes examined -->
                     <Table color="custom" hoverable={true} class="table w-full table-fixed">
-                        <TableHead class = "bg-gray-700 text-slate-100 hover:text-slate-800">
+                        <TableHead class = "bg-slate-700 text-slate-100 hover:text-slate-800">
                             <TableHeadCell class="w-[20%]">Outcome Type</TableHeadCell>
                             <TableHeadCell class="w-[20%]">Target Drug</TableHeadCell>
                             <TableHeadCell class="w-[60%]">Description</TableHeadCell>
@@ -176,7 +176,7 @@
                         <TableBody>
                             {#each outcomes as outcome, i}
                             {#if row[outcome.variable] === 1}
-                                <TableBodyRow class="text-slate-300 hover:text-slate-800 align-top">
+                                <TableBodyRow class="bg-slate-800 text-slate-300 hover:text-slate-800 hover:bg-slate-300 align-top">
 
                                     <TableBodyCell class="whitespace-normal break-words max-w-md capitalize py-1">
                                     {outcome.outcome}

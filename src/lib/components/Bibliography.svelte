@@ -218,7 +218,7 @@
                         <TableBody>
                             {#each outcomes as outcome, i}
                             {#if row[outcome.variable] === 1}
-                                <TableBodyRow class="text-slate-300 hover:text-slate-800 align-top">
+                                <TableBodyRow class="bg-slate-800 text-slate-300 hover:text-slate-800 hover:bg-slate-300 align-top">
 
                                     <TableBodyCell class="whitespace-normal break-words max-w-md capitalize py-1">
                                     {outcome.outcome}
