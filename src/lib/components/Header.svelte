@@ -2,7 +2,7 @@
   import logo from '$lib/assets/cupid-logo-dark.png';
   import { A } from 'flowbite-svelte';
   import { FontAwesomeIcon } from "@fortawesome/svelte-fontawesome";
-  import { faCircleQuestion, faCircleNodes, faEnvelope, faMoon, faLightbulb, faHome } from "@fortawesome/free-solid-svg-icons";
+  import { faCircleQuestion, faCircleNodes, faEnvelope, faHome } from "@fortawesome/free-solid-svg-icons";
 
   </script>
 

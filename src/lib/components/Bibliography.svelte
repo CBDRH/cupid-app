@@ -39,28 +39,13 @@
   });
 
   let searchTerm = $state("");
-    let filteredItems = $derived.by(() => {
-        const query = searchTerm.trim().toLowerCase();
-
-        if (!query) return $activityStore;
-
-        return $activityStore.filter((study) =>
-            Object.values(study).some((value) =>
-                String(value ?? "").toLowerCase().includes(query)
-            )
-        );
-    });
+  let filteredItems = $derived.by(() => $activityStore.filter((study) => !searchTerm || study.reference.toLowerCase().includes(searchTerm.toLowerCase())));
     const pageSize = 50;
     let currentPage = $state(1);
     let totalPages = $derived(Math.max(1, Math.ceil(filteredItems.length / pageSize)));
     let visiblePage = $derived(Math.min(currentPage, totalPages));
     let pageStart = $derived((visiblePage - 1) * pageSize);
     let paginatedItems = $derived(filteredItems.slice(pageStart, pageStart + pageSize));
-
-    $effect(() => {
-        searchTerm;
-        currentPage = 1;
-    });
 </script>
 
     <div class="mt-12">
@@ -210,7 +195,7 @@
 
                     <!-- Table of outcomes examined -->
                     <Table color="custom" hoverable={true} class="table w-full table-fixed">
-                        <TableHead class = "bg-gray-700 text-slate-100 hover:text-slate-800">
+                        <TableHead class = "bg-slate-600 text-slate-100 hover:text-slate-800">
                             <TableHeadCell class="w-[20%]">Outcome Type</TableHeadCell>
                             <TableHeadCell class="w-[20%]">Target Drug</TableHeadCell>
                             <TableHeadCell class="w-[60%]">Description</TableHeadCell>
