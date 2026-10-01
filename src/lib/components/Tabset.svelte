@@ -4,12 +4,12 @@
   import SummaryDrugs from './SummaryDrugs.svelte';
   import SummaryDetail from './SummaryDetail.svelte';
   import SummaryTable from './SummaryTable.svelte';
-  import { dataStore } from '$lib/stores/dataStore';
+  import { activityStore } from '$lib/stores/dataStore';
   import { filteredData } from "$lib/stores/filterStores";
 
   let activeTab = $state(0);
 
-  let total = $derived($dataStore.length);
+  let total = $derived($activityStore.length);
   let selected = $derived($filteredData.length);
 
 </script>

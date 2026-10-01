@@ -39,7 +39,28 @@
   });
 
   let searchTerm = $state("");
-  let filteredItems = $derived.by(() => $activityStore.filter((study) => !searchTerm || study.reference.toLowerCase().includes(searchTerm.toLowerCase())));
+    let filteredItems = $derived.by(() => {
+        const query = searchTerm.trim().toLowerCase();
+
+        if (!query) return $activityStore;
+
+        return $activityStore.filter((study) =>
+            Object.values(study).some((value) =>
+                String(value ?? "").toLowerCase().includes(query)
+            )
+        );
+    });
+    const pageSize = 50;
+    let currentPage = $state(1);
+    let totalPages = $derived(Math.max(1, Math.ceil(filteredItems.length / pageSize)));
+    let visiblePage = $derived(Math.min(currentPage, totalPages));
+    let pageStart = $derived((visiblePage - 1) * pageSize);
+    let paginatedItems = $derived(filteredItems.slice(pageStart, pageStart + pageSize));
+
+    $effect(() => {
+        searchTerm;
+        currentPage = 1;
+    });
 </script>
 
     <div class="mt-12">
@@ -49,6 +70,30 @@
 
     
     <div class="max-h-screen mb-16">
+    <div class="mb-4 flex items-center justify-between gap-4 text-sm text-gray-600">
+        <span>
+            Showing {filteredItems.length ? pageStart + 1 : 0}-{Math.min(pageStart + pageSize, filteredItems.length)} of {filteredItems.length}
+        </span>
+        <div class="flex items-center gap-2">
+            <button
+                type="button"
+                class="rounded border border-gray-300 px-3 py-1 disabled:cursor-not-allowed disabled:opacity-40"
+                disabled={visiblePage === 1}
+                onclick={() => currentPage = Math.max(1, visiblePage - 1)}
+            >
+                Previous
+            </button>
+            <span>Page {visiblePage} of {totalPages}</span>
+            <button
+                type="button"
+                class="rounded border border-gray-300 px-3 py-1 disabled:cursor-not-allowed disabled:opacity-40"
+                disabled={visiblePage === totalPages}
+                onclick={() => currentPage = Math.min(totalPages, visiblePage + 1)}
+            >
+                Next
+            </button>
+        </div>
+    </div>
     <TableSearch placeholder="Search by study title or authors" hoverable bind:inputValue={searchTerm}>
     <Table color="custom" hoverable={false} class="table w-full table-fixed mb-18">
         <TableHead class = "bg-gray-700 text-white">
@@ -61,7 +106,7 @@
         </TableHead>
 
         <TableBody>
-        {#each filteredItems as row, i}
+        {#each paginatedItems as row, i}
 
         {@const count = outcomes.filter(o => row[o.variable] == 1).length}
 
@@ -259,6 +304,7 @@
         {/each}
         </TableBody>
     </Table>
+
     </TableSearch>
    </div> 
 </div>
